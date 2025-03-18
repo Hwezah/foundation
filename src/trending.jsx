@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearch } from "./constants";
-
+import ContentBar from "./contentBar";
 export default function Trending() {
   const { description } = useSearch();
   const [trends, setTrends] = useState([]);
@@ -49,7 +49,7 @@ export default function Trending() {
   }, [description]);
 
   return (
-    <div className="h-screen">
+    <div>
       <div>
         <h2 className="text-3xl font-black p-12 pb-2">
           <span className="tracking-wide">Trends.</span>
@@ -57,6 +57,8 @@ export default function Trending() {
             {description ? `${description}'s foundation.` : ""}
           </p>
         </h2>
+        {/* ///////ContentBar */}
+        <ContentBar />
       </div>
 
       <ul className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 items-start px-8">
