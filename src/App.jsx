@@ -20,7 +20,7 @@ function SearchProvider({ children }) {
 export default function App() {
   return (
     <SearchProvider>
-      <div className="mx-auto max-w-[120rem] bg-[#003049] text-gray-100">
+      <div className="mx-auto max-w-[120rem] bg-[#022b3a] text-gray-100">
         <Navigation />
         <Hero />
 
@@ -37,7 +37,7 @@ function SearchBar() {
       <input
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="flex w-[90%] min-w-[300px] flex-1 rounded-full  bg-[#012536] px-6 py-4 transition-all duration-300 focus:w-full font-bold text-gray-500 focus:outline-none"
+        className="flex w-[90%] min-w-[300px] flex-1 rounded-full  bg-[#01222e] px-6 py-4 transition-all duration-300 focus:w-full font-bold text-gray-500 focus:outline-none"
         placeholder="Search..."
       />
       <button className="absolute top-1/2 right-6 -translate-y-1/2 rounded-full p-2 text-white transition">
