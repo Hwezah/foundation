@@ -32,6 +32,22 @@ export default function BontentBar() {
           Prayer & Fellowship
         </a>
       </div>
+      <div>
+        <a
+          href="/live-feed"
+          className="bg-[#01222e] px-4 py-2 block rounded-lg"
+        >
+          Live-feed
+        </a>
+      </div>
+      <div>
+        <a
+          href="/Testimonies"
+          className="bg-[#01222e] px-4 py-2 block rounded-lg"
+        >
+          Testimonies
+        </a>
+      </div>
     </div>
   );
 }
