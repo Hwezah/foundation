@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { useSearch } from "./constants";
 import ContentBar from "./contentBar";
+// import { SearchProvider } from "./searchBar";
 export default function Trending() {
   const { description } = useSearch();
   const [trends, setTrends] = useState([]);
 
   // Load trends from localStorage when the component mounts
+  // This initially sets localStorage with the empty trends state array
   useEffect(() => {
     const storedTrends = localStorage.getItem("trends");
     if (storedTrends) {
       try {
-        setTrends(JSON.parse(storedTrends)); // Attempt to parse and update the state
+        // Converting and updating the trends array from json to workable javascript object data
+        setTrends(JSON.parse(storedTrends));
       } catch (error) {
         console.error("Error parsing trends from localStorage:", error);
         // Optionally, handle the error (e.g., reset trends to empty array)
@@ -36,9 +39,11 @@ export default function Trending() {
         const response = await fetch(URL);
         const data = await response.json();
         console.log("API Response:", data);
+        //setTrends array gets filled with data(videos) from the API
+        //if no data, then reverts to the original empty array.
         setTrends(data.items || []);
 
-        // Store trends in localStorage
+        // Store trends in localStorage(trends data is converted back to a string so the browser can use it)
         localStorage.setItem("trends", JSON.stringify(data.items));
       } catch (error) {
         console.error("Error fetching YouTube videos:", error);
@@ -57,8 +62,6 @@ export default function Trending() {
             {description ? `${description}'s foundation.` : ""}
           </p>
         </h2>
-        {/* ///////ContentBar */}
-        <ContentBar />
       </div>
 
       <ul className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 items-start px-8">

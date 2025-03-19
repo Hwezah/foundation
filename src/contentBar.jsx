@@ -1,4 +1,4 @@
-export default function BontentBar() {
+export default function ContentBar() {
   return (
     <div className="flex justify-between items-center  p-12 pt-4 font-bold">
       <div>

@@ -1,68 +1,51 @@
 import { strokeColor } from "./constants";
 export default function Notifications() {
   return (
-    <div className="flex justify-between gap-2">
-      <svg
-        className="h-6 w-6"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+    <svg
+      className=" h-6 w-6 "
+      viewBox="-1.5 0 20 20"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      fill={strokeColor}
+      stroke={strokeColor}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <title>notification_bell [#fffff]</title>{" "}
+        <desc>Created with Sketch.</desc> <defs> </defs>{" "}
         <g
-          id="SVGRepo_tracerCarrier"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        ></g>
-        <g id="SVGRepo_iconCarrier">
+          id="Page-1"
+          stroke="none"
+          strokeWidth="1"
+          fill="none"
+          fill-rule="evenodd"
+        >
           {" "}
-          <g clipPath="url(#clip0_15_159)">
+          <g
+            id="Dribbble-Light-Preview"
+            transform="translate(-181.000000, -720.000000)"
+            fill={strokeColor}
+          >
             {" "}
-            <rect width="24" height="24"></rect>{" "}
-            <path
-              d="M9.5 19C8.89555 19 7.01237 19 5.61714 19C4.87375 19 4.39116 18.2177 4.72361 17.5528L5.57771 15.8446C5.85542 15.2892 6 14.6774 6 14.0564C6 13.2867 6 12.1434 6 11C6 9 7 5 12 5C17 5 18 9 18 11C18 12.1434 18 13.2867 18 14.0564C18 14.6774 18.1446 15.2892 18.4223 15.8446L19.2764 17.5528C19.6088 18.2177 19.1253 19 18.382 19H14.5M9.5 19C9.5 21 10.5 22 12 22C13.5 22 14.5 21 14.5 19M9.5 19C11.0621 19 14.5 19 14.5 19"
-              stroke={strokeColor}
-              strokeLinejoin="round"
-            ></path>{" "}
-            <path
-              d="M12 5V3"
-              stroke={strokeColor}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></path>{" "}
-          </g>{" "}
-          <defs>
-            {" "}
-            <clipPath id="clip0_15_159">
+            <g id="icons" transform="translate(56.000000, 160.000000)">
               {" "}
-              <rect width="24" height="24" fill="white"></rect>{" "}
-            </clipPath>{" "}
-          </defs>{" "}
-        </g>
-      </svg>
-      <svg
-        className="h-6 w-6"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-        <g
-          id="SVGRepo_tracerCarrier"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        ></g>
-        <g id="SVGRepo_iconCarrier">
-          {" "}
-          <path
-            d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-            stroke={strokeColor}
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></path>{" "}
-        </g>
-      </svg>
-    </div>
+              <path
+                d="M137.75,574 L129.25,574 L129.25,568 C129.25,565.334 131.375,564 133.498937,564 L133.501063,564 C135.625,564 137.75,565.334 137.75,568 L137.75,574 Z M134.5625,577 C134.5625,577.552 134.0865,578 133.5,578 C132.9135,578 132.4375,577.552 132.4375,577 L132.4375,576 L134.5625,576 L134.5625,577 Z M140.9375,574 C140.351,574 139.875,573.552 139.875,573 L139.875,568 C139.875,564.447 137.359,562.475 134.5625,562.079 L134.5625,561 C134.5625,560.448 134.0865,560 133.5,560 C132.9135,560 132.4375,560.448 132.4375,561 L132.4375,562.079 C129.641,562.475 127.125,564.447 127.125,568 L127.125,573 C127.125,573.552 126.649,574 126.0625,574 C125.476,574 125,574.448 125,575 C125,575.552 125.476,576 126.0625,576 L130.3125,576 L130.3125,577 C130.3125,578.657 131.739438,580 133.5,580 C135.260563,580 136.6875,578.657 136.6875,577 L136.6875,576 L140.9375,576 C141.524,576 142,575.552 142,575 C142,574.448 141.524,574 140.9375,574 L140.9375,574 Z"
+                id="notification_bell-[#fffff]"
+              >
+                {" "}
+              </path>{" "}
+            </g>{" "}
+          </g>{" "}
+        </g>{" "}
+      </g>
+    </svg>
   );
 }
