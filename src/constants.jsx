@@ -1,7 +1,3 @@
-import { createContext, useContext } from "react";
-export function useSearch() {
-  return useContext(SearchContext);
-}
-
+import { createContext } from "react";
 export const strokeColor = "#fff";
 export const SearchContext = createContext();

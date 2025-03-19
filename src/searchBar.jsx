@@ -1,18 +1,7 @@
-import { useSearch, SearchContext } from "./constants";
-import { useState } from "react";
-import { strokeColor } from "./constants";
-export function SearchProvider({ children }) {
-  const [description, setDescription] = useState("");
-
-  return (
-    <SearchContext.Provider value={{ description, setDescription }}>
-      {children}
-    </SearchContext.Provider>
-  );
-}
-
+import { useSearch } from "./SearchContext";
 export default function SearchBar() {
   const { description, setDescription } = useSearch();
+  const { strokeColor } = useSearch();
   return (
     <div className="relative flex w-[70%] items-center rounded-lg p-1 ">
       <input

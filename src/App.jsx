@@ -1,6 +1,6 @@
 import Hero from "./hero";
 import Trending from "./trending";
-import { SearchProvider } from "./searchBar";
+import { SearchProvider } from "./SearchContext";
 import ContentBar from "./contentBar";
 import Navigation from "./navigation";
 
