@@ -11,7 +11,6 @@ export default function App() {
         <Navigation />
         <Hero />
         <Trending />
-        <ContentBar />
       </div>
     </SearchProvider>
   );

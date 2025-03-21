@@ -1,3 +1,4 @@
+import ContentBar from "./contentBar";
 import { useState, useEffect } from "react";
 import { useSearch } from "./SearchContext";
 // import ContentBar from "./contentBar";
@@ -52,7 +53,7 @@ export default function Trending() {
     }
 
     fetchVideos();
-  }, [description]);
+  }, [description, setIsLoading]);
 
   return (
     <div>
@@ -64,7 +65,7 @@ export default function Trending() {
           </p>
         </h2>
       </div>
-
+      <ContentBar />
       <ul className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 items-start px-8">
         {isLoading ? (
           <Loader />
