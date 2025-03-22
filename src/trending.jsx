@@ -33,7 +33,7 @@ export default function Trending() {
       const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
         description
-      )}&maxResults=14&type=video&key=${API_KEY}`;
+      )}&maxResults=24&type=video&key=${API_KEY}`;
 
       try {
         setIsLoading(true);

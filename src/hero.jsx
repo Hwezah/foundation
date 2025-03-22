@@ -6,27 +6,27 @@ import { VideoEmbed } from "./trending";
 export default function Hero() {
   const { isLoading, setIsLoading } = useSearch();
   const { selectedVideo } = useSearch();
-  const { description, setDescription } = useSearch();
+  const { description } = useSearch();
 
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 3000); // Simulate loading for 3 seconds...experimental
   }, []);
   return (
-    <div className="relative h-[70vh] w-full  flex justify-between items-center">
+    <div className="relative h-[70vh] flex justify-between ">
       {isLoading ? (
         <Loader />
       ) : selectedVideo ? (
         <VideoEmbed
           width="100%"
           height="100%"
-          className="h-full w-full rounded-none shadow-none"
+          className=" aspect-w-16 aspect-h-9 top-0 left-0  rounded-none shadow-none"
           videoId={selectedVideo.id.videoId}
           title={selectedVideo.snippet.title}
         />
       ) : (
         <>
-          <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer rounded-full  p-4 text-white transition hover:bg-gray-100">
+          <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
             <svg
               height="24px"
               width="24px"
@@ -48,7 +48,7 @@ export default function Hero() {
               </g>
             </svg>
           </div>
-          <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 text-white transition hover:bg-gray-100">
+          <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 bg-white text-white transition hover:bg-gray-100">
             <svg
               height="24px"
               width="24px"
@@ -102,16 +102,18 @@ export default function Hero() {
           </div>
         </>
       )}
-      <FoundationFeed
-        description={description}
-        title={selectedVideo.snippet.title}
-      />
+      {selectedVideo && selectedVideo.snippet && (
+        <FoundationFeed
+          description={description}
+          title={selectedVideo.snippet.title}
+        />
+      )}
     </div>
   );
 }
 function FoundationFeed({ description, title }) {
   return (
-    <div className="w-1/2 bg-[#01212c] p-10 h-full">
+    <div className="w-1/2 bg-[#01212c] p-14 h-full">
       <h2 className="text-3xl font-black">{description}'s Foundation.</h2>
       <h3 className="mb-2">
         <span className="text-2xl font-bold">Sermon: </span>

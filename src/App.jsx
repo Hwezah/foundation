@@ -7,7 +7,7 @@ import Navigation from "./navigation";
 export default function App() {
   return (
     <SearchProvider>
-      <div className="mx-auto max-w-[120rem] bg-[#022b3a] text-gray-100">
+      <div className="mx-auto  bg-[#022b3a] text-gray-100">
         <Navigation />
         <Hero />
         <Trending />
