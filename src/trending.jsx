@@ -7,6 +7,7 @@ export default function Trending() {
   const [trends, setTrends] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [playingVideoId, setPlayingVideoId] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const storedTrends = localStorage.getItem("trends");
@@ -21,11 +22,12 @@ export default function Trending() {
   }, []);
 
   useEffect(() => {
-    // if (description.trim() === "") {
-    //   setTrends([]);
-    //   localStorage.removeItem("trends");
-    //   return;
-    // }
+    const controller = new AbortController();
+    if (description.trim() === "") {
+      setTrends([]);
+      localStorage.removeItem("trends");
+      return;
+    }
 
     async function fetchVideos() {
       const API_KEY = "AIzaSyC51xFNtD_0T1JXEs1g46xAXI4uvugvMjo";
@@ -35,19 +37,34 @@ export default function Trending() {
 
       try {
         setIsLoading(true);
-        const response = await fetch(URL);
+        setError("");
+        const response = await fetch(URL, { signal: controller.signal });
+        if (!response.ok) {
+          throw new Error(
+            ":) Something went wrong fetching your foundation, please try again."
+          );
+        }
         const data = await response.json();
         console.log(data);
+        if (data.response === "False")
+          throw new Error(
+            ":) Cannot find requested foundation, try another search."
+          );
         setTrends(data.items || []);
         localStorage.setItem("trends", JSON.stringify(data.items));
-      } catch (error) {
-        console.error("Error fetching YouTube videos:", error);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
       } finally {
         setIsLoading(false);
       }
     }
 
     fetchVideos();
+    return () => {
+      controller.abort();
+    };
   }, [description, setIsLoading]);
 
   useEffect(() => {
@@ -55,11 +72,13 @@ export default function Trending() {
       document.title = `Watching | ${description} - ${selectedVideo.snippet.title}`;
     }
 
-    // return () => {
-    //   // Reset selectedVideo when description changes or on reload
-    //   setSelectedVideo(null);
-    //  // Reset title to default
-    // };
+    return () => {
+      // Reset selectedVideo when description changes or on reload
+      setSelectedVideo(null);
+      // Reset title to default
+      // Cleanup function
+      document.title = "Foundation";
+    };
   }, [selectedVideo, description]);
 
   return (
@@ -94,13 +113,15 @@ export default function Trending() {
             />
           ))
         ) : (
-          <p>No results found</p>
+          <ErrorMessage message={error} />
         )}
       </ul>
     </div>
   );
 }
-
+function ErrorMessage({ message }) {
+  return <p>{message}</p>;
+}
 function VideoItem({ video, onClick, onPlay, isPlaying }) {
   const videoId =
     video?.id?.videoId || video?.id?.channelId || video?.id?.playlistId;
