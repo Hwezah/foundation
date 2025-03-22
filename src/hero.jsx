@@ -5,15 +5,15 @@ import { Loader } from "./trending";
 import { VideoEmbed } from "./trending";
 export default function Hero() {
   const { isLoading, setIsLoading } = useSearch();
-  // const { trends } = useSearch();
   const { selectedVideo } = useSearch();
+  const { description, setDescription } = useSearch();
 
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 3000); // Simulate loading for 3 seconds...experimental
   }, []);
   return (
-    <div className="relative h-[80vh] w-full bg-gray-200 flex justify-center items-center">
+    <div className="relative h-[70vh] w-full  flex justify-between items-center">
       {isLoading ? (
         <Loader />
       ) : selectedVideo ? (
@@ -26,7 +26,7 @@ export default function Hero() {
         />
       ) : (
         <>
-          <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
+          <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer rounded-full  p-4 text-white transition hover:bg-gray-100">
             <svg
               height="24px"
               width="24px"
@@ -48,7 +48,7 @@ export default function Hero() {
               </g>
             </svg>
           </div>
-          <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
+          <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 text-white transition hover:bg-gray-100">
             <svg
               height="24px"
               width="24px"
@@ -102,6 +102,32 @@ export default function Hero() {
           </div>
         </>
       )}
+      <FoundationFeed
+        description={description}
+        title={selectedVideo.snippet.title}
+      />
+    </div>
+  );
+}
+function FoundationFeed({ description, title }) {
+  return (
+    <div className="w-1/2 bg-[#01212c] p-10 h-full">
+      <h2 className="text-3xl font-black">{description}'s Foundation.</h2>
+      <h3 className="mb-2">
+        <span className="text-2xl font-bold">Sermon: </span>
+        {title}...
+      </h3>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis,
+        porro repellat! Vel ducimus velit similique sint soluta deserunt dolor
+        ullam dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem
+        ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, porro
+        repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
+        dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Reiciendis, porro repellat!
+        Vel ducimus velit similique sint soluta deserunt dolor ullam dolorum
+        odio optio? Assumenda autem non nulla. Id, ex in?
+      </p>
     </div>
   );
 }
