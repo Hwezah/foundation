@@ -33,7 +33,7 @@ export default function Trending() {
       const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
         description
-      )}&maxResults=24&type=video&key=${API_KEY}`;
+      )}&maxResults=50&type=video&key=${API_KEY}`;
 
       try {
         setIsLoading(true);
@@ -90,7 +90,7 @@ export default function Trending() {
         </p>
       </h2>
       <ContentBar />
-      <ul className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4 items-start px-8">
+      <ul className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4 items-start px-12 relative">
         {isLoading ? (
           <Loader />
         ) : trends.length > 0 ? (
@@ -217,7 +217,7 @@ export function VideoEmbed({
 }
 export function Loader() {
   return (
-    <div className="flex justify-center items-center h-20 ">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="w-8 h-8 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
     </div>
   );
