@@ -8,10 +8,10 @@ export default function Navigation() {
         <img
           src="public\Assets\FoundationLogoWhite.svg"
           alt="Foundation Stone Logo"
-          className="w-[64px]"
+          className="w-[74px]"
         />
 
-        <h1 className=" text-center text-3xl font-bold ">Foundation.</h1>
+        <h1 className=" text-center text-4xl font-black ">Foundation.</h1>
       </div>
       <div className="flex-center flex items-center justify-around gap-4 w-[50%] py-4">
         <SearchBar />

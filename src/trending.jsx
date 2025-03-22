@@ -83,9 +83,9 @@ export default function Trending() {
 
   return (
     <div>
-      <h2 className="text-3xl font-black p-12 pb-2">
+      <h2 className="text-4xl font-black p-12 pb-2">
         <span className="tracking-wide">Trends.</span>
-        <p className="text-2xl text-gray-600">
+        <p className="text-3xl text-gray-600">
           {description ? `${description}'s foundation.` : ""}
         </p>
       </h2>
