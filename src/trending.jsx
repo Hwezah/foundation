@@ -5,6 +5,8 @@ import { useSearch } from "./SearchContext";
 export default function Trending() {
   const { description, isLoading, setIsLoading } = useSearch();
   const [trends, setTrends] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [playingVideoId, setPlayingVideoId] = useState(null);
 
   useEffect(() => {
     const storedTrends = localStorage.getItem("trends");
@@ -19,11 +21,11 @@ export default function Trending() {
   }, []);
 
   useEffect(() => {
-    if (!description.trim() === "") {
-      setTrends([]);
-      localStorage.removeItem("trends");
-      return;
-    }
+    // if (description.trim() === "") {
+    //   setTrends([]);
+    //   localStorage.removeItem("trends");
+    //   return;
+    // }
 
     async function fetchVideos() {
       const API_KEY = "AIzaSyC51xFNtD_0T1JXEs1g46xAXI4uvugvMjo";
@@ -35,6 +37,7 @@ export default function Trending() {
         setIsLoading(true);
         const response = await fetch(URL);
         const data = await response.json();
+        console.log(data);
         setTrends(data.items || []);
         localStorage.setItem("trends", JSON.stringify(data.items));
       } catch (error) {
@@ -46,6 +49,18 @@ export default function Trending() {
 
     fetchVideos();
   }, [description, setIsLoading]);
+
+  useEffect(() => {
+    if (selectedVideo) {
+      document.title = `Watching | ${description} - ${selectedVideo.snippet.title}`;
+    }
+
+    // return () => {
+    //   // Reset selectedVideo when description changes or on reload
+    //   setSelectedVideo(null);
+    //  // Reset title to default
+    // };
+  }, [selectedVideo, description]);
 
   return (
     <div>
@@ -62,10 +77,20 @@ export default function Trending() {
         ) : trends.length > 0 ? (
           trends.map((video) => (
             <VideoItem
+              onClick={() => setSelectedVideo(video)}
               key={
                 video.id.videoId || video.id.channelId || video.id.playlistId
               }
               video={video}
+              isPlaying={
+                playingVideoId ===
+                (video.id.videoId || video.id.channelId || video.id.playlistId)
+              }
+              onPlay={() =>
+                setPlayingVideoId(
+                  video.id.videoId || video.id.channelId || video.id.playlistId
+                )
+              }
             />
           ))
         ) : (
@@ -76,14 +101,13 @@ export default function Trending() {
   );
 }
 
-function VideoItem({ video }) {
-  const [isPlaying, setIsPlaying] = useState(false);
+function VideoItem({ video, onClick, onPlay, isPlaying }) {
   const videoId =
     video?.id?.videoId || video?.id?.channelId || video?.id?.playlistId;
   if (!videoId) return null;
 
   return (
-    <li className="mb-8 cursor-pointer relative flex">
+    <li className="mb-8 cursor-pointer relative flex" onClick={onClick}>
       {!isPlaying ? (
         <>
           <img
@@ -92,7 +116,10 @@ function VideoItem({ video }) {
             className="rounded-lg shadow-lg w-full h-[200px] object-cover"
           />
           <button
-            onClick={() => setIsPlaying(true)}
+            onClick={() => {
+              onPlay();
+              // Prevent triggering `onClick` when clicking the button
+            }}
             className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex items-center justify-center rounded-full bg-opacity-50 p-4"
           >
             <svg
@@ -143,7 +170,7 @@ function VideoItem({ video }) {
           height="200"
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
           title={video.snippet.title}
-          className="rounded-lg shadow-lg"
+          className="rounded-lg shadow-lg hover:shadow-none focus:outline-none "
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
