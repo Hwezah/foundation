@@ -8,14 +8,20 @@ export function useSearch() {
 export function SearchProvider({ children }) {
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [trends, setTrends] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   return (
     <SearchContext.Provider
       value={{
+        selectedVideo,
+        setSelectedVideo,
         description,
         setDescription,
         isLoading,
         setIsLoading,
         strokeColor,
+        trends,
+        setTrends,
       }}
     >
       {children}

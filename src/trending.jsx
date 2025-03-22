@@ -4,8 +4,8 @@ import { useSearch } from "./SearchContext";
 
 export default function Trending() {
   const { description, isLoading, setIsLoading } = useSearch();
-  const [trends, setTrends] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const { trends, setTrends } = useSearch();
+  const { selectedVideo, setSelectedVideo } = useSearch();
   const [playingVideoId, setPlayingVideoId] = useState(null);
   const [error, setError] = useState("");
 
@@ -30,7 +30,7 @@ export default function Trending() {
     }
 
     async function fetchVideos() {
-      const API_KEY = "AIzaSyC51xFNtD_0T1JXEs1g46xAXI4uvugvMjo";
+      const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
         description
       )}&maxResults=14&type=video&key=${API_KEY}`;
@@ -72,13 +72,13 @@ export default function Trending() {
       document.title = `Watching | ${description} - ${selectedVideo.snippet.title}`;
     }
 
-    return () => {
-      // Reset selectedVideo when description changes or on reload
-      setSelectedVideo(null);
-      // Reset title to default
-      // Cleanup function
-      document.title = "Foundation";
-    };
+    // return () => {
+    //   // Reset selectedVideo when description changes or on reload
+    //   setSelectedVideo(null);
+    //   // Reset title to default
+    //   // Cleanup function
+    //   document.title = "Foundation";
+    // };
   }, [selectedVideo, description]);
 
   return (
@@ -120,7 +120,7 @@ export default function Trending() {
   );
 }
 function ErrorMessage({ message }) {
-  return <p>{message}</p>;
+  return <p className="ml-4">{message}</p>;
 }
 function VideoItem({ video, onClick, onPlay, isPlaying }) {
   const videoId =
@@ -147,7 +147,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
               version="1.1"
               id="Capa_1"
               xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
               width="54px"
               height="54px"
               viewBox="-10.89 -10.89 384.80 384.80"
@@ -186,15 +186,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
           </button>
         </>
       ) : (
-        <iframe
-          width="100%"
-          height="200"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-          title={video.snippet.title}
-          className="rounded-lg shadow-lg hover:shadow-none focus:outline-none "
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+        <VideoEmbed videoId={video.id.videoId} title={video.snippet.title} />
       )}
       <h3 className="font-semibold absolute bottom-[-40px] left-0 w-full p-2 text-lg z-10">
         {video.snippet.title.split(" ").slice(0, 4).join(" ")}
@@ -204,9 +196,28 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
   );
 }
 
-function Loader() {
+export function VideoEmbed({
+  videoId,
+  title,
+  width = "100%",
+  height = "200",
+  className = "",
+}) {
   return (
-    <div className="flex justify-center items-center h-20">
+    <iframe
+      width={width}
+      height={height}
+      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+      title={title}
+      className={`rounded-lg shadow-none hover:shadow-none focus:outline-none ${className}`}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  );
+}
+export function Loader() {
+  return (
+    <div className="flex justify-center items-center h-20 ">
       <div className="w-8 h-8 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
     </div>
   );
