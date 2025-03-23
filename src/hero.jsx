@@ -14,7 +14,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="relative h-[75vh] flex justify-between items-center overflow-y-auto">
+    <div className="relative h-[70vh] flex justify-between items-center ">
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -28,18 +28,7 @@ export default function Hero() {
         </video>
       ) : (
         // Once the selected video is available, show the selected video
-        <VideoEmbed
-          width="100%"
-          height="100%"
-          className="rounded-none shadow-none"
-          videoId={selectedVideo.id.videoId}
-          title={selectedVideo.snippet.title}
-        />
-      )}
-
-      {/* Controls for video */}
-      {selectedVideo && (
-        <>
+        <div className="flex justify-between relative h-full w-full">
           <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
             {/* Left arrow icon */}
             <svg
@@ -55,6 +44,13 @@ export default function Hero() {
               />
             </svg>
           </div>
+          <VideoEmbed
+            width="100%"
+            height="100%"
+            className="rounded-none shadow-none"
+            videoId={selectedVideo.id.videoId}
+            title={selectedVideo.snippet.title}
+          />
           <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 bg-white text-white transition hover:bg-gray-100">
             {/* Right arrow icon */}
             <svg
@@ -70,11 +66,12 @@ export default function Hero() {
               />
             </svg>
           </div>
-        </>
+        </div>
       )}
 
-      {/* Show description or title if the selected video exists */}
+      {/* Controls for video */}
       {selectedVideo && selectedVideo.snippet && (
+        // Show description or title if the selected video exists
         <FoundationFeed
           description={description}
           title={selectedVideo.snippet.title}
@@ -85,7 +82,7 @@ export default function Hero() {
 }
 function FoundationFeed({ description, title }) {
   return (
-    <div className="w-1/2 bg-[#01212c] p-14 h-full">
+    <div className="max-w-[30%] bg-[#01212c] p-14 h-full overflow-y-auto">
       <h2 className="text-3xl font-black">{description}'s Foundation.</h2>
       <h3 className="mb-2">
         <span className="text-2xl font-bold">Sermon: </span>

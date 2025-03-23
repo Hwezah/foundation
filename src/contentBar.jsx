@@ -4,25 +4,25 @@ export default function ContentBar() {
       <div>
         <a
           href="/sermons"
-          className="bg-[#000608] text-white px-4 py-2 block rounded-lg"
+          className="bg-white text-[#000608] px-4 py-2 block rounded-lg"
         >
           Sermons
         </a>
       </div>
       <div>
-        <a href="/podcasts" className="bg-[#01222e] px-4 py-2 block rounded-lg">
+        <a href="/podcasts" className="bg-[#000608] px-4 py-2 block rounded-lg">
           Podcasts
         </a>
       </div>
       <div>
-        <a href="/music" className="bg-[#01222e] px-4 py-2 block rounded-lg">
+        <a href="/music" className="bg-[#000608] px-4 py-2 block rounded-lg">
           Music
         </a>
       </div>
       <div>
         <a
           href="/bible-studies"
-          className="bg-[#01222e] px-4 py-2 block rounded-lg"
+          className="bg-[#000608] px-4 py-2 block rounded-lg"
         >
           Bible Studies
         </a>
@@ -30,7 +30,7 @@ export default function ContentBar() {
       <div>
         <a
           href="/prayer-fellowship"
-          className="bg-[#01222e] px-4 py-2 block rounded-lg"
+          className="bg-[#000608] px-4 py-2 block rounded-lg"
         >
           Prayer & Fellowship
         </a>
@@ -38,7 +38,7 @@ export default function ContentBar() {
       <div>
         <a
           href="/live-feed"
-          className="bg-[#01222e] px-4 py-2 block rounded-lg"
+          className="bg-[#000608] px-4 py-2 block rounded-lg"
         >
           Live-feed
         </a>
@@ -46,7 +46,7 @@ export default function ContentBar() {
       <div>
         <a
           href="/Testimonies"
-          className="bg-[#01222e] px-4 py-2 block rounded-lg"
+          className="bg-[#000608] px-4 py-2 block rounded-lg"
         >
           Testimonies
         </a>

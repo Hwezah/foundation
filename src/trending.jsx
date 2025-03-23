@@ -30,7 +30,7 @@ export default function Trending() {
     }
 
     async function fetchVideos() {
-      const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
+      const API_KEY = "AIzaSyCyDM6zL56RjPY62zE30wi6TweFQXjCIYo";
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
         description
       )}&maxResults=50&type=video&key=${API_KEY}`;
@@ -207,7 +207,7 @@ export function VideoEmbed({
     <iframe
       width={width}
       height={height}
-      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
       title={title}
       className={`rounded-lg shadow-none hover:shadow-none focus:outline-none ${className}`}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

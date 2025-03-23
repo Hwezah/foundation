@@ -23,3 +23,8 @@ a {
   height: 24px;
   width: 24px;
 } */
+/* CSS to remove the shadow effect on iframe */
+/* Remove box-shadow on hover */
+iframe:hover {
+  box-shadow: none !important;
+}
