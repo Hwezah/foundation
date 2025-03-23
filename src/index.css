@@ -28,3 +28,17 @@ a {
 iframe:hover {
   box-shadow: none !important;
 }
+/* Hide scrollbar in Webkit-based browsers (Chrome, Safari, Edge) */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar in Firefox */
+.scrollbar-hidden {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar in IE and Edge */
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* Internet Explorer */
+}

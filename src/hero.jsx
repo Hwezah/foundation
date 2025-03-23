@@ -30,7 +30,7 @@ export default function Hero() {
         // Once the selected video is available, show the selected video
         <>
           <div className="block sm:hidden xl:block w-[40%] h-full">
-            <BibleStudy />
+            <Tools />
           </div>
           <div className="  relative h-[40rem] xl:h-full xl:w-full">
             <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer  rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
@@ -87,14 +87,14 @@ export default function Hero() {
 }
 function FoundationFeed({ description, title }) {
   return (
-    <div className="xl:max-w-[30%]  w-full bg-[#01212c] gap-6 xl:p-10 xl:pt-0 p-6 pt-0 h-full xl:overflow-y-auto">
+    <div className="xl:max-w-[30%]  w-full bg-[#01212c] gap-6 xl:p-10 xl:pt-0 p-6 pt-0 h-full xl:overflow-y-auto scrollbar-hidden">
       <div className=" xl:w-full ">
         <div className="sticky top-0 bg-[#01212c] pt-6 mb-4">
           <h2 className="xl:text-4xl sm:text-2xl md:text-3xl font-black mb-3">
             <span className="text-[#4a5759]">Following,</span> {description}'s
             Foundation.
           </h2>
-          <h3 className="mb-2 bg-[#4a5759] p-2 px-4">
+          <h3 className="mb-2 bg-[#4a5759] p-4">
             <span className="xl:text-3xl sm:text-2xl text-white font-extrabold mr-4">
               Sermon:
             </span>
@@ -139,15 +139,15 @@ function FoundationFeed({ description, title }) {
         </p>
       </div>
       {/* <div className="block xl:hidden w-[40%]">
-        <BibleStudy />
+        <Tools />
       </div> */}
     </div>
   );
 }
 
-function BibleStudy() {
+function Tools() {
   return (
-    <div className="bg-[#01212c] w-full  p-6 xl:p-10 h-full">
+    <div className="bg-[#01212c] w-[fit-content] p-6 xl:p-10 h-full sm:block hidden">
       <p>
         {" "}
         repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam

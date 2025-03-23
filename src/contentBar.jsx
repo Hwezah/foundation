@@ -1,6 +1,6 @@
 export default function ContentBar() {
   return (
-    <div className="flex justify-between items-center pt-4 pb-3 font-bold">
+    <div className="flex overflow-hidden overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hidden gap-4 justify-between items-center pt-4 pb-3 font-bold">
       <div>
         <a
           href="/sermons"
@@ -32,7 +32,7 @@ export default function ContentBar() {
           href="/prayer-fellowship"
           className="bg-[#000608] px-4 py-2 block rounded-lg"
         >
-          Prayer & Fellowship
+          Prayer
         </a>
       </div>
       <div>
