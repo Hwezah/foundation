@@ -87,8 +87,10 @@ function FoundationFeed({ description, title }) {
         Foundation.
       </h2>
       <h3 className="mb-2 text-[#000608]  bg-amber-400 p-2 px-4">
-        <span className="text-2xl font-extrabold mr-4">Sermon:</span>
-        <span className="font-bold">{title}...</span>
+        <span className="xl:text-3xl text-2xl font-extrabold mr-4">
+          Sermon:
+        </span>
+        <span className="font-bold xl:text-2xl text-lg">{title}...</span>
       </h3>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis,
