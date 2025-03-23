@@ -3,7 +3,7 @@ export default function SearchBar() {
   const { description, setDescription } = useSearch();
   const { strokeColor } = useSearch();
   return (
-    <div className="relative flex w-[70%] items-center rounded-lg p-1 ">
+    <div className="relative flex min-w-[35rem] items-center rounded-lg p-1 ">
       <input
         value={description}
         onChange={(e) => setDescription(e.target.value)}

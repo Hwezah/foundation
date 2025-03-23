@@ -82,15 +82,15 @@ export default function Trending() {
   }, [selectedVideo, description]);
 
   return (
-    <div>
-      <h2 className="text-4xl font-black p-12 pb-2">
+    <div className="xl:p-12 p-6">
+      <h2 className="text-4xl font-black  pb-2">
         <span className="tracking-wide">Trends.</span>
-        <p className="text-3xl text-gray-600">
-          {description ? `${description}'s foundation.` : ""}
+        <p className="text-4xl text-amber-400">
+          {description ? `${description}'s foundation,` : ""}
         </p>
       </h2>
       <ContentBar />
-      <ul className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4 items-start px-12 relative">
+      <ul className="mt-2 grid sm:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 items-start  relative">
         {isLoading ? (
           <Loader />
         ) : trends.length > 0 ? (
@@ -128,7 +128,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
   if (!videoId) return null;
 
   return (
-    <li className="mb-8 cursor-pointer relative flex" onClick={onClick}>
+    <li className="mb-8 cursor-pointer relative  flex " onClick={onClick}>
       {!isPlaying ? (
         <>
           <img
@@ -188,9 +188,8 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
       ) : (
         <VideoEmbed videoId={video.id.videoId} title={video.snippet.title} />
       )}
-      <h3 className="font-semibold absolute bottom-[-40px] left-0 w-full p-2 text-lg z-10">
-        {video.snippet.title.split(" ").slice(0, 4).join(" ")}
-        {video.snippet.title.split(" ").length > 4 ? "..." : ""}
+      <h3 className="font-semibold truncate absolute bottom-[-40px] left-0 w-full p-2 text-lg ">
+        {video.snippet.title}
       </h3>
     </li>
   );
@@ -209,7 +208,7 @@ export function VideoEmbed({
       height={height}
       src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
       title={title}
-      className={`rounded-lg shadow-none hover:shadow-none focus:outline-none ${className}`}
+      className={`rounded-lg shadow-none hover:shadow-none focus:outline-none ${className} `}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
     ></iframe>

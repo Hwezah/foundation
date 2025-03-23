@@ -14,7 +14,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="relative h-[70vh] flex justify-between items-center ">
+    <div className="relative xl:h-[70vh]  xl:flex xl:justify-between items-center ">
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -28,8 +28,8 @@ export default function Hero() {
         </video>
       ) : (
         // Once the selected video is available, show the selected video
-        <div className="flex justify-between relative h-full w-full">
-          <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
+        <div className="  relative h-[40rem] xl:h-full xl:w-full">
+          <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer  rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
             {/* Left arrow icon */}
             <svg
               height="24px"
@@ -45,9 +45,8 @@ export default function Hero() {
             </svg>
           </div>
           <VideoEmbed
-            width="100%"
             height="100%"
-            className="rounded-none shadow-none"
+            className="rounded-none shadow-none "
             videoId={selectedVideo.id.videoId}
             title={selectedVideo.snippet.title}
           />
@@ -82,11 +81,14 @@ export default function Hero() {
 }
 function FoundationFeed({ description, title }) {
   return (
-    <div className="max-w-[30%] bg-[#01212c] p-14 h-full overflow-y-auto">
-      <h2 className="text-3xl font-black">{description}'s Foundation.</h2>
-      <h3 className="mb-2">
-        <span className="text-2xl font-bold">Sermon: </span>
-        {title}...
+    <div className="xl:max-w-[30%] w-[60%]  bg-[#01212c] xl:p-p-12 p-6 xl:h-full overflow-y-auto">
+      <h2 className="text-3xl font-black mb-3">
+        <span className="text-amber-400">Following,</span> {description}'s
+        Foundation.
+      </h2>
+      <h3 className="mb-2 text-[#000608]  bg-amber-400 p-2 px-4">
+        <span className="text-2xl font-extrabold mr-4">Sermon:</span>
+        <span className="font-bold">{title}...</span>
       </h3>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis,
@@ -101,18 +103,6 @@ function FoundationFeed({ description, title }) {
         amet consectetur adipisicing elit. Reiciendis, porro repellat! Vel
         ducimus velit similique sint soluta deserunt dolor ullam dolorum odio
         optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Reiciendis, porro repellat! Vel ducimus
-        velit similique sint soluta deserunt dolor ullam dolorum odio optio?
-        Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Reiciendis, porro repellat! Vel ducimus
-        velit similique sint soluta deserunt dolor ullam dolorum odio optio?
-        Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Reiciendis, porro repellat! Vel ducimus
-        velit similique sint soluta deserunt dolor ullam dolorum odio optio?
-        Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Reiciendis, porro repellat! Vel ducimus
-        velit similique sint soluta deserunt dolor ullam dolorum odio optio?
-        Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet
         consectetur adipisicing elit. Reiciendis, porro repellat! Vel ducimus
         velit similique sint soluta deserunt dolor ullam dolorum odio optio?
         Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet

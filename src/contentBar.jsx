@@ -1,10 +1,10 @@
 export default function ContentBar() {
   return (
-    <div className="flex justify-between items-center  p-12 py-6 font-bold">
+    <div className="flex justify-between items-center pt-4 pb-3 font-bold">
       <div>
         <a
           href="/sermons"
-          className="bg-white text-[#000608] px-4 py-2 block rounded-lg"
+          className="bg-amber-400 text-[#000608] px-4 py-2 block rounded-lg"
         >
           Sermons
         </a>
