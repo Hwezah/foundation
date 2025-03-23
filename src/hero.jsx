@@ -14,7 +14,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="relative xl:h-[70vh]  xl:flex xl:justify-between items-center ">
+    <div className="relative xl:h-[70vh] xl:flex xl:justify-between items-center  ">
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -87,15 +87,15 @@ export default function Hero() {
 }
 function FoundationFeed({ description, title }) {
   return (
-    <div className="xl:max-w-[30%] w-full flex  bg-[#01212c] gap-6 xl:p-p-12 p-6 pt-0 xl:h-full overflow-y-auto">
-      <div className="w-[60%] xl:w-full ">
-        <div className="sticky top-0 bg-[#01212c] pt-6 mb-4 shadow-md">
-          <h2 className="text-3xl font-black mb-3">
+    <div className="xl:max-w-[30%]  w-full bg-[#01212c] gap-6 xl:p-10 xl:pt-0 p-6 pt-0 h-full xl:overflow-y-auto">
+      <div className=" xl:w-full ">
+        <div className="sticky top-0 bg-[#01212c] pt-6 mb-4">
+          <h2 className="xl:text-4xl sm:text-2xl md:text-3xl font-black mb-3">
             <span className="text-[#4a5759]">Following,</span> {description}'s
             Foundation.
           </h2>
           <h3 className="mb-2 bg-[#4a5759] p-2 px-4">
-            <span className="xl:text-3xl text-2xl text-white font-extrabold mr-4">
+            <span className="xl:text-3xl sm:text-2xl text-white font-extrabold mr-4">
               Sermon:
             </span>
             <span className="font-bold xl:text-2xl text-lg text-[#01212c]">
@@ -136,45 +136,18 @@ function FoundationFeed({ description, title }) {
           power of Elias, to turn the hearts of the fathers to the children, and
           the disobedient to the wisdom of the just; to make ready a people
           prepared for the Lord. 18 And Zacharias said unto the angel, Whereby
-          shall I know this? for I am an old man, and my wife well stricken in
-          years. 19 And the angel answering said unto him, I am Gabriel, that
-          stand in the presence of God; and am sent to speak unto thee, and to
-          shew thee these glad tidings. 20 And, behold, thou shalt be dumb, and
-          not able to speak, until the day that these things shall be performed,
-          because thou believest not my words, which shall be fulfilled in their
-          season. 21 And the people waited for Zacharias, and marvelled that he
-          tarried so long in the temple. 22 And when he came out, he could not
-          speak unto them: and they perceived that he had seen a vision in the
-          temple: for he beckoned unto them, and remained speechless. 23 And it
-          came to pass, that, as soon as the days of his ministration were
-          accomplished, he departed to his own house. 24 And after those days
-          his wife Elisabeth conceived, and hid herself five months, saying, 25
-          Thus hath the Lord dealt with me in the days wherein he looked on me,
-          to take away my reproach among men. The Birth of Jesus Foretold 26 And
-          in the sixth month the angel Gabriel was sent from God unto a city of
-          Galilee, named Nazareth, 27 To a virgin espoused to a man whose name
-          was Joseph, of the house of David; and the virgin’s name was Mary. 28
-          And the angel came in unto her, and said, Hail, thou that art highly
-          favoured, the Lord is with thee: blessed art thou among women. 29 And
-          when she saw him, she was troubled at his saying, and cast in her mind
-          what manner of salutation this should be. 30 And the angel said unto
-          her, Fear not, Mary: for thou hast found favour with God. 31 And,
-          behold, thou shalt conceive in thy womb, and bring forth a son, and
-          shalt call his name Jesus. 32 He shall be great, and shall be called
-          the Son of the Highest: and the Lord God shall give unto him the
-          throne of his father David: 33 And he shall reign over the house of
         </p>
       </div>
-      <div className="block xl:hidden w-[40%]">
+      {/* <div className="block xl:hidden w-[40%]">
         <BibleStudy />
-      </div>
+      </div> */}
     </div>
   );
 }
 
 function BibleStudy() {
   return (
-    <div className="bg-[#01212c] w-full  p-6  h-full">
+    <div className="bg-[#01212c] w-full  p-6 xl:p-10 h-full">
       <p>
         {" "}
         repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
