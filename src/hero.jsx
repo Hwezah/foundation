@@ -87,38 +87,82 @@ export default function Hero() {
 }
 function FoundationFeed({ description, title }) {
   return (
-    <div className="xl:max-w-[30%] w-full flex  bg-[#01212c] gap-6 xl:p-p-12 p-6 xl:h-full overflow-y-auto">
-      <div className="w-[60%] xl:w-full">
-        <h2 className="text-3xl font-black mb-3">
-          <span className="text-[#4a5759]">Following,</span> {description}'s
-          Foundation.
-        </h2>
-        <h3 className="mb-2 text-[#01212c]  bg-[#4a5759] p-2 px-4">
-          <span className="xl:text-3xl text-2xl font-extrabold mr-4">
-            Sermon:
-          </span>
-          <span className="font-bold xl:text-2xl text-lg">{title}...</span>
-        </h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis,
-          porro repellat! Vel ducimus velit similique sint soluta deserunt dolor
-          ullam dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem
-          ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, porro
-          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
-          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Reiciendis, porro
-          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
-          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Reiciendis, porro
-          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
-          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Reiciendis, porro
-          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
-          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Reiciendis, porro
-          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
-          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
-          dolor sit amet
+    <div className="xl:max-w-[30%] w-full flex  bg-[#01212c] gap-6 xl:p-p-12 p-6 pt-0 xl:h-full overflow-y-auto">
+      <div className="w-[60%] xl:w-full ">
+        <div className="sticky top-0 bg-[#01212c] pt-6 mb-4 shadow-md">
+          <h2 className="text-3xl font-black mb-3">
+            <span className="text-[#4a5759]">Following,</span> {description}'s
+            Foundation.
+          </h2>
+          <h3 className="mb-2 bg-[#4a5759] p-2 px-4">
+            <span className="xl:text-3xl text-2xl text-white font-extrabold mr-4">
+              Sermon:
+            </span>
+            <span className="font-bold xl:text-2xl text-lg text-[#01212c]">
+              {title}...
+            </span>
+          </h3>
+        </div>
+        <p className="leading-relaxed">
+          Luke 1:1-40 (KJV) 1 Forasmuch as many have taken in hand to set forth
+          in order a declaration of those things which are most surely believed
+          among us, 2 Even as they delivered them unto us, which from the
+          beginning were eyewitnesses, and ministers of the word; 3 It seemed
+          good to me also, having had perfect understanding of all things from
+          the very first, to write unto thee in order, most excellent
+          Theophilus, 4 That thou mightest know the certainty of those things,
+          wherein thou hast been instructed. The Birth of John the Baptist
+          Foretold 5 There was in the days of Herod, the king of Judaea, a
+          certain priest named Zacharias, of the course of Abia: and his wife
+          was of the daughters of Aaron, and her name was Elisabeth. 6 And they
+          were both righteous before God, walking in all the commandments and
+          ordinances of the Lord blameless. 7 And they had no child, because
+          that Elisabeth was barren, and they both were now well stricken in
+          years. 8 And it came to pass, that while he executed the priest’s
+          office before God in the order of his course, 9 According to the
+          custom of the priest’s office, his lot was to burn incense when he
+          went into the temple of the Lord. 10 And the whole multitude of the
+          people were praying without at the time of incense. 11 And there
+          appeared unto him an angel of the Lord standing on the right side of
+          the altar of incense. 12 And when Zacharias saw him, he was troubled,
+          and fear fell upon him. 13 But the angel said unto him, Fear not,
+          Zacharias: for thy prayer is heard; and thy wife Elisabeth shall bear
+          thee a son, and thou shalt call his name John. 14 And thou shalt have
+          joy and gladness; and many shall rejoice at his birth. 15 For he shall
+          be great in the sight of the Lord, and shall drink neither wine nor
+          strong drink; and he shall be filled with the Holy Ghost, even from
+          his mother’s womb. 16 And many of the children of Israel shall he turn
+          to the Lord their God. 17 And he shall go before him in the spirit and
+          power of Elias, to turn the hearts of the fathers to the children, and
+          the disobedient to the wisdom of the just; to make ready a people
+          prepared for the Lord. 18 And Zacharias said unto the angel, Whereby
+          shall I know this? for I am an old man, and my wife well stricken in
+          years. 19 And the angel answering said unto him, I am Gabriel, that
+          stand in the presence of God; and am sent to speak unto thee, and to
+          shew thee these glad tidings. 20 And, behold, thou shalt be dumb, and
+          not able to speak, until the day that these things shall be performed,
+          because thou believest not my words, which shall be fulfilled in their
+          season. 21 And the people waited for Zacharias, and marvelled that he
+          tarried so long in the temple. 22 And when he came out, he could not
+          speak unto them: and they perceived that he had seen a vision in the
+          temple: for he beckoned unto them, and remained speechless. 23 And it
+          came to pass, that, as soon as the days of his ministration were
+          accomplished, he departed to his own house. 24 And after those days
+          his wife Elisabeth conceived, and hid herself five months, saying, 25
+          Thus hath the Lord dealt with me in the days wherein he looked on me,
+          to take away my reproach among men. The Birth of Jesus Foretold 26 And
+          in the sixth month the angel Gabriel was sent from God unto a city of
+          Galilee, named Nazareth, 27 To a virgin espoused to a man whose name
+          was Joseph, of the house of David; and the virgin’s name was Mary. 28
+          And the angel came in unto her, and said, Hail, thou that art highly
+          favoured, the Lord is with thee: blessed art thou among women. 29 And
+          when she saw him, she was troubled at his saying, and cast in her mind
+          what manner of salutation this should be. 30 And the angel said unto
+          her, Fear not, Mary: for thou hast found favour with God. 31 And,
+          behold, thou shalt conceive in thy womb, and bring forth a son, and
+          shalt call his name Jesus. 32 He shall be great, and shall be called
+          the Son of the Highest: and the Lord God shall give unto him the
+          throne of his father David: 33 And he shall reign over the house of
         </p>
       </div>
       <div className="block xl:hidden w-[40%]">
@@ -130,7 +174,7 @@ function FoundationFeed({ description, title }) {
 
 function BibleStudy() {
   return (
-    <div className="bg-[#000608] w-full  p-6  h-full">
+    <div className="bg-[#01212c] w-full  p-6  h-full">
       <p>
         {" "}
         repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
