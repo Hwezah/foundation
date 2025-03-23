@@ -28,44 +28,50 @@ export default function Hero() {
         </video>
       ) : (
         // Once the selected video is available, show the selected video
-        <div className="  relative h-[40rem] xl:h-full xl:w-full">
-          <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer  rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
-            {/* Left arrow icon */}
-            <svg
-              height="24px"
-              width="24px"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M16.1795 3.26875C15.7889 2.87823 15.1558 2.87823 14.7652 3.26875L8.12078 9.91322C6.94952 11.0845 6.94916 12.9833 8.11996 14.155L14.6903 20.7304C15.0808 21.121 15.714 21.121 16.1045 20.7304C16.495 20.3399 16.495 19.7067 16.1045 19.3162L9.53246 12.7442C9.14194 12.3536 9.14194 11.7205 9.53246 11.33L16.1795 4.68297C16.57 4.29244 16.57 3.65928 16.1795 3.26875Z"
-                fill="#0F0F0F"
-              />
-            </svg>
+        <>
+          <div className="block sm:hidden xl:block w-[40%] h-full">
+            <BibleStudy />
           </div>
-          <VideoEmbed
-            height="100%"
-            className="rounded-none shadow-none "
-            videoId={selectedVideo.id.videoId}
-            title={selectedVideo.snippet.title}
-          />
-          <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 bg-white text-white transition hover:bg-gray-100">
-            {/* Right arrow icon */}
-            <svg
-              height="24px"
-              width="24px"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.82054 20.7313C8.21107 21.1218 8.84423 21.1218 9.23476 20.7313L15.8792 14.0868C17.0505 12.9155 17.0508 11.0167 15.88 9.84497L9.3097 3.26958C8.91918 2.87905 8.28601 2.87905 7.89549 3.26958C7.50497 3.6601 7.50497 4.29327 7.89549 4.68379L14.4675 11.2558C14.8581 11.6464 14.8581 12.2795 14.4675 12.67L7.82054 19.317C7.43002 19.7076 7.43002 20.3407 7.82054 20.7313Z"
-                fill="#0F0F0F"
-              />
-            </svg>
+          <div className="  relative h-[40rem] xl:h-full xl:w-full">
+            <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer  rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
+              {/* Left arrow icon */}
+              <svg
+                height="24px"
+                width="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.1795 3.26875C15.7889 2.87823 15.1558 2.87823 14.7652 3.26875L8.12078 9.91322C6.94952 11.0845 6.94916 12.9833 8.11996 14.155L14.6903 20.7304C15.0808 21.121 15.714 21.121 16.1045 20.7304C16.495 20.3399 16.495 19.7067 16.1045 19.3162L9.53246 12.7442C9.14194 12.3536 9.14194 11.7205 9.53246 11.33L16.1795 4.68297C16.57 4.29244 16.57 3.65928 16.1795 3.26875Z"
+                  fill="#0F0F0F"
+                />
+              </svg>
+            </div>
+
+            <VideoEmbed
+              height="100%"
+              className="rounded-none shadow-none "
+              videoId={selectedVideo.id.videoId}
+              title={selectedVideo.snippet.title}
+            />
+            <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 bg-white text-white transition hover:bg-gray-100">
+              {/* Right arrow icon */}
+              <svg
+                height="24px"
+                width="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.82054 20.7313C8.21107 21.1218 8.84423 21.1218 9.23476 20.7313L15.8792 14.0868C17.0505 12.9155 17.0508 11.0167 15.88 9.84497L9.3097 3.26958C8.91918 2.87905 8.28601 2.87905 7.89549 3.26958C7.50497 3.6601 7.50497 4.29327 7.89549 4.68379L14.4675 11.2558C14.8581 11.6464 14.8581 12.2795 14.4675 12.67L7.82054 19.317C7.43002 19.7076 7.43002 20.3407 7.82054 20.7313Z"
+                  fill="#0F0F0F"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Controls for video */}
@@ -81,22 +87,52 @@ export default function Hero() {
 }
 function FoundationFeed({ description, title }) {
   return (
-    <div className="xl:max-w-[30%] w-[60%]  bg-[#01212c] xl:p-p-12 p-6 xl:h-full overflow-y-auto">
-      <h2 className="text-3xl font-black mb-3">
-        <span className="text-amber-400">Following,</span> {description}'s
-        Foundation.
-      </h2>
-      <h3 className="mb-2 text-[#000608]  bg-amber-400 p-2 px-4">
-        <span className="xl:text-3xl text-2xl font-extrabold mr-4">
-          Sermon:
-        </span>
-        <span className="font-bold xl:text-2xl text-lg">{title}...</span>
-      </h3>
+    <div className="xl:max-w-[30%] w-full flex  bg-[#01212c] gap-6 xl:p-p-12 p-6 xl:h-full overflow-y-auto">
+      <div className="w-[60%] xl:w-full">
+        <h2 className="text-3xl font-black mb-3">
+          <span className="text-[#4a5759]">Following,</span> {description}'s
+          Foundation.
+        </h2>
+        <h3 className="mb-2 text-[#01212c]  bg-[#4a5759] p-2 px-4">
+          <span className="xl:text-3xl text-2xl font-extrabold mr-4">
+            Sermon:
+          </span>
+          <span className="font-bold xl:text-2xl text-lg">{title}...</span>
+        </h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis,
+          porro repellat! Vel ducimus velit similique sint soluta deserunt dolor
+          ullam dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem
+          ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, porro
+          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
+          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
+          dolor sit amet consectetur adipisicing elit. Reiciendis, porro
+          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
+          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
+          dolor sit amet consectetur adipisicing elit. Reiciendis, porro
+          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
+          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
+          dolor sit amet consectetur adipisicing elit. Reiciendis, porro
+          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
+          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
+          dolor sit amet consectetur adipisicing elit. Reiciendis, porro
+          repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
+          dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
+          dolor sit amet
+        </p>
+      </div>
+      <div className="block xl:hidden w-[40%]">
+        <BibleStudy />
+      </div>
+    </div>
+  );
+}
+
+function BibleStudy() {
+  return (
+    <div className="bg-[#000608] w-full  p-6  h-full">
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis,
-        porro repellat! Vel ducimus velit similique sint soluta deserunt dolor
-        ullam dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, porro
+        {" "}
         repellat! Vel ducimus velit similique sint soluta deserunt dolor ullam
         dolorum odio optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum
         dolor sit amet consectetur adipisicing elit. Reiciendis, porro repellat!
@@ -105,12 +141,6 @@ function FoundationFeed({ description, title }) {
         amet consectetur adipisicing elit. Reiciendis, porro repellat! Vel
         ducimus velit similique sint soluta deserunt dolor ullam dolorum odio
         optio? Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Reiciendis, porro repellat! Vel ducimus
-        velit similique sint soluta deserunt dolor ullam dolorum odio optio?
-        Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Reiciendis, porro repellat! Vel ducimus
-        velit similique sint soluta deserunt dolor ullam dolorum odio optio?
-        Assumenda autem non nulla. Id, ex in? Lorem ipsum dolor sit amet
       </p>
     </div>
   );

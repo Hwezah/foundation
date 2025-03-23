@@ -85,7 +85,7 @@ export default function Trending() {
     <div className="xl:p-12 p-6">
       <h2 className="text-4xl font-black  pb-2">
         <span className="tracking-wide">Trends.</span>
-        <p className="text-4xl text-amber-400">
+        <p className="text-4xl text-white">
           {description ? `${description}'s foundation,` : ""}
         </p>
       </h2>
