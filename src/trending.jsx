@@ -83,7 +83,7 @@ export default function Trending() {
 
   return (
     <div className="xl:p-10 md:p-4 lg:p-6 p-4">
-      <h2 className="xl:text-4xl sm:text-2xl md:text-3xl font-black tracking-wide pt-4">
+      <h2 className="xl:text-4xl sm:text-2xl md:text-3xl font-black tracking-wide pt-4 lg:pb-2">
         Trends. {description ? `${description}'s foundation,` : ""}
       </h2>
       <ContentBar />
