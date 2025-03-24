@@ -82,12 +82,9 @@ export default function Trending() {
   }, [selectedVideo, description]);
 
   return (
-    <div className="xl:p-12 p-6">
-      <h2 className="xl:text-4xl sm:text-2xl md:text-3xl font-black sm:pb-0 pb-2">
-        <span className="tracking-wide">Trends.</span>
-        <p className="xl:text-4xl sm:text-2xl md:text-3xl text-white md:hidden lg:block">
-          {description ? `${description}'s foundation,` : ""}
-        </p>
+    <div className="xl:p-10 md:p-4 lg:p-6 p-4">
+      <h2 className="xl:text-4xl sm:text-2xl md:text-3xl font-black tracking-wide pt-4">
+        Trends. {description ? `${description}'s foundation,` : ""}
       </h2>
       <ContentBar />
       <ul className="mt-2 grid sm:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 items-start  relative">
@@ -128,7 +125,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
   if (!videoId) return null;
 
   return (
-    <li className="mb-8 cursor-pointer relative  flex " onClick={onClick}>
+    <li className="mb-8  cursor-pointer relative flex " onClick={onClick}>
       {!isPlaying ? (
         <>
           <img
