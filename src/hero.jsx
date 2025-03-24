@@ -94,7 +94,7 @@ function FoundationFeed({ description, title }) {
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
             <spa>{description}'s Foundation.</spa>
           </h2>
-          <div className="flex justify-between bg-[#4a5759] mb-2 p-4 lg:p-6 items-center">
+          <div className="flex justify-between bg-[#4a5759] mb-2 p-4 xl:p-6 items-center">
             <h3>
               <span className="xl:text-3xl sm:text-2xl text-white font-extrabold mr-4">
                 SERMON:
