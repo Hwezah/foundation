@@ -10,9 +10,12 @@ export function SearchProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [trends, setTrends] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [bibleQuery, setBibleQuery] = useState("");
   return (
     <SearchContext.Provider
       value={{
+        bibleQuery,
+        setBibleQuery,
         selectedVideo,
         setSelectedVideo,
         description,

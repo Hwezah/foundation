@@ -1,12 +1,15 @@
 // import { strokeColor } from "./App";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearch } from "./SearchContext";
 import { Loader } from "./trending";
 import { VideoEmbed } from "./trending";
+import { BibleSearch } from "./Bible";
+
 export default function Hero() {
   const { isLoading, setIsLoading } = useSearch();
   const { selectedVideo } = useSearch();
   const { description } = useSearch();
+  const [isFeedVisible, setIsFeedVisible] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -14,7 +17,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="relative h-[75vh] xl:flex xl:justify-between items-center overflow-hidden ">
+    <div className="relative xl:h-[70vh] h-fit xl:flex xl:justify-between items-center scrollbar-hidden overflow-hidden">
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -30,11 +33,10 @@ export default function Hero() {
         // Once the selected video is available, show the selected video
         <>
           <div className="hidden xl:block h-full ">
-            <Tools />
+            <Tools setIsFeedVisible={setIsFeedVisible} />
           </div>
           <div className="  relative h-[40rem] xl:h-full xl:w-full">
-            <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer  rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
-              {/* Left arrow icon */}
+            {/* <div className="absolute top-1/2 left-10 -translate-y-1/2 transform cursor-pointer  rounded-full bg-white p-4 text-white transition hover:bg-gray-100">
               <svg
                 height="24px"
                 width="24px"
@@ -47,7 +49,7 @@ export default function Hero() {
                   fill="#0F0F0F"
                 />
               </svg>
-            </div>
+            </div> */}
 
             <VideoEmbed
               height="100%"
@@ -55,8 +57,7 @@ export default function Hero() {
               videoId={selectedVideo.id.videoId}
               title={selectedVideo.snippet.title}
             />
-            <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 bg-white text-white transition hover:bg-gray-100">
-              {/* Right arrow icon */}
+            {/* <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 bg-white text-white transition hover:bg-gray-100">
               <svg
                 height="24px"
                 width="24px"
@@ -69,7 +70,7 @@ export default function Hero() {
                   fill="#0F0F0F"
                 />
               </svg>
-            </div>
+            </div> */}
           </div>
         </>
       )}
@@ -78,6 +79,8 @@ export default function Hero() {
       {selectedVideo && selectedVideo.snippet && (
         // Show description or title if the selected video exists
         <FoundationFeed
+          isFeedVisible={isFeedVisible}
+          setIsFeedVisible={setIsFeedVisible}
           description={description}
           title={selectedVideo.snippet.title}
         />
@@ -85,122 +88,78 @@ export default function Hero() {
     </div>
   );
 }
-function FoundationFeed({ description, title }) {
+function FoundationFeed({
+  description,
+  title,
+  isFeedVisible,
+  setIsFeedVisible,
+}) {
   return (
-    <div className="xl:max-w-[30%]  w-full bg-[#01212c] gap-6  xl:pt-0 xl:p-6 h-full overflow-y-auto scrollbar-hidden">
+    <div
+      className={`xl:max-w-[30%] w-full bg-[#01212c] gap-6 xl:pt-0 xl:p-6 xl:h-full h-fit ${
+        isFeedVisible ? "overflow-y-auto scrollbar-hidden" : ""
+      }`}
+    >
+      {" "}
       <div className=" xl:w-full ">
         <div className="sticky top-0 bg-[#01212c] xl:pt-6 mb-4">
-          <h2 className="hidden xl:block xl:text-4xl sm:text-2xl md:text-3xl font-black mb-3 pt-6  px-4 pb-0  xl:p-0">
+          <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 pt-6  px-4   xl:p-0">
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
             <spa>{description}'s Foundation.</spa>
           </h2>
-          <div className="flex justify-between bg-[#4a5759] mb-2 p-4 xl:p-6 items-center">
-            <h3>
-              <span className="xl:text-3xl sm:text-2xl text-white font-extrabold mr-4">
-                SERMON:
+          <div className="flex justify-between bg-[#4a5759] px-4 py-3 xl:px-6 xl:py-4 items-center">
+            <h3 className="w-3/4 xl:w-full truncate xl:truncate-two-lines">
+              <span className="text-2xl text-white font-extrabold mr-3">
+                On:
               </span>
-              <span className="font-bold xl:text-2xl lg:text-lg text-[#01212c] ">
+              <span className="  font-bold lg:text-lg  text-[#01212c] ">
                 {title}...
               </span>
             </h3>
             <div className="xl:hidden">
-              <Tools />
+              <Tools setIsFeedVisible={setIsFeedVisible} />
             </div>
           </div>
         </div>
-        <p className="leading-relaxed px-4 lg:px-6 xl:px-0">
-          Luke 1:1-40 (KJV) 1 Forasmuch as many have taken in hand to set forth
-          in order a declaration of those things which are most surely believed
-          among us, 2 Even as they delivered them unto us, which from the
-          beginning were eyewitnesses, and ministers of the word; 3 It seemed
-          good to me also, having had perfect understanding of all things from
-          the very first, to write unto thee in order, most excellent
-          Theophilus, 4 That thou mightest know the certainty of those things,
-          wherein thou hast been instructed. The Birth of John the Baptist
-          Foretold 5 There was in the days of Herod, the king of Judaea, a
-          certain priest named Zacharias, of the course of Abia: and his wife
-          was of the daughters of Aaron, and her name was Elisabeth. 6 And they
-          were both righteous before God, walking in all the commandments and
-          ordinances of the Lord blameless. 7 And they had no child, because
-          that Elisabeth was barren, and they both were now well stricken in
-          years. 8 And it came to pass, that while he executed the priest’s
-          office before God in the order of his course, 9 According to the
-          custom of the priest’s office, his lot was to burn incense when he
-          went into the temple of the Lord. 10 And the whole multitude of the
-          people were praying without at the time of incense. 11 And there
-          appeared unto him an angel of the Lord standing on the right side of
-          the altar of incense. 12 And when Zacharias saw him, he was troubled,
-          and fear fell upon him. 13 But the angel said unto him, Fear not,
-          Zacharias: for thy prayer is heard; and thy wife Elisabeth shall bear
-          thee a son, and thou shalt call his name John. 14 And thou shalt have
-          joy and gladness; and many shall rejoice at his birth. 15 For he shall
-          be great in the sight of the Lord, and shall drink neither wine nor
-          strong drink; and he shall be filled with the Holy Ghost, even from
-          his mother’s womb. 16 And many of the children of Israel shall he turn
-          to the Lord their God. 17 And he shall go before him in the spirit and
-          power of Elias, to turn the hearts of the fathers to the children, and
-          the disobedient to the wisdom of the just; to make ready a people
-          prepared for the Lord. 18 And Zacharias said unto the angel, Whereby
-          wherein thou hast been instructed. The Birth of John the Baptist
-          Foretold 5 There was in the days of Herod, the king of Judaea, a
-          certain priest named Zacharias, of the course of Abia: and his wife
-          was of the daughters of Aaron, and her name was Elisabeth. 6 And they
-          were both righteous before God, walking in all the commandments and
-          ordinances of the Lord blameless. 7 And they had no child, because
-          that Elisabeth was barren, and they both were now well stricken in
-          years. 8 And it came to pass, that while he executed the priest’s
-          office before God in the order of his course, 9 According to the
-          custom of the priest’s office, his lot was to burn incense when he
-          went into the temple of the Lord. 10 And the whole multitude of the
-          people were praying without at the time of incense. 11 And there
-          appeared unto him an angel of the Lord standing on the right side of
-          the altar of incense. 12 And when Zacharias saw him, he was troubled,
-          and fear fell upon him. 13 But the angel said unto him, Fear not,
-          Zacharias: for thy prayer is heard; and thy wife Elisabeth shall bear
-          thee a son, and thou shalt call his name John. 14 And thou shalt have
-          joy and gladness; and many shall rejoice at his birth. 15 For he shall
-          be great in the sight of the Lord, and shall drink neither wine nor
-          strong drink; and he shall be filled with the Holy Ghost, even from
-          his mother’s womb. 16 And many of the children of Israel shall he turn
-          to the Lord their God. 17 And he shall go before him in the spirit and
-          power of Elias, to turn the hearts of the fathers to the children, and
-          the disobedient to the wisdom of the just; to make ready a people
-          prepared for the Lord. 18 And Zacharias said unto the angel, Whereby
-          was of the daughters of Aaron, and her name was Elisabeth. 6 And they
-          were both righteous before God, walking in all the commandments and
-          ordinances of the Lord blameless. 7 And they had no child, because
-          that Elisabeth was barren, and they both were now well stricken in
-          years. 8 And it came to pass, that while he executed the priest’s
-          office before God in the order of his course, 9 According to the
-          custom of the priest’s office, his lot was to burn incense when he
-          went into the temple of the Lord. 10 And the whole multitude of the
-          people were praying without at the time of incense. 11 And there
-          appeared unto him an angel of the Lord standing on the right side of
-          the altar of incense. 12 And when Zacharias saw him, he was troubled,
-          and fear fell upon him. 13 But the angel said unto him, Fear not,
-          Zacharias: for thy prayer is heard; and thy wife Elisabeth shall bear
-          thee a son, and thou shalt call his name John. 14 And thou shalt have
-          joy and gladness; and many shall rejoice at his birth. 15 For he shall
-          be great in the sight of the Lord, and shall drink neither wine nor
-          strong drink; and he shall be filled with the Holy Ghost, even from
-          his mother’s womb. 16 And many of the children of Israel shall he turn
-          to the Lord their God. 17 And he shall go before him in the spirit and
-          power of Elias, to turn the hearts of the fathers to the children, and
-          the disobedient to the wisdom of the just; to make ready a people
-          prepared for the Lord. 18 And Zacharias said unto the angel, Whereby
-        </p>
+        {isFeedVisible && <Feed />}
       </div>
-      {/* <div className="block xl:hidden w-[40%]">
-        <Tools />
-      </div> */}
     </div>
   );
 }
 
-function Tools() {
+function Feed({ className }) {
+  return (
+    <div className={className}>
+      <div className="leading-relaxed px-4 lg:px-6 xl:px-0 pb-4">
+        <BibleSearch />
+        Luke 1:1-40 (KJV) 1 Forasmuch as many have taken in hand to set forth in
+        order a declaration of those things which are most surely believed among
+        us, 2 Even as they delivered them unto us, which from the beginning were
+        eyewitnesses, and ministers of the word; 3 It seemed good to me also,
+        having had perfect understanding of all things from the very first, to
+        write unto thee in order, most excellent Theophilus, 4 That thou
+        mightest know the certainty of those things, wherein thou hast been
+        instructed. The Birth of John the Baptist Foretold 5 There was in the
+        days of Herod, the king of Judaea, a certain priest named Zacharias, of
+        the course of Abia: and his wife was of the daughters of Aaron, and her
+        name was Elisabeth. 6 And they were both righteous before God, walking
+        in all the commandments and ordinances of the Lord blameless. 7 And they
+        had no child, because that Elisabeth was barren, and they both were now
+        well stricken in years. 8 And it came to pass, that while he executed
+        the priest’s office before God in the order of his course, 9 According
+        to the custom of the priest’s office, his lot was to burn incense when
+        he went into the temple of the Lord. 10 And the whole multitude of the
+        people were praying without at the time of incense. 11 And there
+      </div>
+    </div>
+  );
+}
+
+function Tools({ setIsFeedVisible }) {
   return (
     <div className="xl:bg-[#01212c] xl:p-4 h-full flex gap-2 xl:flex-col xl:justify-between">
       <svg
+        onClick={() => setIsFeedVisible((prev) => !prev)}
         height={"44px"}
         width={"44px"}
         viewBox="0 0 24 24"
@@ -231,6 +190,7 @@ function Tools() {
         </g>
       </svg>
       <svg
+        onClick={() => setIsFeedVisible((prev) => !prev)}
         height={"44px"}
         width={"44px"}
         viewBox="0 0 24 24"

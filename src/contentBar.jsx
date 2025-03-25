@@ -1,6 +1,6 @@
 export default function ContentBar() {
   return (
-    <div className="flex overflow-hidden overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hidden gap-4 justify-between items-center pt-4 pb-3 font-bold">
+    <div className="flex overflow-hidden overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hidden gap-4 justify-between items-center md:pt-3 pt-2 pb-3 font-bold">
       <div>
         <a
           href="/sermons"

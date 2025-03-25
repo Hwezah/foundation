@@ -7,7 +7,7 @@ export default function SearchBar() {
       <input
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="flex w-[400px] flex-1 rounded-full  bg-[#01222e] px-6 py-3 transition-all duration-300 focus:w-full font-bold text-gray-500 focus:outline-none"
+        className="flex w-[350px] flex-1 rounded-full  bg-[#01222e] px-6 py-3 transition-all duration-300 focus:w-[400px] font-bold text-gray-500 focus:outline-none"
         placeholder="Search..."
       />
       <button className="absolute top-1/2 right-6 -translate-y-1/2 rounded-full p-2 text-white transition">

@@ -30,7 +30,7 @@ export default function Trending() {
     }
 
     async function fetchVideos() {
-      const API_KEY = "AIzaSyCyDM6zL56RjPY62zE30wi6TweFQXjCIYo";
+      const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
         description
       )}&maxResults=50&type=video&key=${API_KEY}`;
@@ -83,7 +83,7 @@ export default function Trending() {
 
   return (
     <div className="xl:p-10 md:p-4 lg:p-6 p-4">
-      <h2 className="xl:text-4xl sm:text-2xl md:text-3xl font-black tracking-wide pt-4 lg:pb-2">
+      <h2 className="text-2xl md:text-3xl font-black tracking-wide lg:pb-2">
         Trends. {description ? `${description}'s foundation,` : ""}
       </h2>
       <ContentBar />
@@ -185,7 +185,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
       ) : (
         <VideoEmbed videoId={video.id.videoId} title={video.snippet.title} />
       )}
-      <h3 className="font-semibold truncate absolute bottom-[-40px] left-0 w-full p-2 text-lg ">
+      <h3 className="truncate absolute bottom-[-40px] max-w-full left-0 w-full p-2 text-lg ">
         {video.snippet.title}
       </h3>
     </li>
