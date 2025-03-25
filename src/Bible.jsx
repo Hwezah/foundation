@@ -1,23 +1,30 @@
 import { useSearch } from "./SearchContext";
 import { useState, useEffect } from "react";
 import { strokeColor } from "./constants";
+import { Feed } from "./hero";
 
 export default function Bible() {
-  const { bibleQuery, setBibleQuery } = useSearch();
+  const {
+    bibleQuery,
+    setBibleQuery,
+    version,
+    book,
+    chapter,
+    isLoading,
+    setIsLoading,
+  } = useSearch();
   const [error, setError] = useState("");
-  const { version, book, chapter } = useSearch();
-  const { isLoading, setIsLoading } = useSearch();
 
   useEffect(() => {
+    const { version, book, chapter } = bibleQuery;
     const controller = new AbortController();
-    if (bibleQuery.trim() === "") {
-      // setTrends([]);
-      // localStorage.removeItem("trends");
-      return;
-    }
+    // if (bibleQuery.trim() === "") {
+
+    //   return;
+    // }
     async function fetchQuery() {
       // const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
-      const URL = `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}/books/${book}/chapters/${chapter}.json`;
+      const URL = `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${"en-kjv"}/books/${"matthew"}/chapters/${1}.json`;
 
       try {
         setIsLoading(true);
@@ -25,18 +32,23 @@ export default function Bible() {
         const response = await fetch(URL, { signal: controller.signal });
         if (!response.ok) {
           throw new Error(
-            ":) Something went wrong fetching your foundation, please try again."
+            ":) Something went wrong fetching your search, please try again."
           );
         }
         const data = await response.json();
         console.log(data);
-        if (data.response === "False") {
-          throw new Error(
-            ":) Cannot find requested foundation, try another search."
-          );
+        if (data && data.data) {
+          // For example, set the first verse data to the state
+          setBibleQuery({
+            book: data.data.book,
+            chapter: data.data.chapter,
+            verse: data.data.verse,
+            text: data.data.text,
+          });
+          // This hook will run whenever bibleQuery changes
+        } else {
+          throw new Error(":) Cannot find your request, try another search.");
         }
-        setTrends(data.items || []);
-        localStorage.setItem("trends", JSON.stringify(data.items));
       } catch (err) {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -50,7 +62,9 @@ export default function Bible() {
     return () => {
       controller.abort();
     };
-  }, [description, version, book, chapter]);
+  }, [bibleQuery, version, book, chapter, setIsLoading]);
+
+  return <Feed />;
 }
 
 export function BibleSearch() {

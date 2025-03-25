@@ -4,7 +4,7 @@ import { useSearch } from "./SearchContext";
 import { Loader } from "./trending";
 import { VideoEmbed } from "./trending";
 import { BibleSearch } from "./Bible";
-
+import Bible from "./Bible";
 export default function Hero() {
   const { isLoading, setIsLoading } = useSearch();
   const { selectedVideo } = useSearch();
@@ -105,7 +105,7 @@ function FoundationFeed({
         <div className="sticky top-0 bg-[#01212c] xl:pt-6 mb-4">
           <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 pt-6  px-4   xl:p-0">
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
-            <spa>{description}'s Foundation.</spa>
+            <span>{description}'s Foundation.</span>
           </h2>
           <div className="flex justify-between bg-[#4a5759] px-4 py-3 xl:px-6 xl:py-4 items-center">
             <h3 className="w-3/4 xl:w-full truncate xl:truncate-two-lines">
@@ -121,35 +121,26 @@ function FoundationFeed({
             </div>
           </div>
         </div>
-        {isFeedVisible && <Feed />}
+        {isFeedVisible && <Bible />}
       </div>
     </div>
   );
 }
 
-function Feed({ className }) {
+export function Feed({ className }) {
+  const { bibleQuery } = useSearch();
+  // if (!bibleQuery.book || !bibleQuery.chapter || !bibleQuery.verse) {
+  //   return <p>No results found</p>; // No results or loading state
+  // }
+  console.log(bibleQuery.book);
   return (
     <div className={className}>
       <div className="leading-relaxed px-4 lg:px-6 xl:px-0 pb-4">
         <BibleSearch />
-        Luke 1:1-40 (KJV) 1 Forasmuch as many have taken in hand to set forth in
-        order a declaration of those things which are most surely believed among
-        us, 2 Even as they delivered them unto us, which from the beginning were
-        eyewitnesses, and ministers of the word; 3 It seemed good to me also,
-        having had perfect understanding of all things from the very first, to
-        write unto thee in order, most excellent Theophilus, 4 That thou
-        mightest know the certainty of those things, wherein thou hast been
-        instructed. The Birth of John the Baptist Foretold 5 There was in the
-        days of Herod, the king of Judaea, a certain priest named Zacharias, of
-        the course of Abia: and his wife was of the daughters of Aaron, and her
-        name was Elisabeth. 6 And they were both righteous before God, walking
-        in all the commandments and ordinances of the Lord blameless. 7 And they
-        had no child, because that Elisabeth was barren, and they both were now
-        well stricken in years. 8 And it came to pass, that while he executed
-        the priest’s office before God in the order of his course, 9 According
-        to the custom of the priest’s office, his lot was to burn incense when
-        he went into the temple of the Lord. 10 And the whole multitude of the
-        people were praying without at the time of incense. 11 And there
+        <p>
+          {bibleQuery.book} {bibleQuery.chapter}:{bibleQuery.verse} -{" "}
+          {bibleQuery.text}
+        </p>
       </div>
     </div>
   );
@@ -166,11 +157,11 @@ function Tools({ setIsFeedVisible }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g
           id="SVGRepo_tracerCarrier"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         ></g>
         <g id="SVGRepo_iconCarrier">
           {" "}
@@ -198,11 +189,11 @@ function Tools({ setIsFeedVisible }) {
         xmlns="http://www.w3.org/2000/svg"
         stroke="[#01212c]"
       >
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g
           id="SVGRepo_tracerCarrier"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         ></g>
         <g id="SVGRepo_iconCarrier">
           {" "}
@@ -212,8 +203,8 @@ function Tools({ setIsFeedVisible }) {
             fill="#fff"
           ></path>{" "}
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M2 14C2 11.1997 2 9.79961 2.54497 8.73005C3.02433 7.78924 3.78924 7.02433 4.73005 6.54497C5.79961 6 7.19974 6 10 6H14C16.8003 6 18.2004 6 19.27 6.54497C20.2108 7.02433 20.9757 7.78924 21.455 8.73005C22 9.79961 22 11.1997 22 14C22 16.8003 22 18.2004 21.455 19.27C20.9757 20.2108 20.2108 20.9757 19.27 21.455C18.2004 22 16.8003 22 14 22H10C7.19974 22 5.79961 22 4.73005 21.455C3.78924 20.9757 3.02433 20.2108 2.54497 19.27C2 18.2004 2 16.8003 2 14ZM12.75 11C12.75 10.5858 12.4142 10.25 12 10.25C11.5858 10.25 11.25 10.5858 11.25 11V15.1893L10.0303 13.9697C9.73744 13.6768 9.26256 13.6768 8.96967 13.9697C8.67678 14.2626 8.67678 14.7374 8.96967 15.0303L11.4697 17.5303C11.6103 17.671 11.8011 17.75 12 17.75C12.1989 17.75 12.3897 17.671 12.5303 17.5303L15.0303 15.0303C15.3232 14.7374 15.3232 14.2626 15.0303 13.9697C14.7374 13.6768 14.2626 13.6768 13.9697 13.9697L12.75 15.1893V11Z"
             fill="#01212c"
           ></path>{" "}

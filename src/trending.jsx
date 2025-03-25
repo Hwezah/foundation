@@ -45,7 +45,7 @@ export default function Trending() {
           );
         }
         const data = await response.json();
-        console.log(data);
+
         if (data.response === "False")
           throw new Error(
             ":) Cannot find requested foundation, try another search."
@@ -148,16 +148,16 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
               width="54px"
               height="54px"
               viewBox="-10.89 -10.89 384.80 384.80"
-              xml:space="preserve"
+              xmlSpace="preserve"
               fill="#fff"
               stroke="#fff"
-              stroke-width="9.801675"
+              strokeWidth="9.801675"
             >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g
                 id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
