@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import ContentBar from "./contentBar";
 import { useSearch } from "./SearchContext";
 
 export default function Trending() {
@@ -19,7 +18,7 @@ export default function Trending() {
         setTrends([]);
       }
     }
-  }, []);
+  }, [setTrends]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -30,7 +29,7 @@ export default function Trending() {
     }
 
     async function fetchVideos() {
-      const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
+      const API_KEY = "AIzaSyCyDM6zL56RjPY62zE30wi6TweFQXjCIYo";
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
         description
       )}&maxResults=50&type=video&key=${API_KEY}`;
@@ -65,7 +64,7 @@ export default function Trending() {
     return () => {
       controller.abort();
     };
-  }, [description, setIsLoading]);
+  }, [description, setIsLoading, setTrends]);
 
   useEffect(() => {
     if (selectedVideo) {
@@ -185,7 +184,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
       ) : (
         <VideoEmbed videoId={video.id.videoId} title={video.snippet.title} />
       )}
-      <h3 className="truncate absolute bottom-[-40px] max-w-full left-0 w-full p-2 text-lg ">
+      <h3 className="truncate absolute bottom-[-40px]  max-w-full left-0 w-full p-2  ">
         {video.snippet.title}
       </h3>
     </li>
@@ -215,6 +214,63 @@ export function Loader() {
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="w-8 h-8 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+    </div>
+  );
+}
+
+function ContentBar() {
+  return (
+    <div className="flex overflow-hidden overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hidden gap-4 justify-between items-center md:pt-3 pt-2 pb-3 font-bold">
+      <div>
+        <a
+          href="/sermons"
+          className="bg-amber-400 text-[#000608] px-4 py-2 block rounded-lg"
+        >
+          Sermons
+        </a>
+      </div>
+      <div>
+        <a href="/podcasts" className="bg-[#000608] px-4 py-2 block rounded-lg">
+          Podcasts
+        </a>
+      </div>
+      <div>
+        <a href="/music" className="bg-[#000608] px-4 py-2 block rounded-lg">
+          Music
+        </a>
+      </div>
+      <div>
+        <a
+          href="/bible-studies"
+          className="bg-[#000608] px-4 py-2 block rounded-lg"
+        >
+          Bible Studies
+        </a>
+      </div>
+      <div>
+        <a
+          href="/prayer-fellowship"
+          className="bg-[#000608] px-4 py-2 block rounded-lg"
+        >
+          Prayer
+        </a>
+      </div>
+      <div>
+        <a
+          href="/live-feed"
+          className="bg-[#000608] px-4 py-2 block rounded-lg"
+        >
+          Live-feed
+        </a>
+      </div>
+      <div>
+        <a
+          href="/Testimonies"
+          className="bg-[#000608] px-4 py-2 block rounded-lg"
+        >
+          Testimonies
+        </a>
+      </div>
     </div>
   );
 }

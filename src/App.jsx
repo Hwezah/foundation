@@ -2,7 +2,7 @@ import Hero from "./hero";
 import Trending from "./trending";
 import { SearchProvider } from "./SearchContext";
 import Navigation from "./navigation";
-import Bible from "./Bible";
+
 export default function App() {
   return (
     <SearchProvider>
@@ -10,7 +10,6 @@ export default function App() {
         <Navigation />
         <Hero />
         <Trending />
-        <Bible />
       </div>
     </SearchProvider>
   );

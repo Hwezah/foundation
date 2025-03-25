@@ -1,7 +1,7 @@
 import { useSearch } from "./SearchContext";
 import { useState, useEffect } from "react";
-import { strokeColor } from "./constants";
-import { Feed } from "./hero";
+import { Feed } from "./foundationUtilities";
+import { Loader } from "./trending";
 
 export default function Bible() {
   const {
@@ -62,38 +62,13 @@ export default function Bible() {
     return () => {
       controller.abort();
     };
-  }, [bibleQuery, version, book, chapter, setIsLoading]);
+  }, [version, book, chapter, setIsLoading, setBibleQuery]);
 
-  return <Feed />;
-}
-
-export function BibleSearch() {
-  const { bibleQuery, setBibleQuery } = useSearch();
   return (
-    <div className="relative flex items-center ">
-      <input
-        value={bibleQuery}
-        onChange={(e) => setBibleQuery(e.target.value)}
-        className="flex flex-1 bg-transparent p-1 transition-all duration-300 font-bold text-gray-500 focus:outline-none"
-        placeholder="Search by BibleVersion,Chapter,Verse..."
-        style={{ caretShape: "bar", caret: "5px" }}
-      />
-      <button className="absolute top-1/2 right-6 -translate-y-1/2  py-2 text-white transition">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke={strokeColor}
-          className="h-5 w-5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010 17.5 7.5 7.5 0 0016.65 16.65z"
-          />
-        </svg>
-      </button>
-    </div>
+    <>
+      {isLoading && <Loader />}
+      {error && <Feed />}
+      <Feed />
+    </>
   );
 }

@@ -11,9 +11,13 @@ export function SearchProvider({ children }) {
   const [trends, setTrends] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [bibleQuery, setBibleQuery] = useState("");
+  const [isFeedVisible, setIsFeedVisible] = useState(false);
+
   return (
     <SearchContext.Provider
       value={{
+        isFeedVisible,
+        setIsFeedVisible,
         bibleQuery,
         setBibleQuery,
         selectedVideo,
