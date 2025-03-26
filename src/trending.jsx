@@ -138,10 +138,10 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
             className="rounded-lg shadow-lg w-full h-[200px] object-cover"
           />
           <button
-            onClick={() => {
-              onPlay();
-              // Prevent triggering `onClick` when clicking the button
-            }}
+            // onClick={() => {
+            //   onPlay();
+            //   // Prevent triggering `onClick` when clicking the button
+            // }}
             className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex items-center justify-center rounded-full bg-opacity-50 p-4"
           >
             <svg
