@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSearch } from "./SearchContext";
-
 export default function Trending() {
-  const { description, isLoading, setIsLoading } = useSearch();
-  const { trends, setTrends } = useSearch();
-  const { selectedVideo, setSelectedVideo } = useSearch();
+  const {
+    description,
+    isLoading,
+    setIsLoading,
+    selectedVideo,
+    setSelectedVideo,
+    trends,
+    setTrends,
+  } = useSearch();
   const [playingVideoId, setPlayingVideoId] = useState(null);
   const [error, setError] = useState("");
 
@@ -18,7 +23,7 @@ export default function Trending() {
         setTrends([]);
       }
     }
-  }, [setTrends]);
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -29,7 +34,7 @@ export default function Trending() {
     }
 
     async function fetchVideos() {
-      const API_KEY = "AIzaSyCyDM6zL56RjPY62zE30wi6TweFQXjCIYo";
+      const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
         description
       )}&maxResults=50&type=video&key=${API_KEY}`;
@@ -64,7 +69,7 @@ export default function Trending() {
     return () => {
       controller.abort();
     };
-  }, [description, setIsLoading, setTrends]);
+  }, [description, setIsLoading]);
 
   useEffect(() => {
     if (selectedVideo) {
@@ -184,7 +189,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
       ) : (
         <VideoEmbed videoId={video.id.videoId} title={video.snippet.title} />
       )}
-      <h3 className="truncate absolute bottom-[-40px]  max-w-full left-0 w-full p-2  ">
+      <h3 className="truncate absolute bottom-[-40px] max-w-full left-0 w-full p-2 text-lg ">
         {video.snippet.title}
       </h3>
     </li>
@@ -210,6 +215,7 @@ export function VideoEmbed({
     ></iframe>
   );
 }
+
 export function Loader() {
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

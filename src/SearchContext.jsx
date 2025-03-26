@@ -9,7 +9,7 @@ export function SearchProvider({ children }) {
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [trends, setTrends] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState();
   const [bibleQuery, setBibleQuery] = useState("");
   const [isFeedVisible, setIsFeedVisible] = useState(false);
 

@@ -1,6 +1,5 @@
 import { useSearch } from "./SearchContext";
 import Bible from "./Bible";
-import { strokeColor } from "./constants";
 export default function FoundationUtilities() {
   const { selectedVideo, isFeedVisible, setIsFeedVisible, description } =
     useSearch();
@@ -38,32 +37,12 @@ export default function FoundationUtilities() {
   );
 }
 
-export function Feed({ className }) {
-  const { bibleQuery } = useSearch();
-  // if (!bibleQuery.book || !bibleQuery.chapter || !bibleQuery.verse) {
-  //   return <p>No results found</p>; // No results or loading state
-  // }
-  console.log(bibleQuery.book);
-  return (
-    <div className={className}>
-      <div className="leading-relaxed px-4 lg:px-6 xl:px-0 pb-4">
-        <BibleSearch />
-        <p>
-          {bibleQuery.book} {bibleQuery.chapter}:{bibleQuery.verse} -{" "}
-          {bibleQuery.text}
-        </p>
-      </div>
-    </div>
-  );
-}
-
 export function Tools({ setIsFeedVisible }) {
   return (
     <div className="xl:bg-[#01212c] xl:p-4 h-full flex gap-2 xl:flex-col xl:justify-between">
       <svg
         onClick={() => {
           setIsFeedVisible((prev) => !prev);
-          console.log("SVG clicked");
         }}
         height={"44px"}
         width={"44px"}
@@ -124,37 +103,6 @@ export function Tools({ setIsFeedVisible }) {
           ></path>{" "}
         </g>
       </svg>
-    </div>
-  );
-}
-
-function BibleSearch() {
-  const { bibleQuery, setBibleQuery } = useSearch();
-  return (
-    <div className="relative flex items-center ">
-      <input
-        value={bibleQuery}
-        onChange={(e) => setBibleQuery(e.target.value)}
-        className="flex flex-1 bg-transparent p-1 transition-all duration-300 font-bold text-gray-500 focus:outline-none"
-        placeholder="Search by BibleVersion,Chapter,Verse..."
-        style={{ caretShape: "bar", caret: "5px" }}
-      />
-      <button className="absolute top-1/2 right-6 -translate-y-1/2  py-2 text-white transition">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke={strokeColor}
-          className="h-5 w-5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010 17.5 7.5 7.5 0 0016.65 16.65z"
-          />
-        </svg>
-      </button>
     </div>
   );
 }
