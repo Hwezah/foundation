@@ -195,7 +195,7 @@ export function VideoEmbed({
   videoId,
   title,
   width = "100%",
-  height = "200",
+  height = "auto",
   className = "",
 }) {
   return (
@@ -204,7 +204,7 @@ export function VideoEmbed({
       height={height}
       src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
       title={title}
-      className={`md:rounded-lg shadow-none hover:shadow-none focus:outline-none ${className} `}
+      className={` shadow-none hover:shadow-none aspect-video focus:outline-none ${className} `}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
     ></iframe>
