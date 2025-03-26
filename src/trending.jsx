@@ -225,7 +225,7 @@ function ContentBar() {
       <div>
         <a
           href="/sermons"
-          className="bg-amber-400 text-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+          className="bg-amber-400 text-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-sm"
         >
           Sermons
         </a>
@@ -233,7 +233,7 @@ function ContentBar() {
       <div>
         <a
           href="/podcasts"
-          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-sm"
         >
           Podcasts
         </a>
@@ -241,7 +241,7 @@ function ContentBar() {
       <div>
         <a
           href="/music"
-          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-sm"
         >
           Music
         </a>
@@ -249,7 +249,7 @@ function ContentBar() {
       <div>
         <a
           href="/bible-studies"
-          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-sm"
         >
           Bible Studies
         </a>
@@ -257,7 +257,7 @@ function ContentBar() {
       <div>
         <a
           href="/prayer-fellowship"
-          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-sm"
         >
           Prayer
         </a>
@@ -265,7 +265,7 @@ function ContentBar() {
       <div>
         <a
           href="/live-feed"
-          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-sm"
         >
           Live-feed
         </a>
@@ -273,7 +273,7 @@ function ContentBar() {
       <div>
         <a
           href="/Testimonies"
-          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-sm"
         >
           Testimonies
         </a>
