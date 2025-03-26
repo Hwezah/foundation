@@ -135,11 +135,15 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
     <li className="mb-8 cursor-pointer relative flex " onClick={onClick}>
       {!isPlaying ? (
         <>
-          <img
-            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-            alt="Video Thumbnail"
-            className="md:rounded-lg shadow-lg w-full h-[200px] object-cover"
-          />
+          <div
+            className="w-full h-[210px] bg-cover bg-center md:rounded-lg shadow-lg"
+            style={{
+              backgroundImage: `url(https://img.youtube.com/vi/${videoId}/hqdefault.jpg)`,
+            }}
+          >
+            {/* Other content can go inside here */}
+          </div>
+
           <button
             // onClick={() => {
             //   onPlay();
