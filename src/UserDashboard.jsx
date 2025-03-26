@@ -3,7 +3,7 @@ import Notifications from "./notifications";
 import User from "./user";
 export default function UserDashboard() {
   return (
-    <div className="flex justify-between gap-2">
+    <div className="flex justify-between gap-4">
       <Notifications />
       <User />
       <Settings />

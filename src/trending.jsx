@@ -4,8 +4,8 @@ import { useSearch } from "./SearchContext";
 
 export default function Trending() {
   const { description, isLoading, setIsLoading } = useSearch();
-  const [trends, setTrends] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const { trends, setTrends } = useSearch();
+  const { selectedVideo, setSelectedVideo } = useSearch();
   const [playingVideoId, setPlayingVideoId] = useState(null);
   const [error, setError] = useState("");
 
@@ -30,10 +30,10 @@ export default function Trending() {
     }
 
     async function fetchVideos() {
-      const API_KEY = "AIzaSyC51xFNtD_0T1JXEs1g46xAXI4uvugvMjo";
+      const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
         description
-      )}&maxResults=14&type=video&key=${API_KEY}`;
+      )}&maxResults=50&type=video&key=${API_KEY}`;
 
       try {
         setIsLoading(true);
@@ -72,25 +72,22 @@ export default function Trending() {
       document.title = `Watching | ${description} - ${selectedVideo.snippet.title}`;
     }
 
-    return () => {
-      // Reset selectedVideo when description changes or on reload
-      setSelectedVideo(null);
-      // Reset title to default
-      // Cleanup function
-      document.title = "Foundation";
-    };
+    // return () => {
+    //   // Reset selectedVideo when description changes or on reload
+    //   setSelectedVideo(null);
+    //   // Reset title to default
+    //   // Cleanup function
+    //   document.title = "Foundation";
+    // };
   }, [selectedVideo, description]);
 
   return (
-    <div>
-      <h2 className="text-3xl font-black p-12 pb-2">
-        <span className="tracking-wide">Trends.</span>
-        <p className="text-2xl text-gray-600">
-          {description ? `${description}'s foundation.` : ""}
-        </p>
+    <div className="xl:p-10 md:p-4 lg:p-6 p-4">
+      <h2 className="text-2xl md:text-3xl font-black tracking-wide lg:pb-2">
+        Trends. {description ? `${description}'s foundation,` : ""}
       </h2>
       <ContentBar />
-      <ul className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4 items-start px-8">
+      <ul className="mt-2 grid sm:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 items-start  relative">
         {isLoading ? (
           <Loader />
         ) : trends.length > 0 ? (
@@ -120,7 +117,7 @@ export default function Trending() {
   );
 }
 function ErrorMessage({ message }) {
-  return <p>{message}</p>;
+  return <p className="ml-4">{message}</p>;
 }
 function VideoItem({ video, onClick, onPlay, isPlaying }) {
   const videoId =
@@ -128,7 +125,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
   if (!videoId) return null;
 
   return (
-    <li className="mb-8 cursor-pointer relative flex" onClick={onClick}>
+    <li className="mb-8  cursor-pointer relative flex " onClick={onClick}>
       {!isPlaying ? (
         <>
           <img
@@ -147,7 +144,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
               version="1.1"
               id="Capa_1"
               xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
               width="54px"
               height="54px"
               viewBox="-10.89 -10.89 384.80 384.80"
@@ -186,27 +183,37 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
           </button>
         </>
       ) : (
-        <iframe
-          width="100%"
-          height="200"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-          title={video.snippet.title}
-          className="rounded-lg shadow-lg hover:shadow-none focus:outline-none "
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+        <VideoEmbed videoId={video.id.videoId} title={video.snippet.title} />
       )}
-      <h3 className="font-semibold absolute bottom-[-40px] left-0 w-full p-2 text-lg z-10">
-        {video.snippet.title.split(" ").slice(0, 4).join(" ")}
-        {video.snippet.title.split(" ").length > 4 ? "..." : ""}
+      <h3 className="truncate absolute bottom-[-40px] max-w-full left-0 w-full p-2 text-lg ">
+        {video.snippet.title}
       </h3>
     </li>
   );
 }
 
-function Loader() {
+export function VideoEmbed({
+  videoId,
+  title,
+  width = "100%",
+  height = "200",
+  className = "",
+}) {
   return (
-    <div className="flex justify-center items-center h-20">
+    <iframe
+      width={width}
+      height={height}
+      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
+      title={title}
+      className={`rounded-lg shadow-none hover:shadow-none focus:outline-none ${className} `}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  );
+}
+export function Loader() {
+  return (
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="w-8 h-8 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
     </div>
   );
