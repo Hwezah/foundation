@@ -10,7 +10,9 @@ export default function Navigation() {
           alt="Foundation Stone Logo"
           className="w-[74px]"
         />
-        <h1 className=" xl:text-4xl sm:text-3xl font-black ">Foundation.</h1>
+        <h1 className=" xl:text-4xl md:text-3xl text-2xl font-black ">
+          Foundation.
+        </h1>
       </div>
       <div className="flex items-center justify-around gap-4  py-4">
         <SearchBar />

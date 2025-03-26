@@ -86,12 +86,15 @@ export default function Trending() {
   }, [selectedVideo, description]);
 
   return (
-    <div className="xl:p-10 md:p-4 lg:p-6 p-4">
-      <h2 className="text-2xl md:text-3xl font-black tracking-wide lg:pb-2">
-        Trends. {description ? `${description}'s foundation,` : ""}
-      </h2>
-      <ContentBar />
-      <ul className="mt-2 grid sm:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 items-start  relative">
+    <div>
+      <div className="xl:p-10 md:p-4 lg:p-6 p-4">
+        <h2 className="text-xl md:text-3xl font-black tracking-wide lg:pb-2">
+          Trends. {description ? `${description}'s foundation,` : ""}
+        </h2>
+        <ContentBar />
+      </div>
+
+      <ul className=" xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 items-start  relative">
         {isLoading ? (
           <Loader />
         ) : trends.length > 0 ? (
@@ -129,13 +132,13 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
   if (!videoId) return null;
 
   return (
-    <li className="mb-8  cursor-pointer relative flex " onClick={onClick}>
+    <li className="mb-8 cursor-pointer relative flex " onClick={onClick}>
       {!isPlaying ? (
         <>
           <img
             src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
             alt="Video Thumbnail"
-            className="rounded-lg shadow-lg w-full h-[200px] object-cover"
+            className="md:rounded-lg shadow-lg w-full h-[200px] object-cover"
           />
           <button
             // onClick={() => {
@@ -177,7 +180,7 @@ function VideoItem({ video, onClick, onPlay, isPlaying }) {
       ) : (
         <VideoEmbed videoId={video.id.videoId} title={video.snippet.title} />
       )}
-      <h3 className="truncate absolute bottom-[-40px] max-w-full left-0 w-full p-2 text-lg ">
+      <h3 className="truncate absolute bottom-[-35px] max-w-full left-0 w-full p-2 text-sm lg:text-lg ">
         {video.snippet.title}
       </h3>
     </li>
@@ -197,7 +200,7 @@ export function VideoEmbed({
       height={height}
       src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
       title={title}
-      className={`rounded-lg shadow-none hover:shadow-none focus:outline-none ${className} `}
+      className={`md:rounded-lg shadow-none hover:shadow-none focus:outline-none ${className} `}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
     ></iframe>
@@ -214,29 +217,35 @@ export function Loader() {
 
 function ContentBar() {
   return (
-    <div className="flex overflow-hidden overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hidden gap-4 justify-between items-center md:pt-3 pt-2 pb-3 font-bold">
+    <div className="flex overflow-hidden overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hidden gap-4 justify-between items-center md:pt-3 pt-2 text-xs md:text-sm xl:text-base  font-bold">
       <div>
         <a
           href="/sermons"
-          className="bg-amber-400 text-[#000608] px-4 py-2 block rounded-lg"
+          className="bg-amber-400 text-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
         >
           Sermons
         </a>
       </div>
       <div>
-        <a href="/podcasts" className="bg-[#000608] px-4 py-2 block rounded-lg">
+        <a
+          href="/podcasts"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+        >
           Podcasts
         </a>
       </div>
       <div>
-        <a href="/music" className="bg-[#000608] px-4 py-2 block rounded-lg">
+        <a
+          href="/music"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
+        >
           Music
         </a>
       </div>
       <div>
         <a
           href="/bible-studies"
-          className="bg-[#000608] px-4 py-2 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
         >
           Bible Studies
         </a>
@@ -244,7 +253,7 @@ function ContentBar() {
       <div>
         <a
           href="/prayer-fellowship"
-          className="bg-[#000608] px-4 py-2 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
         >
           Prayer
         </a>
@@ -252,7 +261,7 @@ function ContentBar() {
       <div>
         <a
           href="/live-feed"
-          className="bg-[#000608] px-4 py-2 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
         >
           Live-feed
         </a>
@@ -260,7 +269,7 @@ function ContentBar() {
       <div>
         <a
           href="/Testimonies"
-          className="bg-[#000608] px-4 py-2 block rounded-lg"
+          className="bg-[#000608] md:px-2.5 md:py-1.5 px-2 py-1 block rounded-lg"
         >
           Testimonies
         </a>

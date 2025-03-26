@@ -19,7 +19,7 @@ export default function FoundationUtilities() {
           </h2>
           <div className="flex justify-between bg-[#4a5759] px-4 py-3 xl:px-6 xl:py-4 items-center">
             <h3 className="w-3/4 xl:w-full truncate xl:truncate-two-lines">
-              <span className="text-2xl text-white font-extrabold mr-3">
+              <span className="text-xl md:text-2xl lg:text-3xl text-white font-extrabold mr-3">
                 On:
               </span>
               <span className="  font-bold lg:text-lg  text-[#01212c] ">
