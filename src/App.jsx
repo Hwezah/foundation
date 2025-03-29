@@ -2,6 +2,7 @@ import Hero from "./hero";
 import Trending from "./trending";
 import { SearchProvider } from "./SearchContext";
 import Navigation from "./navigation";
+
 export default function App() {
   return (
     <SearchProvider>

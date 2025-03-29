@@ -1,22 +1,19 @@
 import { useSearch } from "./SearchContext";
 import { useState, useEffect } from "react";
+import { Loader } from "./trending";
 import { strokeColor } from "./constants";
 
 export default function Bible() {
-  const { bibleQuery, setBibleQuery } = useSearch();
+  const { bibleQuery, setBibleQuery, isLoading, setIsLoading } = useSearch();
   const [error, setError] = useState("");
-  const { version, book, chapter } = useSearch();
-  const { isLoading, setIsLoading } = useSearch();
 
   useEffect(() => {
+    const { version, book, chapter } = bibleQuery;
     const controller = new AbortController();
     if (bibleQuery.trim() === "") {
-      // setTrends([]);
-      // localStorage.removeItem("trends");
       return;
     }
     async function fetchQuery() {
-      // const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
       const URL = `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${version}/books/${book}/chapters/${chapter}.json`;
 
       try {
@@ -25,18 +22,24 @@ export default function Bible() {
         const response = await fetch(URL, { signal: controller.signal });
         if (!response.ok) {
           throw new Error(
-            ":) Something went wrong fetching your foundation, please try again."
+            ":) Something went wrong fetching your search, please try again."
           );
         }
         const data = await response.json();
         console.log(data);
-        if (data.response === "False") {
-          throw new Error(
-            ":) Cannot find requested foundation, try another search."
-          );
+        if (data && data.data) {
+          // For example, set the first verse data to the state
+          setBibleQuery({
+            book: data.data.book,
+            chapter: data.data.chapter,
+            verse: data.data.verse,
+            text: data.data.text,
+          });
+          // This hook will run whenever bibleQuery changes
+        } else {
+          throw new Error(":) Cannot find your request, try another search.");
         }
-        setTrends(data.items || []);
-        localStorage.setItem("trends", JSON.stringify(data.items));
+        setError("");
       } catch (err) {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -50,10 +53,37 @@ export default function Bible() {
     return () => {
       controller.abort();
     };
-  }, [description, version, book, chapter]);
+  }, [bibleQuery, setIsLoading, setBibleQuery]);
+
+  return (
+    <>
+      {isLoading && <Loader />}
+      {error && <BibleFeed />}
+      <BibleFeed />
+    </>
+  );
 }
 
-export function BibleSearch() {
+function BibleFeed({ className }) {
+  const { bibleQuery } = useSearch();
+  // if (!bibleQuery.book || !bibleQuery.chapter || !bibleQuery.verse) {
+  //   return <p>No results found</p>; // No results or loading state
+  // }
+  console.log(bibleQuery.book);
+  return (
+    <div className={className}>
+      <div className="leading-relaxed px-4 lg:px-6 xl:px-0 pb-4">
+        <BibleSearch />
+        <p>
+          {bibleQuery.book} {bibleQuery.chapter}:{bibleQuery.verse} -{" "}
+          {bibleQuery.text}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function BibleSearch() {
   const { bibleQuery, setBibleQuery } = useSearch();
   return (
     <div className="relative flex items-center ">
