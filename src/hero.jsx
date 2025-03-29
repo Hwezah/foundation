@@ -7,12 +7,9 @@ import FoundationUtilities from "./foundationUtilities";
 
 export default function Hero() {
   const { selectedVideo, setIsFeedVisible, isLoading } = useSearch();
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   setTimeout(() => setIsLoading(false), 2000); // Simulate loading for 3 seconds...experimental
-  // }, []);
+
   return (
-    <div className="relative bg-[#01212c] h-auto xl:flex  xl:justify-between items-start scrollbar-hidden overflow-hidden">
+    <div className="relative bg-[#01212c] h-fit  xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden">
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -27,13 +24,12 @@ export default function Hero() {
       ) : (
         // Once the selected video is available, show the selected video
         <>
-          <div className="hidden xl:block h-full ">
+          <div className="hidden xl:block h-full">
             <Tools setIsFeedVisible={setIsFeedVisible} />
           </div>
-          <div className=" relative xl:h-full xl:w-full">
+          <div className="w-full h-full aspect-video">
             <VideoEmbed
-              height="auto"
-              className="shadow-none "
+              className="shadow-none rounded-none w-full h-full object-cover"
               videoId={selectedVideo.id.videoId}
               title={selectedVideo.snippet.title}
             />
@@ -49,6 +45,7 @@ export default function Hero() {
     </div>
   );
 }
+
 {
   /* <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 bg-white text-white transition hover:bg-gray-100">
               <svg
