@@ -1,5 +1,5 @@
 import { useSearch } from "./SearchContext";
-import Bible from "./Bible";
+import Bible from "./Services/Bible";
 export default function FoundationUtilities() {
   const { selectedVideo, isFeedVisible, setIsFeedVisible, description } =
     useSearch();
@@ -12,7 +12,7 @@ export default function FoundationUtilities() {
     >
       {" "}
       <div className=" xl:w-full ">
-        <div className="sticky top-0 bg-[#01212c] xl:pt-6 mb-4">
+        <div className="sticky top-0 bg-[#01212c] xl:pt-6">
           <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 pt-6  px-4   xl:p-0">
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
             <span>{description}'s Foundation.</span>
