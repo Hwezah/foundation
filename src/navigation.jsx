@@ -1,6 +1,7 @@
 import UserDashboard from "./UserDashboard";
 import Donations from "./donations";
 import { useSearch } from "./SearchContext";
+import { fetchVideos } from "./api";
 export default function Navigation() {
   return (
     <div className=" flex items-center justify-between gap-4 px-10 py-1 w-full">
@@ -23,8 +24,15 @@ export default function Navigation() {
   );
 }
 function SearchBar() {
-  const { description, setDescription } = useSearch();
+  const { description, setDescription, setIsLoading, setError, setTrends } =
+    useSearch();
   const { strokeColor } = useSearch();
+
+  const handleSearch = () => {
+    setIsLoading(true);
+    fetchVideos(description, setIsLoading, setError, setTrends);
+  };
+
   return (
     <div className="relative flex items-center md:block hidden rounded-lg p-1 ">
       <input
@@ -33,7 +41,10 @@ function SearchBar() {
         className="flex w-[350px] flex-1 rounded-full  bg-[#01222e] px-6 py-3 transition-all duration-300 focus:w-[400px] font-bold text-gray-500 focus:outline-none"
         placeholder="Search..."
       />
-      <button className="absolute top-1/2 right-6 -translate-y-1/2 rounded-full p-2 text-white transition">
+      <button
+        onClick={handleSearch} // Call API when button is clicked
+        className="absolute top-1/2 right-6 -translate-y-1/2 rounded-full p-2 text-white transition"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

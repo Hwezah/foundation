@@ -12,7 +12,7 @@ export default function Hero() {
   //   setTimeout(() => setIsLoading(false), 2000); // Simulate loading for 3 seconds...experimental
   // }, []);
   return (
-    <div className="relative xl:h-[70vh] h-fit xl:flex xl:justify-between items-center scrollbar-hidden overflow-hidden">
+    <div className="relative bg-[#01212c] h-auto xl:flex  xl:justify-between items-start scrollbar-hidden overflow-hidden">
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -30,10 +30,10 @@ export default function Hero() {
           <div className="hidden xl:block h-full ">
             <Tools setIsFeedVisible={setIsFeedVisible} />
           </div>
-          <div className="  relative h-[40rem] xl:h-full xl:w-full">
+          <div className=" relative xl:h-full xl:w-full">
             <VideoEmbed
-              height="100%"
-              className="rounded-none shadow-none "
+              height="auto"
+              className="shadow-none "
               videoId={selectedVideo.id.videoId}
               title={selectedVideo.snippet.title}
             />

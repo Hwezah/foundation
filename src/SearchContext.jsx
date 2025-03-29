@@ -12,6 +12,7 @@ export function SearchProvider({ children }) {
   const [selectedVideo, setSelectedVideo] = useState();
   const [bibleQuery, setBibleQuery] = useState("");
   const [isFeedVisible, setIsFeedVisible] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <SearchContext.Provider
@@ -29,6 +30,8 @@ export function SearchProvider({ children }) {
         strokeColor,
         trends,
         setTrends,
+        error,
+        setError,
       }}
     >
       {children}

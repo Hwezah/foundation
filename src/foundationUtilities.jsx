@@ -39,13 +39,13 @@ export default function FoundationUtilities() {
 
 export function Tools({ setIsFeedVisible }) {
   return (
-    <div className="xl:bg-[#01212c] xl:p-4 h-full flex gap-2 xl:flex-col xl:justify-between">
+    <div className="xl:bg-[#01212c] xl:p-4 flex gap-2 xl:flex-col xl:justify-between">
       <svg
+        height={"44px"}
+        width={"44px"}
         onClick={() => {
           setIsFeedVisible((prev) => !prev);
         }}
-        height={"44px"}
-        width={"44px"}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
