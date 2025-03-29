@@ -1,28 +1,39 @@
-export default async function fetchVideos(
+export async function fetchVideos(
   description,
   setIsLoading,
+  setError,
   setTrends
 ) {
-  //   const [description, setDescription] = useSearch();
-  //   const { isLoading, setIsLoading } = useSearch();
-  //   const [trends, setTrends] = useSearch();
-  const API_KEY = "AIzaSyCSs5XLks6Sod6cQgauGVNW7Wf4asuZ_Jc";
+  if (!description.trim()) return; // Prevent empty searches
+
+  const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
   const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
     description
-  )}&maxResults=14&type=video&key=${API_KEY}`;
+  )}&maxResults=50&type=video&key=${API_KEY}`;
 
   try {
     setIsLoading(true);
+    setError("");
+
     const response = await fetch(URL);
+    if (!response.ok) {
+      throw new Error(
+        ":) Something went wrong fetching your foundation, please try again."
+      );
+    }
+
     const data = await response.json();
-    console.log("API Response:", data);
-    //setTrends array gets filled with data(videos) from the API
-    //if no data, then reverts to the original empty array.
+    if (data.response === "False") {
+      throw new Error(
+        ":) Cannot find requested foundation, try another search."
+      );
+    }
+
     setTrends(data.items || []);
-    setIsLoading(false);
-    // Store trends in localStorage(trends data is converted back to a string so the browser can use it)
     localStorage.setItem("trends", JSON.stringify(data.items));
-  } catch (error) {
-    console.error("Error fetching YouTube videos:", error);
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setIsLoading(false);
   }
 }
