@@ -15,7 +15,7 @@ export default function Hero() {
         <Loader />
       ) : !selectedVideo ? (
         // Show fallback video while waiting for the selected video
-        <video autoPlay muted loop className="w-full h-full object-cover">
+        <video autoPlay muted loop className="w-full h-[70vh] object-cover">
           <source
             src="public\Assets\5875774-uhd_3840_2160_24fps.mp4" // Ensure the path is correct
             type="video/mp4"
