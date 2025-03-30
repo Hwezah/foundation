@@ -2,16 +2,17 @@ import UserDashboard from "./UserDashboard";
 import Donations from "./donations";
 import { useSearch } from "./SearchContext";
 import { fetchVideos } from "./Services/api";
+import { useState } from "react";
 export default function Navigation() {
   return (
-    <div className=" flex items-center justify-between gap-4 px-10 py-1 w-full">
+    <div className=" flex items-center justify-between py-1 px-10 w-full">
       <div className="flex items-center">
         <img
           src="public\Assets\FoundationLogoWhite.svg"
           alt="Foundation Stone Logo"
           className="w-[74px]"
         />
-        <h1 className=" xl:text-4xl md:text-3xl text-2xl font-black ">
+        <h1 className=" xl:text-4xl md:text-3xl text-2xl font-black">
           Foundation.
         </h1>
       </div>
@@ -27,29 +28,27 @@ function SearchBar() {
   const { description, setDescription, setIsLoading, setError, setTrends } =
     useSearch();
   const { strokeColor } = useSearch();
+  const [showSearch, setShowSearch] = useState(false);
 
   const handleSearch = () => {
     setIsLoading(true);
     fetchVideos(description, setIsLoading, setError, setTrends);
+    setShowSearch(false);
+    setDescription("");
   };
 
   return (
-    <div className="relative flex items-center md:block hidden rounded-lg p-1 ">
-      <input
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="flex w-[350px] flex-1 rounded-full  bg-[#01222e] px-6 py-3 transition-all duration-300 focus:w-[400px] font-bold text-gray-500 focus:outline-none"
-        placeholder="Search..."
-      />
+    <div className="relative flex items-center md:block rounded-lg p-1">
+      {/* Button for small screens */}
       <button
-        onClick={handleSearch} // Call API when button is clicked
-        className="absolute top-1/2 right-6 -translate-y-1/2 rounded-full p-2 text-white transition"
+        onClick={() => setShowSearch(!showSearch)} // Toggle search bar visibility
+        className="absolute top-1/2 right-6 -translate-y-1/2 rounded-full p-2 text-white transition md:hidden"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke={strokeColor}
+          stroke="currentColor"
           className="h-5 w-5"
         >
           <path
@@ -60,6 +59,21 @@ function SearchBar() {
           />
         </svg>
       </button>
+
+      {/* Full search bar on medium screens and above */}
+      <input
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className={`flex lg:w-[350px] w-min flex-1 rounded-full bg-[#01222e] px-6 py-2 lg:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
+          showSearch ? "block" : "hidden"
+        } md:block`} // Conditionally display
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSearch(); // Perform search and hide search bar
+          }
+        }}
+        placeholder="Search..."
+      />
     </div>
   );
 }

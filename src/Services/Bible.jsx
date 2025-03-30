@@ -79,7 +79,7 @@ export const BibleSearch = ({ fetchBibleVerse }) => {
   };
 
   return (
-    <div className="flex justify-center p-4 gap-4">
+    <div className="flex justify-center p-4 gap-2">
       <input
         className="focus:outline-none w-fit min-w-[100px]"
         type="text"
