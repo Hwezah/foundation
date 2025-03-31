@@ -15,7 +15,7 @@ export default function FoundationUtilities() {
         <div className="sticky top-0 bg-[#01212c] pt-4">
           <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 px-4">
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
-            <span>{description ? `${description}'s Foundation.` : ""}</span>
+            <p>{description ? `${description}'s Foundation.` : ""}</p>
           </h2>
           <div className="flex justify-between bg-[#4a5759] px-3 py-2.5 items-center">
             <h3 className="w-3/4 xl:w-full truncate xl:truncate-two-lines">
