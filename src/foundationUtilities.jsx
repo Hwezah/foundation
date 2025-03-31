@@ -6,18 +6,18 @@ export default function FoundationUtilities() {
 
   return (
     <div
-      className={`xl:max-w-[30%] w-full bg-[#01212c] gap-6 xl:pt-0 xl:p-6 xl:h-full h-fit ${
+      className={`xl:max-w-[30%] w-full bg-[#01212c] gap-6 xl:pt-0 xl:h-full h-fit ${
         isFeedVisible ? "overflow-y-auto scrollbar-hidden" : ""
       }`}
     >
       {" "}
       <div className=" xl:w-full ">
-        <div className="sticky top-0 bg-[#01212c] xl:pt-6">
-          <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 pt-6  px-4   xl:p-0">
+        <div className="sticky top-0 bg-[#01212c] pt-4">
+          <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 px-4">
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
-            <span>{description}'s Foundation.</span>
+            <span>{description ? `${description}'s Foundation.` : ""}</span>
           </h2>
-          <div className="flex justify-between bg-[#4a5759] px-4 py-1.5 xl:px-6 xl:py-4 items-center">
+          <div className="flex justify-between bg-[#4a5759] px-3 py-2.5 items-center">
             <h3 className="w-3/4 xl:w-full truncate xl:truncate-two-lines">
               <span className="text-xl md:text-2xl lg:text-3xl text-white font-extrabold mr-3">
                 On:

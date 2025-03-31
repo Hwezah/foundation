@@ -8,7 +8,7 @@ export default function Navigation() {
   const [showSearch, setShowSearch] = useState(false);
   return (
     <>
-      <div className="flex items-center justify-between md:p-4 p-2.5  w-full">
+      <div className="flex items-center justify-between lg:p-4 p-2.5  w-full">
         <div className="flex items-center">
           <img
             src="public\Assets\FoundationLogoWhite.svg"
@@ -91,7 +91,7 @@ function SearchBar({ showSearch, setShowSearch }) {
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className={`flex lg:w-[350px] w-min flex-1 rounded-full bg-[#01222e] px-6 py-1.5 lg:py-2 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
+        className={`flex lg:w-[350px] w-min flex-1 rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
           showSearch ? "block" : "hidden"
         } md:block`} // Conditionally display
         onKeyDown={(e) => {
