@@ -111,7 +111,7 @@ function VideoItem({ video, onClick, isPlaying }) {
       ) : (
         <VideoEmbed videoId={videoId} title={video.snippet.title} />
       )}
-      <h3 className="truncate absolute bottom-[-36px] w-full p-2 text-sm lg:text-lg">
+      <h3 className="truncate absolute bottom-[-30px] w-full p-2 text-sm lg:text-lg">
         {video.snippet.title}
       </h3>
     </li>
