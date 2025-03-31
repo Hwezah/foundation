@@ -30,7 +30,7 @@ export default function Trending() {
         <h2 className="text-xl md:text-3xl font-black tracking-wide pb-1 ">
           Trends.{" "}
           {description && (
-            <h2 className="text-[#4a5759] mt-3">
+            <h2 className="text-[#4a5759] mt-1">
               {" "}
               {/* Add any class here */}
               {`${description}'s foundation.`}
