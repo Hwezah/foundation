@@ -8,11 +8,7 @@ export default function Navigation() {
   const [showSearch, setShowSearch] = useState(false);
   return (
     <>
-      <div
-        className={` flex items-center justify-between  ${
-          showSearch ? "py-1" : "py-3"
-        } p-4 lg:p-px-10 w-full `}
-      >
+      <div className="flex items-center justify-between md:p-4 p-2.5  w-full">
         <div className="flex items-center">
           <img
             src="public\Assets\FoundationLogoWhite.svg"
@@ -27,7 +23,7 @@ export default function Navigation() {
             Foundation.
           </h1>
         </div>
-        <div className="flex items-center justify-between gap-4  py-2">
+        <div className="flex items-center justify-between gap-4  ">
           <SearchBar showSearch={showSearch} setShowSearch={setShowSearch} />
           <Donations showSearch={showSearch} />
           <UserDashboard
@@ -67,11 +63,11 @@ function SearchBar({ showSearch, setShowSearch }) {
   }, []);
 
   return (
-    <div className="relative flex items-center md:block rounded-lg p-1">
+    <div className="relative flex items-center md:block rounded-lg">
       {/* Button for small screens */}
       <button
         onClick={() => isSmallScreen && setShowSearch(!showSearch)} // Only toggle on small screens
-        className={`absolute top-1/2 -translate-y-1/2 rounded-full p-2 text-white transition ${
+        className={`absolute top-1/2 -translate-y-1/2 rounded-full  text-white transition ${
           showSearch ? "right-6" : "right-1"
         } md:right-6`} // Apply right-6 on medium screens and larger
       >
@@ -95,7 +91,7 @@ function SearchBar({ showSearch, setShowSearch }) {
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className={`flex lg:w-[350px] w-min flex-1 rounded-full bg-[#01222e] px-6 py-2 lg:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
+        className={`flex lg:w-[350px] w-min flex-1 rounded-full bg-[#01222e] px-6 py-1.5 lg:py-2 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
           showSearch ? "block" : "hidden"
         } md:block`} // Conditionally display
         onKeyDown={(e) => {

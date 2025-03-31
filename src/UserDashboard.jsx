@@ -15,9 +15,11 @@ import Cast from "./cast";
 export default function UserDashboard({ showSearch }) {
   return (
     <div
-      className={`flex justify-between gap-4 ${
-        showSearch ? "hidden sm:block" : "block"
-      } `}
+      // className={`flex justify-between gap-4 ${
+      //   showSearch ? "hidden sm:block" : "block"
+      // } `}
+
+      className="flex justify-between gap-4"
     >
       <Cast />
       <Notifications />

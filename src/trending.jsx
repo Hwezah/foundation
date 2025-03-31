@@ -14,14 +14,16 @@ export default function Trending() {
       try {
         setTrends(JSON.parse(storedTrends));
       } catch {
-        setTrends([]);
+        console.error("Invalid JSON in localStorage: trends");
       }
     }
   }, []);
 
   useEffect(() => {
-    // Store updated trends in localStorage
-    localStorage.setItem("trends", JSON.stringify(trends));
+    if (trends && trends.length > 0) {
+      // Ensure trends is valid before storing
+      localStorage.setItem("trends", JSON.stringify(trends));
+    }
   }, [trends]);
 
   return (
