@@ -2,7 +2,7 @@ import { strokeColor } from "./constants";
 export default function Settings() {
   return (
     <svg
-      className=" h-6 w-6 "
+      className="lg:h-6 lg:w-6 h-5 w-5 hidden lg:block"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -15,21 +15,23 @@ export default function Hero() {
         <Loader />
       ) : !selectedVideo ? (
         // Show fallback video while waiting for the selected video
-        <video autoPlay muted loop className="w-full h-[70vh] object-cover">
-          <source
-            src="public\Assets\5875774-uhd_3840_2160_24fps.mp4" // Ensure the path is correct
-            type="video/mp4"
-          />
-        </video>
+        // <video autoPlay muted loop className="w-full h-[70vh] object-cover">
+        //   <source
+        //     src="public\Assets\5875774-uhd_3840_2160_24fps.mp4" // Ensure the path is correct
+        //     type="video/mp4"
+        //   />
+        // </video>
+
+        <img src="\Assets\pexels-jibarofoto-13963623.jpg" alt="" />
       ) : (
         // Once the selected video is available, show the selected video
         <>
           <div className="hidden xl:block h-full">
             <Tools setIsFeedVisible={setIsFeedVisible} />
           </div>
-          <div className="w-full h-full aspect-video">
+          <div className="w-full h-full aspect-video sticky top-0">
             <VideoEmbed
-              className="shadow-none rounded-none w-full h-full object-cover"
+              className=" shadow-none rounded-none w-full h-full object-cover"
               videoId={selectedVideo.id.videoId}
               title={selectedVideo.snippet.title}
             />

@@ -26,12 +26,19 @@ export default function Trending() {
 
   return (
     <div>
-      <div className=" lg:p-6 p-4 pt-6 lg:pt-8 xl:pt-10">
-        <h2 className="text-xl md:text-3xl font-black tracking-wide pb-2">
-          Trends. {description && `${description}'s foundation`}
+      <div className=" lg:pt-6 px-2 pt-6 xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 xl:pt-10 ">
+        <h2 className="text-xl md:text-3xl font-black tracking-wide pb-1">
+          Trends.{" "}
+          {description && (
+            <h2 className="text-[#4a5759]">
+              {" "}
+              {/* Add any class here */}
+              {`${description}'s foundation.`}
+            </h2>
+          )}
         </h2>
-        <ContentBar />
       </div>
+      <ContentBar />
 
       <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
         {isLoading ? (
@@ -104,7 +111,7 @@ function VideoItem({ video, onClick, isPlaying }) {
       ) : (
         <VideoEmbed videoId={videoId} title={video.snippet.title} />
       )}
-      <h3 className="truncate absolute bottom-[-37px] w-full p-2 text-sm lg:text-lg">
+      <h3 className="truncate absolute bottom-[-36px] w-full p-2 text-sm lg:text-lg">
         {video.snippet.title}
       </h3>
     </li>
@@ -153,12 +160,12 @@ function ContentBar() {
     "Testimonies",
   ];
   return (
-    <div className="flex overflow-x-auto justify-between gap-4 text-sm lg:text-md font-bold scrollbar-hidden">
+    <div className="flex pb-4 xl:pb-5 xl:px-10 md:px-4 sm:px-2 lg:px-6  overflow-x-auto justify-between gap-4 text-sm lg:text-md font-bold scrollbar-hidden">
       {categories.map((category) => (
         <a
           key={category}
           href={`/${category.toLowerCase().replace(" ", "-")}`}
-          className="bg-[#000608] px-2 py-1 lg:px-3 lg:py-1.5 rounded-sm whitespace-nowrap"
+          className="bg-[#01222e] text-[#78898b] px-2  py-1 lg:px-3 lg:py-1.5 rounded-sm whitespace-nowrap font-semibold"
         >
           {category}
         </a>

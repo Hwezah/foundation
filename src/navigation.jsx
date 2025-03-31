@@ -2,47 +2,78 @@ import UserDashboard from "./UserDashboard";
 import Donations from "./donations";
 import { useSearch } from "./SearchContext";
 import { fetchVideos } from "./Services/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 export default function Navigation() {
+  const [showSearch, setShowSearch] = useState(false);
   return (
-    <div className=" flex items-center justify-between py-1 px-10 w-full">
-      <div className="flex items-center">
-        <img
-          src="public\Assets\FoundationLogoWhite.svg"
-          alt="Foundation Stone Logo"
-          className="w-[74px]"
-        />
-        <h1 className=" xl:text-4xl md:text-3xl text-2xl font-black">
-          Foundation.
-        </h1>
+    <>
+      <div
+        className={` flex items-center justify-between  ${
+          showSearch ? "py-1" : "py-3"
+        } p-4 lg:p-px-10 w-full `}
+      >
+        <div className="flex items-center">
+          <img
+            src="public\Assets\FoundationLogoWhite.svg"
+            alt="Foundation Logo"
+            className="w-[74px] hidden lg:block"
+          />
+          <h1
+            className={`xl:text-4xl md:text-3xl text-2xl font-black ${
+              showSearch ? "hidden sm:block" : "block"
+            }`}
+          >
+            Foundation.
+          </h1>
+        </div>
+        <div className="flex items-center justify-between gap-4  py-2">
+          <SearchBar showSearch={showSearch} setShowSearch={setShowSearch} />
+          <Donations showSearch={showSearch} />
+          <UserDashboard
+            showSearch={showSearch}
+            setShowSearch={setShowSearch}
+          />
+        </div>
       </div>
-      <div className="flex items-center justify-around gap-4  py-4">
-        <SearchBar />
-        <Donations />
-        <UserDashboard />
-      </div>
-    </div>
+    </>
   );
 }
-function SearchBar() {
+function SearchBar({ showSearch, setShowSearch }) {
   const { description, setDescription, setIsLoading, setError, setTrends } =
     useSearch();
-  const { strokeColor } = useSearch();
-  const [showSearch, setShowSearch] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [inputValue, setInputValue] = useState(description);
 
   const handleSearch = () => {
     setIsLoading(true);
-    fetchVideos(description, setIsLoading, setError, setTrends);
+    setDescription(inputValue);
+    fetchVideos(inputValue, setIsLoading, setError, setTrends);
     setShowSearch(false);
-    setDescription("");
+    setInputValue("");
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768); // Set breakpoint at 768px for small screens
+    };
+
+    handleResize(); // Check on initial render
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className="relative flex items-center md:block rounded-lg p-1">
       {/* Button for small screens */}
       <button
-        onClick={() => setShowSearch(!showSearch)} // Toggle search bar visibility
-        className="absolute top-1/2 right-6 -translate-y-1/2 rounded-full p-2 text-white transition md:hidden"
+        onClick={() => isSmallScreen && setShowSearch(!showSearch)} // Only toggle on small screens
+        className={`absolute top-1/2 -translate-y-1/2 rounded-full p-2 text-white transition ${
+          showSearch ? "right-6" : "right-1"
+        } md:right-6`} // Apply right-6 on medium screens and larger
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -62,8 +93,8 @@ function SearchBar() {
 
       {/* Full search bar on medium screens and above */}
       <input
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         className={`flex lg:w-[350px] w-min flex-1 rounded-full bg-[#01222e] px-6 py-2 lg:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
           showSearch ? "block" : "hidden"
         } md:block`} // Conditionally display
@@ -72,7 +103,7 @@ function SearchBar() {
             handleSearch(); // Perform search and hide search bar
           }
         }}
-        placeholder="Search..."
+        placeholder="Search Foundation..."
       />
     </div>
   );

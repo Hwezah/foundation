@@ -52,7 +52,7 @@ export default function Bible() {
 
 // BibleSearch Component
 export const BibleSearch = ({ fetchBibleVerse }) => {
-  const [version, setVersion] = useState("");
+  // const [version, setVersion] = useState("");
   const [book, setBook] = useState("");
   const [chapter, setChapter] = useState("");
   const [verse, setVerse] = useState("");
@@ -70,7 +70,7 @@ export const BibleSearch = ({ fetchBibleVerse }) => {
       return;
     }
 
-    const data = await fetchBibleVerse(version, book, chapter, verse);
+    const data = await fetchBibleVerse(book, chapter, verse);
     if (data.error) {
       setError(data.error);
     } else {
@@ -80,13 +80,13 @@ export const BibleSearch = ({ fetchBibleVerse }) => {
 
   return (
     <div className="flex justify-center p-4 gap-2">
-      <input
+      {/* <input
         className="focus:outline-none w-fit min-w-[100px]"
         type="text"
         placeholder="Version (e.g., KJV)"
         value={version}
         onChange={(e) => setVersion(e.target.value)}
-      />
+      /> */}
       <input
         className="focus:outline-none w-fit min-w-[100px]"
         type="text"
