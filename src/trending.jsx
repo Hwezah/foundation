@@ -27,10 +27,10 @@ export default function Trending() {
   return (
     <div>
       <div className=" lg:pt-6 px-2 pt-6 xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 xl:pt-10 ">
-        <h2 className="text-xl md:text-3xl font-black tracking-wide pb-1">
+        <h2 className="text-xl md:text-3xl font-black tracking-wide pb-1 ">
           Trends.{" "}
           {description && (
-            <h2 className="text-[#4a5759]">
+            <h2 className="text-[#4a5759] mt-3">
               {" "}
               {/* Add any class here */}
               {`${description}'s foundation.`}
@@ -160,7 +160,7 @@ function ContentBar() {
     "Testimonies",
   ];
   return (
-    <div className="flex pb-4 xl:pb-5 xl:px-10 md:px-4 sm:px-2 lg:px-6  overflow-x-auto justify-between gap-4 text-sm lg:text-md font-bold scrollbar-hidden">
+    <div className="flex pb-2 xl:pb-3 xl:px-10 md:px-4 sm:px-2 lg:px-6  overflow-x-auto justify-between gap-4 text-sm lg:text-md font-bold scrollbar-hidden">
       {categories.map((category) => (
         <a
           key={category}
