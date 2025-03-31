@@ -12,7 +12,7 @@ import Cast from "./cast";
 //   );
 // }
 
-export default function UserDashboard({ showSearch }) {
+export default function UserDashboard() {
   return (
     <div
       // className={`flex justify-between gap-4 ${
