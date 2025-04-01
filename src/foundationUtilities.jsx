@@ -6,14 +6,14 @@ export default function FoundationUtilities() {
 
   return (
     <div
-      className={`xl:max-w-[30%] w-full bg-[#01212c] gap-6 xl:pt-0 xl:h-full h-fit ${
+      className={`xl:max-w-[35%] w-full bg-[#01212c] gap-6 xl:pt-0 xl:h-full h-fit ${
         isFeedVisible ? "overflow-y-auto scrollbar-hidden" : ""
       }`}
     >
       {" "}
       <div className=" xl:w-full ">
-        <div className="sticky top-0 bg-[#01212c] pt-4">
-          <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 px-4">
+        <div className="sticky top-0 bg-[#01212c]">
+          <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 px-4  pt-3">
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
             <p>{description ? `${description}'s Foundation.` : ""}</p>
           </h2>

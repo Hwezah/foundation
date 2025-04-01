@@ -8,7 +8,7 @@ export default function Navigation() {
   const [showSearch, setShowSearch] = useState(false);
   return (
     <>
-      <div className="flex items-center justify-between lg:p-4 p-2.5  w-full">
+      <div className="flex items-center justify-between lg:p-4 p-2.5  w-full xl:px-10 md:px-4 sm:px-2 lg:px-6">
         <div className="flex items-center">
           <img
             src="public\Assets\FoundationLogoWhite.svg"

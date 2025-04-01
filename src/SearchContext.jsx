@@ -8,7 +8,10 @@ export function useSearch() {
 export function SearchProvider({ children }) {
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [trends, setTrends] = useState([]);
+  const [trends, setTrends] = useState(() => {
+    const storedTrends = localStorage.getItem("trends");
+    return JSON.parse(storedTrends);
+  });
   const [selectedVideo, setSelectedVideo] = useState();
   const [bibleQuery, setBibleQuery] = useState("");
   const [isFeedVisible, setIsFeedVisible] = useState(false);

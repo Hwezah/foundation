@@ -6,10 +6,10 @@ import { Tools } from "./foundationUtilities";
 import FoundationUtilities from "./foundationUtilities";
 
 export default function Hero() {
-  const { selectedVideo, setIsFeedVisible, isLoading } = useSearch();
+  const { selectedVideo, isLoading } = useSearch();
 
   return (
-    <div className="relative bg-[#01212c] h-fit  xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden">
+    <div className="relative bg-[#01212c]  xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden">
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -27,7 +27,7 @@ export default function Hero() {
         // Once the selected video is available, show the selected video
         <>
           <div className="hidden xl:block h-full">
-            <Tools setIsFeedVisible={setIsFeedVisible} />
+            {/* <Tools setIsFeedVisible={setIsFeedVisible} /> */}
           </div>
           <div className="w-full h-full aspect-video sticky top-0">
             <VideoEmbed

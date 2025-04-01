@@ -2,22 +2,10 @@ import { useState, useEffect } from "react";
 import { useSearch } from "./SearchContext";
 
 export default function Trending() {
-  const { description, isLoading, trends, setTrends, setSelectedVideo, error } =
+  const { description, isLoading, trends, setSelectedVideo, error } =
     useSearch();
 
   const [playingVideoId, setPlayingVideoId] = useState(null);
-
-  useEffect(() => {
-    // Load trends from localStorage on mount
-    const storedTrends = localStorage.getItem("trends");
-    if (storedTrends) {
-      try {
-        setTrends(JSON.parse(storedTrends));
-      } catch {
-        console.error("Invalid JSON in localStorage: trends");
-      }
-    }
-  }, []);
 
   useEffect(() => {
     if (trends && trends.length > 0) {
