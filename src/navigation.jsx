@@ -23,7 +23,7 @@ export default function Navigation() {
             Foundation.
           </h1>
         </div>
-        <div className="flex items-center justify-between lg:gap-4 gap-2 ">
+        <div className="flex items-center justify-between lg:gap-4 gap-1.5 ">
           <SearchBar showSearch={showSearch} setShowSearch={setShowSearch} />
           <Donations showSearch={showSearch} />
           <UserDashboard
@@ -68,7 +68,7 @@ function SearchBar({ showSearch, setShowSearch }) {
       <button
         onClick={() => isSmallScreen && setShowSearch(!showSearch)} // Only toggle on small screens
         className={`absolute top-1/2 -translate-y-1/2 rounded-full  text-white transition ${
-          showSearch ? "right-6" : "right-1"
+          showSearch ? "right-2" : "right-1"
         } md:right-6`} // Apply right-6 on medium screens and larger
       >
         <svg
@@ -91,7 +91,7 @@ function SearchBar({ showSearch, setShowSearch }) {
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className={`flex max-w-[350px] rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:max-w-[400px] font-bold text-gray-500 focus:outline-none ${
+        className={`flex xl:w-[350px] rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
           showSearch ? "block" : "hidden"
         } md:block`} // Conditionally display
         onKeyDown={(e) => {
