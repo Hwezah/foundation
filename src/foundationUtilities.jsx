@@ -17,7 +17,7 @@ export default function FoundationUtilities() {
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
             <p>{description ? `${description}'s Foundation.` : ""}</p>
           </h2>
-          <div className="flex justify-between bg-[#4a5759] px-3 py-2.5 items-center">
+          <div className="flex justify-between bg-[#4a5759] px-3 py-1 md:py-1.5 lg:py-2 items-center">
             <h3 className="w-3/4 xl:w-full truncate xl:truncate-two-lines">
               <span className="text-xl md:text-2xl lg:text-3xl text-white font-extrabold mr-3">
                 On:
