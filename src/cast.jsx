@@ -18,14 +18,14 @@ export default function Cast() {
           <path
             d="M14 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V8.5"
             stroke="#fff"
-            stroke-width="3"
+            stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           ></path>{" "}
           <path
             d="M7 18C7 16.3431 5.65685 15 4 15"
             stroke="#fff"
-            stroke-width="3"
+            stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           ></path>{" "}
@@ -39,7 +39,7 @@ export default function Cast() {
           <path
             d="M4 18L4 18.01"
             stroke="#fff"
-            stroke-width="3"
+            stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           ></path>{" "}
