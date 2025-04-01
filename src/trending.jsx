@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearch } from "./SearchContext";
 
 export default function Trending() {
@@ -6,13 +6,6 @@ export default function Trending() {
     useSearch();
 
   const [playingVideoId, setPlayingVideoId] = useState(null);
-
-  useEffect(() => {
-    if (trends && trends.length > 0) {
-      // Ensure trends is valid before storing
-      localStorage.setItem("trends", JSON.stringify(trends));
-    }
-  }, [trends]);
 
   return (
     <div>
