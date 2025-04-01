@@ -91,7 +91,7 @@ function SearchBar({ showSearch, setShowSearch }) {
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className={`flex lg:w-[350px] w-[250px] rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
+        className={`flex lg:w-[350px] w-[258px] rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
           showSearch ? "block" : "hidden"
         } md:block`} // Conditionally display
         onKeyDown={(e) => {
