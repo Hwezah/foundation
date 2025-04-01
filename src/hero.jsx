@@ -29,7 +29,7 @@ export default function Hero() {
           <div className="hidden xl:block h-full">
             {/* <Tools setIsFeedVisible={setIsFeedVisible} /> */}
           </div>
-          <div className="w-full h-full aspect-video sticky top-0">
+          <div className="w-full  aspect-video sticky top-0">
             <VideoEmbed
               className=" shadow-none rounded-none w-full h-full object-cover"
               videoId={selectedVideo.id.videoId}
