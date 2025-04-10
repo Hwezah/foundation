@@ -1,22 +1,21 @@
 import { useSearch } from "./SearchContext";
 import Bible from "./Services/Bible";
 export default function FoundationUtilities() {
-  const { selectedVideo, isFeedVisible, setIsFeedVisible, description } =
-    useSearch();
+  const { selectedVideo, isFeedVisible, setIsFeedVisible } = useSearch();
 
   return (
     <div
-      className={`xl:max-w-[35%] w-full bg-[#01212c] gap-6 xl:pt-0 xl:h-full h-fit ${
-        isFeedVisible ? "overflow-y-auto scrollbar-hidden" : ""
+      className={`xl:max-w-[40%] h-[40vh] bg-[#01212c] gap-6 xl:pt-0 ${
+        isFeedVisible ? "overflow-y-auto scrollbar-hidden " : ""
       }`}
     >
       {" "}
       <div className=" xl:w-full ">
         <div className="sticky top-0 bg-[#01212c]">
-          <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 px-4  pt-3">
+          {/* <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 px-4  pt-3">
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
             <p>{description ? `${description}'s Foundation.` : ""}</p>
-          </h2>
+          </h2> */}
           <div className="flex justify-between bg-[#4a5759] px-3 py-1 md:py-1.5 lg:py-2 items-center">
             <h3 className="w-3/4 xl:w-full truncate xl:truncate-two-lines">
               <span className="text-xl md:text-2xl lg:text-3xl text-white font-extrabold mr-3">
@@ -26,7 +25,7 @@ export default function FoundationUtilities() {
                 {selectedVideo.snippet.title}...
               </span>
             </h3>
-            <div className="xl:hidden">
+            <div className="">
               <Tools setIsFeedVisible={setIsFeedVisible} />
             </div>
           </div>
@@ -39,7 +38,7 @@ export default function FoundationUtilities() {
 
 export function Tools({ setIsFeedVisible }) {
   return (
-    <div className="xl:bg-[#01212c] xl:p-4 flex gap-2 xl:flex-col xl:justify-between">
+    <div className=" flex gap-2">
       <svg
         height={"34px"}
         width={"34px"}

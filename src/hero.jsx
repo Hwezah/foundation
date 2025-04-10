@@ -9,7 +9,7 @@ export default function Hero() {
   const { selectedVideo, isLoading } = useSearch();
 
   return (
-    <div className="relative bg-[#01212c] xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden">
+    <div className="relative bg-[#01212c]  xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden">
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -22,7 +22,11 @@ export default function Hero() {
         //   />
         // </video>
 
-        <img src="\Assets\pexels-jibarofoto-13963623.jpg" alt="" />
+        <img
+          className="w-full h-full object-cover object-center"
+          src="\Assets\pexels-jibarofoto-13963623.jpg"
+          alt=""
+        />
       ) : (
         // Once the selected video is available, show the selected video
         <>
