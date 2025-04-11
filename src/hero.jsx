@@ -9,7 +9,7 @@ export default function Hero() {
 
   return (
     <div
-      className=" bg-[#01212c] w-full
+      className=" bg-[#01212c] w-full sticky top-0 z-10
  xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden"
     >
       {/* If still loading, show the Loader */}
