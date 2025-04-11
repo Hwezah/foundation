@@ -2,7 +2,6 @@
 import { useSearch } from "./SearchContext";
 import { Loader } from "./trending";
 import { VideoEmbed } from "./trending";
-import { Tools } from "./foundationUtilities";
 import FoundationUtilities from "./foundationUtilities";
 
 export default function Hero() {

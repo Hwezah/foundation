@@ -63,13 +63,28 @@ function SearchBar({ showSearch, setShowSearch }) {
   }, []);
 
   return (
-    <div className="relative flex items-center md:block rounded-lg">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault(); // Prevent page reload
+        handleSearch(); // Perform search
+      }}
+      className="relative flex items-center md:block rounded-lg"
+    >
       {/* Button for small screens */}
       <button
-        onClick={() => isSmallScreen && setShowSearch(!showSearch)} // Only toggle on small screens
-        className={`absolute top-1/2 -translate-y-1/2 rounded-full  text-white transition ${
+        type="button"
+        onClick={() => {
+          if (isSmallScreen) {
+            if (!showSearch) {
+              setShowSearch(true); // Open search bar
+            } else {
+              handleSearch(); // Already open, perform search
+            }
+          }
+        }}
+        className={`absolute top-1/2 -translate-y-1/2 rounded-full text-white transition ${
           showSearch ? "right-2" : "right-1"
-        } md:right-6`} // Apply right-6 on medium screens and larger
+        } md:right-6`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -87,20 +102,15 @@ function SearchBar({ showSearch, setShowSearch }) {
         </svg>
       </button>
 
-      {/* Full search bar on medium screens and above */}
+      {/* Full search bar */}
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         className={`flex xl:w-[350px] rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
           showSearch ? "block" : "hidden"
-        } md:block`} // Conditionally display
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleSearch(); // Perform search and hide search bar
-          }
-        }}
+        } md:block`}
         placeholder="Search Foundation..."
       />
-    </div>
+    </form>
   );
 }
