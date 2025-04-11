@@ -1,12 +1,34 @@
 import { useState } from "react";
 import { useSearch } from "./SearchContext";
 import ReactPlayer from "react-player/youtube";
-
+import { fetchVideos } from "./Services/api";
 export default function Trending() {
-  const { description, isLoading, trends, setSelectedVideo, error } =
-    useSearch();
-
+  const {
+    description,
+    isLoading,
+    trends,
+    setSelectedVideo,
+    error,
+    setIsLoading,
+    setError,
+    setTrends,
+  } = useSearch();
   const [playingVideoId, setPlayingVideoId] = useState(null);
+  function handleLoadMore() {
+    const nextPageToken = localStorage.getItem("nextPageToken") || "";
+
+    if (nextPageToken) {
+      fetchVideos(
+        description,
+        setIsLoading,
+        setError,
+        setTrends,
+        nextPageToken
+      );
+    } else {
+      setError("No next page available.");
+    }
+  }
 
   return (
     <div>
@@ -23,7 +45,6 @@ export default function Trending() {
         </h2>
       </div>
       <ContentBar />
-
       <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
         {isLoading ? (
           <Loader />
@@ -43,6 +64,54 @@ export default function Trending() {
           <ErrorMessage message={error} />
         )}
       </ul>
+      <>
+        <button
+          onClick={handleLoadMore}
+          className="flex items-center gap-2 mx-auto
+ text-white  px-4 rounded-lg"
+        >
+          <svg
+            height={"44px"}
+            width={"44px"}
+            viewBox="-2.24 -2.24 36.48 36.48"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            fill="#fff"
+            stroke="#fff"
+            stroke-width="0.64"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              {" "}
+              <g id="icomoon-ignore"> </g>{" "}
+              <path
+                d="M20.462 10.824l-9.265 9.196 0.753 0.756 9.265-9.196z"
+                fill="#fff"
+              >
+                {" "}
+              </path>{" "}
+              <path
+                d="M6.937 21.864c-3.234 0-5.864-2.631-5.864-5.864s2.631-5.864 5.864-5.864c1.566 0 2.987 0.621 4.040 1.624l0.001-0.006 0.054 0.047 2.076 2.066h-1.905v1.066h3.732v-3.732h-1.066v1.918l-2.084-2.074-0.005 0.005c-1.251-1.224-2.959-1.982-4.842-1.982-3.821 0-6.931 3.109-6.931 6.931s3.109 6.931 6.931 6.931c1.971 0 3.747-0.831 5.011-2.156l-0.753-0.754c-1.070 1.132-2.581 1.844-4.258 1.844z"
+                fill="#fff"
+              >
+                {" "}
+              </path>{" "}
+              <path
+                d="M25.063 9.069c-1.765 0-3.373 0.668-4.597 1.759l0.753 0.753c1.030-0.898 2.373-1.446 3.844-1.446 3.234 0 5.864 2.631 5.864 5.864s-2.631 5.864-5.864 5.864c-1.56 0-2.976-0.616-4.028-1.613l-0.002 0.010-3.531-3.518-0.757 0.751 3.535 3.522 0.006-0.006c1.245 1.187 2.925 1.921 4.776 1.921 3.821 0 6.931-3.109 6.931-6.931s-3.109-6.931-6.931-6.931z"
+                fill="#fff"
+              >
+                {" "}
+              </path>{" "}
+            </g>
+          </svg>
+        </button>
+      </>
     </div>
   );
 }

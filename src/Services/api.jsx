@@ -2,37 +2,37 @@ export async function fetchVideos(
   description,
   setIsLoading,
   setError,
-  setTrends
+  setTrends,
+  pageToken = ""
 ) {
-  if (!description.trim()) return; // Prevent empty searches
-
+  setIsLoading(true);
+  setError(null); // Clear previous errors
   const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
   const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
     description
-  )}&maxResults=50&type=video&key=${API_KEY}`;
+  )}&maxResults=50&pageToken=${pageToken}&type=video&key=${API_KEY}`;
 
   try {
-    setIsLoading(true);
-    setError("");
-
     const response = await fetch(URL);
-    if (!response.ok) {
-      throw new Error(
-        ":) Something went wrong fetching your foundation, please try again."
-      );
-    }
-
     const data = await response.json();
-    if (data.response === "False") {
-      throw new Error(
-        ":) Cannot find requested foundation, try another search."
+    console.log(data);
+    if (response.ok) {
+      // Update trends with the new results
+      setTrends((prevTrends) =>
+        pageToken === "" ? data.items : [...prevTrends, ...data.items]
       );
-    }
 
-    setTrends(data.items || []);
-    localStorage.setItem("trends", JSON.stringify(data.items));
-  } catch (err) {
-    setError(err.message);
+      // Store the nextPageToken in localStorage for the next request
+      if (data.nextPageToken) {
+        localStorage.setItem("nextPageToken", data.nextPageToken);
+      } else {
+        localStorage.removeItem("nextPageToken"); // No more pages
+      }
+    } else {
+      throw new Error(data.error.message);
+    }
+  } catch (error) {
+    setError(error.message);
   } finally {
     setIsLoading(false);
   }
