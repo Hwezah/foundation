@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSearch } from "./SearchContext";
+import ReactPlayer from "react-player/youtube";
 
 export default function Trending() {
   const { description, isLoading, trends, setSelectedVideo, error } =
@@ -105,19 +106,23 @@ export function VideoEmbed({
   videoId,
   title,
   width = "100%",
-  height = "200px",
+  height = "100%",
   className = "",
 }) {
   return (
-    <iframe
-      width={width}
-      height={height}
-      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
-      title={title}
-      className={` shadow-none hover:shadow-none focus:outline-none ${className} `}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    ></iframe>
+    <div
+      className={`relative ${className}`}
+      style={{ width, height }}
+      aria-label={title}
+    >
+      <ReactPlayer
+        url={`https://www.youtube.com/watch?v=${videoId}&modestbranding=1`}
+        width="100%"
+        height="100%"
+        playing
+        controls={false} // or true if you want native controls
+      />
+    </div>
   );
 }
 
