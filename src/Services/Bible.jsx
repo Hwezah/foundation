@@ -294,7 +294,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
         </button>
       </form>
 
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-amber-500">{error}</p>}
 
       {result && (
         <BibleDisplay result={result} isVerseByVerse={isVerseByVerse} />

@@ -5,8 +5,8 @@ export default function FoundationUtilities() {
 
   return (
     <div
-      className={`xl:max-w-[40%] bg-[#01212c] gap-6 xl:pt-0 ${
-        isFeedVisible ? "overflow-y-auto scrollbar-hidden " : ""
+      className={`xl:max-w-[40%] overflow-auto max-h-full bg-[#01212c] gap-6 xl:pt-0 ${
+        isFeedVisible ? " scrollbar-hidden " : ""
       }`}
     >
       {" "}

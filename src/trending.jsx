@@ -120,7 +120,7 @@ export function VideoEmbed({
         width="100%"
         height="100%"
         playing
-        controls={false} // or true if you want native controls
+        controls={true} // or true if you want native controls
       />
     </div>
   );
