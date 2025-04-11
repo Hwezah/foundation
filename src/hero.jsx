@@ -9,7 +9,10 @@ export default function Hero() {
   const { selectedVideo, isLoading } = useSearch();
 
   return (
-    <div className=" bg-[#01212c] w-full  xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden">
+    <div
+      className=" bg-[#01212c] w-full
+ xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden"
+    >
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
@@ -33,9 +36,9 @@ export default function Hero() {
           <div className="hidden xl:block h-full">
             {/* <Tools setIsFeedVisible={setIsFeedVisible} /> */}
           </div>
-          <div className="w-full aspect-video relative">
+          <div className="w-full aspect-video ">
             <VideoEmbed
-              className=" shadow-none rounded-none w-full h-full object-cover absolute top-0 left-0"
+              className=" shadow-none rounded-none w-full h-full object-cover "
               videoId={selectedVideo.id.videoId}
               title={selectedVideo.snippet.title}
             />

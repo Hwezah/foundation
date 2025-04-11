@@ -36,7 +36,7 @@ function BibleDisplay({ result, isVerseByVerse }) {
   return (
     <div className="bible-display">
       <div className="mt-1 px-2">
-        <h3 className="text-lg font-bold">{result.reference}</h3>
+        <h3 className="text-lg font-bold text-blue-400">{result.reference}</h3>
         <p className="text-gray-200">
           {result.content
             .split(/(?=\b\d{1,3}[^a-zA-Z0-9]*[A-Z])/)
