@@ -27,7 +27,7 @@ export default function Hero() {
         // </video>
 
         <img
-          className="w-full h-full object-cover object-center"
+          className="w-full max-h-[60vh] object-cover object-center"
           src="\Assets\pexels-jibarofoto-13963623.jpg"
           alt=""
         />

@@ -1,13 +1,16 @@
 import { useSearch } from "./SearchContext";
 import Bible from "./Services/Bible";
 export default function FoundationUtilities() {
-  const { selectedVideo, isFeedVisible, setIsFeedVisible } = useSearch();
+  const { selectedVideo, isFeedVisible, setIsFeedVisible, verse, chapter } =
+    useSearch();
 
   return (
     <div
-      className={`xl:max-w-[40%] overflow-y-auto max-h-full bg-[#01212c] gap-6 xl:pt-0 ${
-        isFeedVisible ? "scrollbar-hidden " : ""
-      }`}
+      className={`xl:max-w-[40%] 
+         max-h-[28rem] 
+       overflow-y-auto  bg-[#01212c] gap-6 xl:pt-0 ${
+         isFeedVisible ? "scrollbar-hidden " : ""
+       }`}
     >
       {" "}
       <div className=" xl:w-full ">
