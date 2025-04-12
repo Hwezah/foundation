@@ -1,5 +1,6 @@
 import { useSearch } from "./SearchContext";
 import Bible from "./Services/Bible";
+import User from "./user";
 export default function FoundationUtilities() {
   const { selectedVideo, isFeedVisible, setIsFeedVisible, verse, chapter } =
     useSearch();
@@ -107,6 +108,162 @@ export function Tools({ setIsFeedVisible }) {
           ></path>{" "}
         </g>
       </svg>
+    </div>
+  );
+}
+
+export function BaseTools() {
+  return (
+    <div className=" w-full bg-[#01212c] p-1.5 block sm:hidden sticky bottom-0">
+      <div className="flex items-center justify-around ">
+        <svg
+          height={"34px"}
+          width={"34px"}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            {" "}
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M2.5192 7.82274C2 8.77128 2 9.91549 2 12.2039V13.725C2 17.6258 2 19.5763 3.17157 20.7881C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.7881C22 19.5763 22 17.6258 22 13.725V12.2039C22 9.91549 22 8.77128 21.4808 7.82274C20.9616 6.87421 20.0131 6.28551 18.116 5.10812L16.116 3.86687C14.1106 2.62229 13.1079 2 12 2C10.8921 2 9.88939 2.62229 7.88403 3.86687L5.88403 5.10813C3.98695 6.28551 3.0384 6.87421 2.5192 7.82274ZM11.25 18C11.25 18.4142 11.5858 18.75 12 18.75C12.4142 18.75 12.75 18.4142 12.75 18V15C12.75 14.5858 12.4142 14.25 12 14.25C11.5858 14.25 11.25 14.5858 11.25 15V18Z"
+              fill="#fff"
+            ></path>{" "}
+          </g>
+        </svg>
+        <svg
+          height={"34px"}
+          width={"34px"}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            {" "}
+            <path
+              opacity="0.1"
+              d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+              fill="#fff"
+            ></path>{" "}
+            <path
+              d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+              stroke="#fff"
+              stroke-width="2"
+            ></path>{" "}
+            <path
+              d="M12 16L12 8"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>{" "}
+            <path
+              d="M9 13L11.913 15.913V15.913C11.961 15.961 12.039 15.961 12.087 15.913V15.913L15 13"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>{" "}
+          </g>
+        </svg>
+        <svg
+          height={"34px"}
+          width={"34px"}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            {" "}
+            <path
+              opacity="0.1"
+              d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
+              fill="#fff"
+            ></path>{" "}
+            <path
+              d="M9 12H15"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>{" "}
+            <path
+              d="M12 9L12 15"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>{" "}
+            <path
+              d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
+              stroke="#fff"
+              stroke-width="2"
+            ></path>{" "}
+          </g>
+        </svg>
+        <svg
+          height={"29px"}
+          width={"29px"}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            {" "}
+            <path
+              d="M18.5 12C18.5 13.3807 17.3807 14.5 16 14.5C14.6193 14.5 13.5 13.3807 13.5 12C13.5 10.6193 14.6193 9.5 16 9.5C17.3807 9.5 18.5 10.6193 18.5 12Z"
+              stroke="#fff"
+              stroke-width="2.5"
+            ></path>{" "}
+            <path
+              d="M10.5 12C10.5 13.3807 9.38071 14.5 8 14.5C6.61929 14.5 5.5 13.3807 5.5 12C5.5 10.6193 6.61929 9.5 8 9.5C9.38071 9.5 10.5 10.6193 10.5 12Z"
+              stroke="#fff"
+              stroke-width="2.5"
+            ></path>{" "}
+            <path
+              d="M8 14.5H16"
+              stroke="#fff"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            ></path>{" "}
+            <path
+              d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
+              stroke="#fff"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            ></path>{" "}
+          </g>
+        </svg>
+        <div className="">
+          <User className="w-8 h-8" stroke="#fff" strokeWidth="2.2" />
+        </div>
+      </div>
     </div>
   );
 }
@@ -243,133 +400,3 @@ export function Tools({ setIsFeedVisible }) {
 //     </div>
 //   );
 // };
-
-export function BaseTools() {
-  return (
-    <div className=" w-full bg-[#4a5759] p-1.5 block sm:hidden sticky bottom-0">
-      <div className="flex items-center justify-around ">
-        <svg
-          height={"34px"}
-          width={"34px"}
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            {" "}
-            <path
-              opacity="0.1"
-              d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
-              fill="#323232"
-            ></path>{" "}
-            <path
-              d="M9 12H15"
-              stroke="#323232"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>{" "}
-            <path
-              d="M12 9L12 15"
-              stroke="#323232"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>{" "}
-            <path
-              d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
-              stroke="#323232"
-              stroke-width="2"
-            ></path>{" "}
-          </g>
-        </svg>
-        <svg
-          height={"34px"}
-          width={"34px"}
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            {" "}
-            <path
-              opacity="0.1"
-              d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-              fill="#323232"
-            ></path>{" "}
-            <path
-              d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-              stroke="#323232"
-              stroke-width="2"
-            ></path>{" "}
-            <path
-              d="M12 16L12 8"
-              stroke="#323232"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>{" "}
-            <path
-              d="M9 13L11.913 15.913V15.913C11.961 15.961 12.039 15.961 12.087 15.913V15.913L15 13"
-              stroke="#323232"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>{" "}
-          </g>
-        </svg>
-        <svg
-          height={"29px"}
-          width={"29px"}
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            {" "}
-            <path
-              d="M18.5 12C18.5 13.3807 17.3807 14.5 16 14.5C14.6193 14.5 13.5 13.3807 13.5 12C13.5 10.6193 14.6193 9.5 16 9.5C17.3807 9.5 18.5 10.6193 18.5 12Z"
-              stroke="#323232"
-              stroke-width="2.5"
-            ></path>{" "}
-            <path
-              d="M10.5 12C10.5 13.3807 9.38071 14.5 8 14.5C6.61929 14.5 5.5 13.3807 5.5 12C5.5 10.6193 6.61929 9.5 8 9.5C9.38071 9.5 10.5 10.6193 10.5 12Z"
-              stroke="#323232"
-              stroke-width="2.5"
-            ></path>{" "}
-            <path
-              d="M8 14.5H16"
-              stroke="#323232"
-              stroke-width="2.5"
-              stroke-linecap="round"
-            ></path>{" "}
-            <path
-              d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
-              stroke="#323232"
-              stroke-width="2.5"
-              stroke-linecap="round"
-            ></path>{" "}
-          </g>
-        </svg>
-      </div>
-    </div>
-  );
-}

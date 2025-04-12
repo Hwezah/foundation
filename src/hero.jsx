@@ -6,13 +6,12 @@ import FoundationUtilities from "./foundationUtilities";
 
 export default function Hero() {
   const { selectedVideo, isLoading, book, chapter, verse } = useSearch();
-  const isSticky = book && chapter && !verse; // Check if book and chapter are defined
+  // const isSticky = book && chapter && !verse; // Check if book and chapter are defined
 
   return (
     <div
-      className={`bg-[#01212c] w-full ${
-        isSticky ? "" : "sticky top-0 z-10"
-      } xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden`}
+      className={`bg-[#01212c] w-full sticky top-0 z-10 
+       xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden`}
     >
       {/* If still loading, show the Loader */}
       {isLoading ? (

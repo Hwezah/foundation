@@ -23,7 +23,9 @@ export default function UserDashboard() {
     >
       <Cast />
       <Notifications />
-      <User />
+      <div className="hidden lg:block">
+        <User />
+      </div>
       <Settings />
     </div>
   );

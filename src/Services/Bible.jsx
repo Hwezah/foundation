@@ -123,17 +123,22 @@ export const BibleSearch = ({ fetchBibleData }) => {
   const { setIsLoading } = useSearch();
   const [isVerseByVerse, setIsVerseByVerse] = useState(false);
   const toggleDisplayStyle = () => setIsVerseByVerse((prev) => !prev);
-  const [showForm, setShowForm] = useState(false);
-  ////autohiding the form on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setShowForm(scrollY > 1);
-    };
+  // const [showForm, setShowForm] = useState(false);
+  // ////autohiding the form on scroll
+  // useEffect(() => {
+  //   function handleInteraction() {
+  //     setShowForm(true);
+  //   }
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  //   window.addEventListener("touchstart", handleInteraction);
+  //   window.addEventListener("scroll", handleInteraction);
+
+  //   return () => {
+  //     window.removeEventListener("touchstart", handleInteraction);
+  //     window.removeEventListener("scroll", handleInteraction);
+  //   };
+  // }, []);
+
   // Top of the BibleSearch.js or Bible.js file
 
   const books = {
@@ -262,53 +267,50 @@ export const BibleSearch = ({ fetchBibleData }) => {
 
   return (
     <div className="p-2 pt-2 gap-4">
-      {showForm && (
-        <form
-          className="flex gap-2 justify-end"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleBibleSearch();
-          }}
+      <form
+        className="flex gap-2 w-[100%] justify-end"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleBibleSearch();
+        }}
+      >
+        <BibleDisplayToggle
+          isVerseByVerse={isVerseByVerse}
+          toggleDisplayStyle={toggleDisplayStyle}
+        />
+
+        <input
+          className="bg-[#022b3a] border-none focus:outline-none w-fit min-w-[100px] border rounded px-2"
+          type="text"
+          placeholder="Book"
+          value={book}
+          onChange={(e) => setBook(e.target.value)}
+        />
+        <input
+          className="appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [moz-appearance:textfield] bg-[#022b3a] border-none focus:outline-none w-[8ch] border border-gray-300 rounded px-2 appearance-none"
+          type="number"
+          placeholder="Chapter"
+          value={chapter}
+          onChange={(e) => setChapter(e.target.value)}
+        />
+        <input
+          className="appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [moz-appearance:textfield] bg-[#022b3a] border-none focus:outline-none w-[6ch] border border-gray-300 rounded px-2 appearance-none"
+          type="number"
+          placeholder="Verse"
+          value={verse}
+          onChange={(e) => setVerse(e.target.value)}
+        />
+
+        <button
+          type="submit"
+          className="hidden sm:inline-block bg-[#4a5759] text-white px-3 py-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
         >
-          <BibleDisplayToggle
-            isVerseByVerse={isVerseByVerse}
-            toggleDisplayStyle={toggleDisplayStyle}
-          />
-
-          <input
-            className="bg-[#022b3a] border-none focus:outline-none w-[9rem] border rounded px-2"
-            type="text"
-            placeholder="Book (e.g., GEN)"
-            value={book}
-            onChange={(e) => setBook(e.target.value)}
-          />
-          <input
-            className="appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [moz-appearance:textfield] bg-[#022b3a] border-none focus:outline-none w-[8ch] border border-gray-300 rounded px-2"
-            type="number"
-            placeholder="Chapter"
-            value={chapter}
-            onChange={(e) => setChapter(e.target.value)}
-          />
-          <input
-            className="appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [moz-appearance:textfield] bg-[#022b3a] border-none focus:outline-none w-[6ch] border border-gray-300 rounded px-2"
-            type="number"
-            placeholder="Verse"
-            value={verse}
-            onChange={(e) => setVerse(e.target.value)}
-          />
-
-          <button
-            type="submit"
-            className="hidden sm:inline-block bg-[#4a5759] text-white px-3 py-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
-          >
-            Search
-          </button>
-          <button type="submit" className="sm:hidden py-1">
-            <Search />
-          </button>
-        </form>
-      )}
-
+          Search
+        </button>
+        <button type="submit" className="sm:hidden py-1">
+          <Search />
+        </button>
+      </form>
       {error && <p className="text-amber-500">{error}</p>}
       {result && (
         <BibleDisplay result={result} isVerseByVerse={isVerseByVerse} />

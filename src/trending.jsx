@@ -32,7 +32,7 @@ export default function Trending() {
 
   return (
     <div>
-      <div className=" lg:pt-6 px-2 pt-6 xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 xl:pt-10 ">
+      <div className=" lg:pt-6 px-2 pt-6 xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 xl:pt-10">
         <h2 className="text-xl md:text-3xl font-black tracking-wide pb-1 ">
           Trends.{" "}
           {description && (
@@ -45,7 +45,7 @@ export default function Trending() {
         </h2>
       </div>
       <ContentBar />
-      <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
+      <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4">
         {isLoading ? (
           <Loader />
         ) : trends.length ? (
