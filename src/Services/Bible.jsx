@@ -117,9 +117,7 @@ export default function Bible() {
 
 export const BibleSearch = ({ fetchBibleData }) => {
   const [bibleId, setBibleId] = useState("de4e12af7f28f599-01");
-  const [book, setBook] = useState("");
-  const [chapter, setChapter] = useState("");
-  const [verse, setVerse] = useState("");
+  const { chapter, setChapter, verse, setVerse, book, setBook } = useSearch();
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const { setIsLoading } = useSearch();

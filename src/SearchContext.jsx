@@ -14,6 +14,9 @@ export function SearchProvider({ children }) {
   const [bibleQuery, setBibleQuery] = useState("");
   const [isFeedVisible, setIsFeedVisible] = useState(false);
   const [error, setError] = useState("");
+  const [book, setBook] = useState("");
+  const [chapter, setChapter] = useState("");
+  const [verse, setVerse] = useState("");
 
   return (
     <SearchContext.Provider
@@ -33,6 +36,12 @@ export function SearchProvider({ children }) {
         setTrends,
         error,
         setError,
+        verse,
+        setVerse,
+        chapter,
+        setChapter,
+        book,
+        setBook,
       }}
     >
       {children}
