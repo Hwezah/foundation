@@ -36,11 +36,11 @@ export default function Trending() {
         <h2 className="text-xl md:text-3xl font-black tracking-wide pb-1 ">
           Trends.{" "}
           {description && (
-            <h2 className="text-[#4a5759]">
+            <span className="text-[#4a5759]">
               {" "}
               {/* Add any class here */}
               {`${description}'s foundation.`}
-            </h2>
+            </span>
           )}
         </h2>
       </div>
