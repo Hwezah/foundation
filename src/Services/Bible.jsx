@@ -1,7 +1,6 @@
 import { useSearch } from "../SearchContext";
-import { useState, useEffect } from "react";
-import { Loader } from "../trending";
-import { strokeColor } from "../constants";
+import { useState } from "react";
+import Fuse from "fuse.js";
 
 const BASE_URL = "https://api.scripture.api.bible/v1/bibles";
 const API_KEY = "2917b29dcc612336646fc8dd29282dbd";
@@ -22,6 +21,7 @@ const fetchBibleData = async (endpoint, setError, setIsLoading) => {
     }
 
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.error("Bible API Error:", error.message);
@@ -32,11 +32,16 @@ const fetchBibleData = async (endpoint, setError, setIsLoading) => {
   }
 };
 
-function BibleDisplay({ result, isVerseByVerse }) {
+function BibleDisplay({ result, isVerseByVerse, bibleVersion }) {
   return (
     <div className="bible-display">
       <div className="mt-1 px-2">
-        <h3 className="text-lg font-bold text-blue-400">{result.reference}</h3>
+        <h3 className="text-lg font-bold text-blue-400">
+          {result.reference}
+          <span className="text-xs text-white font-semibold px-2">
+            {bibleVersion}
+          </span>
+        </h3>
         <p className="text-gray-200">
           {result.content
             .split(/(?=\b\d{1,3}[^a-zA-Z0-9]*[A-Z])/)
@@ -68,7 +73,7 @@ function BibleDisplayToggle({ isVerseByVerse, toggleDisplayStyle }) {
   return (
     <button
       onClick={toggleDisplayStyle}
-      className="bg-[#022b3a] text-white px-2 py-0.5 lg:py-1 rounded "
+      className="bg-[#022b3a] text-white px-1.5 py-0.5 lg:py-1 rounded "
     >
       {isVerseByVerse ? (
         <svg
@@ -116,126 +121,221 @@ export default function Bible() {
 }
 
 export const BibleSearch = ({ fetchBibleData }) => {
-  const [bibleId, setBibleId] = useState("de4e12af7f28f599-01");
-  const { chapter, setChapter, verse, setVerse, book, setBook } = useSearch();
+  const {
+    chapter,
+    setChapter,
+    verse,
+    setVerse,
+    book,
+    setBook,
+    setIsLoading,
+    isLoading,
+  } = useSearch();
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-  const { setIsLoading } = useSearch();
+  const BIBLE_IDS = {
+    KJV: "f276be3571f516cb-01",
+    GANDA: "de4e12af7f28f599-01",
+  };
+  const [bibleVersion, setBibleVersion] = useState("KJV");
+  const bibleId = BIBLE_IDS[bibleVersion];
+
   const [isVerseByVerse, setIsVerseByVerse] = useState(false);
   const toggleDisplayStyle = () => setIsVerseByVerse((prev) => !prev);
-  // const [showForm, setShowForm] = useState(false);
-  // ////autohiding the form on scroll
-  // useEffect(() => {
-  //   function handleInteraction() {
-  //     setShowForm(true);
-  //   }
 
-  //   window.addEventListener("touchstart", handleInteraction);
-  //   window.addEventListener("scroll", handleInteraction);
-
-  //   return () => {
-  //     window.removeEventListener("touchstart", handleInteraction);
-  //     window.removeEventListener("scroll", handleInteraction);
-  //   };
-  // }, []);
-
-  // Top of the BibleSearch.js or Bible.js file
-
-  const books = {
-    GEN: "Genesis",
-    EXO: "Exodus",
-    LEV: "Leviticus",
-    NUM: "Numbers",
-    DEU: "Deuteronomy",
-    JOS: "Joshua",
-    JDG: "Judges",
-    RUT: "Ruth",
-    "1SA": "1 Samuel",
-    "2SA": "2 Samuel",
-    "1KI": "1 Kings",
-    "2KI": "2 Kings",
-    "1CH": "1 Chronicles",
-    "2CH": "2 Chronicles",
-    EZR: "Ezra",
-    NEH: "Nehemiah",
-    EST: "Esther",
-    JOB: "Job",
-    PSA: "Psalms",
-    PRO: "Proverbs",
-    ECC: "Ecclesiastes",
-    SNG: "Song of Solomon",
-    ISA: "Isaiah",
-    JER: "Jeremiah",
-    LAM: "Lamentations",
-    EZK: "Ezekiel",
-    DAN: "Daniel",
-    HOS: "Hosea",
-    JOEL: "Joel",
-    AMO: "Amos",
-    OBA: "Obadiah",
-    JON: "Jonah",
-    MIC: "Micah",
-    NAH: "Nahum",
-    HAB: "Habakkuk",
-    ZEP: "Zephaniah",
-    HAG: "Haggai",
-    ZEC: "Zechariah",
-    MAL: "Malachi",
-    MAT: "Matthew",
-    MRK: "Mark",
-    LUK: "Luke",
-    JHN: "John",
-    ACT: "Acts",
-    ROM: "Romans",
-    "1CO": "1 Corinthians",
-    "2CO": "2 Corinthians",
-    GAL: "Galatians",
-    EPH: "Ephesians",
-    PHP: "Philippians",
-    COL: "Colossians",
-    "1TH": "1 Thessalonians",
-    "2TH": "2 Thessalonians",
-    "1TI": "1 Timothy",
-    "2TI": "2 Timothy",
-    TIT: "Titus",
-    PHM: "Philemon",
-    HEB: "Hebrews",
-    JAM: "James",
-    "1PE": "1 Peter",
-    "2PE": "2 Peter",
-    "1JN": "1 John",
-    "2JN": "2 John",
-    "3JN": "3 John",
-    JUD: "Jude",
-    REV: "Revelation",
+  const booksByVersion = {
+    KJV: {
+      GEN: "Genesis",
+      EXO: "Exodus",
+      LEV: "Leviticus",
+      NUM: "Numbers",
+      DEU: "Deuteronomy",
+      JOS: "Joshua",
+      JDG: "Judges",
+      RUT: "Ruth",
+      "1SA": "1 Samuel",
+      "2SA": "2 Samuel",
+      "1KI": "1 Kings",
+      "2KI": "2 Kings",
+      "1CH": "1 Chronicles",
+      "2CH": "2 Chronicles",
+      EZR: "Ezra",
+      NEH: "Nehemiah",
+      EST: "Esther",
+      JOB: "Job",
+      PSA: "Psalms",
+      PRO: "Proverbs",
+      ECC: "Ecclesiastes",
+      SNG: "Song of Solomon",
+      ISA: "Isaiah",
+      JER: "Jeremiah",
+      LAM: "Lamentations",
+      EZK: "Ezekiel",
+      DAN: "Daniel",
+      HOS: "Hosea",
+      JOEL: "Joel",
+      AMO: "Amos",
+      OBA: "Obadiah",
+      JON: "Jonah",
+      MIC: "Micah",
+      NAH: "Nahum",
+      HAB: "Habakkuk",
+      ZEP: "Zephaniah",
+      HAG: "Haggai",
+      ZEC: "Zechariah",
+      MAL: "Malachi",
+      MAT: "Matthew",
+      MRK: "Mark",
+      LUK: "Luke",
+      JHN: "John",
+      ACT: "Acts",
+      ROM: "Romans",
+      "1CO": "1 Corinthians",
+      "2CO": "2 Corinthians",
+      GAL: "Galatians",
+      EPH: "Ephesians",
+      PHP: "Philippians",
+      COL: "Colossians",
+      "1TH": "1 Thessalonians",
+      "2TH": "2 Thessalonians",
+      "1TI": "1 Timothy",
+      "2TI": "2 Timothy",
+      TIT: "Titus",
+      PHM: "Philemon",
+      HEB: "Hebrews",
+      JAM: "James",
+      "1PE": "1 Peter",
+      "2PE": "2 Peter",
+      "1JN": "1 John",
+      "2JN": "2 John",
+      "3JN": "3 John",
+      JUD: "Jude",
+      REV: "Revelation",
+    },
+    GANDA: {
+      GEN: "Olubereberye",
+      EXO: "Okuva",
+      LEV: "Ebyabaleevi",
+      NUM: "Okubala",
+      DEU: "Ekyamateeka Olwokubiri",
+      JOS: "Yoswa",
+      JDG: "Balam",
+      RUT: "Luusi",
+      "1SA": "1 Samwiri",
+      "2SA": "2 Samwiri",
+      "1KI": "1 Bassekabaka",
+      "2KI": "2 Bassekabaka",
+      "1CH": "1 Ebyomumirembe",
+      "2CH": "2 Ebyomumirembe",
+      EZR: "Ezera",
+      NEH: "Nekkemiya",
+      EST: "Eseza",
+      JOB: "Yobu",
+      PSA: "Zabbuli",
+      PRO: "Engero",
+      ECC: "Omubuulizi",
+      SNG: "Oluyimba",
+      ISA: "Isaaya",
+      JER: "Yeremiya",
+      LAM: "Okukungubaga",
+      EZK: "Ezeekyeri",
+      DAN: "Danyeri",
+      HOS: "Koseya",
+      JOEL: "Yoweeri",
+      AMO: "Amosi",
+      OBA: "Obadiya",
+      JON: "Yona",
+      MIC: "Mikka",
+      NAH: "Nakum",
+      HAB: "Kaabakuuku",
+      ZEP: "Zeffaniya",
+      HAG: "Kaggayi",
+      ZEC: "Zekkaliya",
+      MAL: "Malaki",
+      MAT: "Matayo",
+      MRK: "Makko",
+      LUK: "Lukka",
+      JHN: "Yokaana",
+      ACT: "Ebikolwa byʼAbatume",
+      ROM: "Abaruumi",
+      "1CO": "1 Abakkolinso",
+      "2CO": "2 Abakkolinso",
+      GAL: "Abaggalatiya",
+      EPH: "Ephesians",
+      PHP: "Abaefeso",
+      COL: "Abakkolosaayi",
+      "1TH": "1 Basessaloniika",
+      "2TH": "2 Basessaloniika",
+      "1TI": "1 Timoseewo",
+      "2TI": "2 Timoseewo",
+      TIT: "Tito",
+      PHM: "Firemooni",
+      HEB: "Abaebbulaniya",
+      JAM: "Yakobo",
+      "1PE": "1 Peetero",
+      "2PE": "2 Peetero",
+      "1JN": "1 Yokaana",
+      "2JN": "2 Yokaana",
+      "3JN": "3 Yokaana",
+      JUD: "Yuda",
+      REV: "Okubikkulirwa",
+    },
+    // Other versions
   };
 
   const normalizeBook = (input) => {
     const userInput = input.trim().toLowerCase();
 
-    // Exact match: abbreviation or full name
-    for (const [abbr, name] of Object.entries(books)) {
-      if (
-        abbr.toLowerCase() === userInput ||
-        name.toLowerCase() === userInput
-      ) {
-        return abbr;
+    // 1. Exact match (abbreviation or name)
+    for (const version of Object.keys(booksByVersion)) {
+      const mapping = booksByVersion[version];
+      for (const [abbr, name] of Object.entries(mapping)) {
+        if (
+          abbr.toLowerCase() === userInput ||
+          name.toLowerCase() === userInput
+        ) {
+          return abbr; // Return standardized abbreviation
+        }
       }
     }
 
-    // Starts with (fuzzy match)
-    for (const [abbr, name] of Object.entries(books)) {
-      if (name.toLowerCase().startsWith(userInput)) {
-        return abbr;
+    // 2. Starts with (simple fuzzy-ish)
+    for (const version of Object.keys(booksByVersion)) {
+      const mapping = booksByVersion[version];
+      for (const [abbr, name] of Object.entries(mapping)) {
+        if (name.toLowerCase().startsWith(userInput)) {
+          return abbr;
+        }
       }
     }
 
-    return null; // No match found
+    // 3. Fuzzy match with Fuse.js
+    const books = [];
+    for (const version of Object.keys(booksByVersion)) {
+      for (const [abbr, name] of Object.entries(booksByVersion[version])) {
+        books.push({ abbr, name });
+      }
+    }
+
+    const fuse = new Fuse(books, {
+      keys: ["abbr", "name"],
+      threshold: 0.4, // tweak if needed
+    });
+
+    const result = fuse.search(userInput);
+    if (result.length > 0) {
+      return result[0].item.abbr;
+    }
+
+    return null;
   };
 
   const handleBibleSearch = async () => {
     setError(null);
     setResult(null);
+    setIsLoading(true);
+
+    if (isLoading || !book || !chapter) return;
 
     if (!book || !chapter) {
       setError("Please provide both the book and chapter.");
@@ -243,7 +343,9 @@ export const BibleSearch = ({ fetchBibleData }) => {
       return;
     }
 
-    const abbr = normalizeBook(book);
+    const abbr = normalizeBook(book); // ✅ get abbreviation here
+    // const abbr = getFuzzyBookAbbr(userInput);
+
     if (!abbr) {
       setError("Book not recognized.");
       setIsLoading(false);
@@ -259,6 +361,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
       : `${BASE_URL}/${bibleId}/chapters/${verseId}`;
 
     const data = await fetchBibleData(endpoint, setError, setIsLoading);
+
     if (data && !data.error) {
       const cleanContent = data.data.content.replace(/<[^>]*>/g, "");
       setResult({ ...data.data, content: cleanContent });
@@ -266,9 +369,9 @@ export const BibleSearch = ({ fetchBibleData }) => {
   };
 
   return (
-    <div className="p-2 pt-2 gap-4">
+    <div className="p-2">
       <form
-        className="flex gap-2 w-[100%] justify-end"
+        className="flex gap-1 justify-end mb-3"
         onSubmit={(e) => {
           e.preventDefault();
           handleBibleSearch();
@@ -278,6 +381,39 @@ export const BibleSearch = ({ fetchBibleData }) => {
           isVerseByVerse={isVerseByVerse}
           toggleDisplayStyle={toggleDisplayStyle}
         />
+        <button
+          onClick={() =>
+            setBibleVersion((prev) => (prev === "KJV" ? "GANDA" : "KJV"))
+          }
+          className="px-1 py-0.5 sm:inline-block bg-[#4a5759] text-white p-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
+        >
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              {" "}
+              <path
+                opacity="0.4"
+                d="M16.8203 2H7.18031C5.05031 2 3.32031 3.74 3.32031 5.86V19.95C3.32031 21.75 4.61031 22.51 6.19031 21.64L11.0703 18.93C11.5903 18.64 12.4303 18.64 12.9403 18.93L17.8203 21.64C19.4003 22.52 20.6903 21.76 20.6903 19.95V5.86C20.6803 3.74 18.9503 2 16.8203 2Z"
+                fill="#fff"
+              ></path>{" "}
+              <path
+                d="M12.0007 10.2801C10.9807 10.2801 9.96074 10.1001 8.99074 9.75005C8.60074 9.61005 8.40074 9.18005 8.54074 8.79005C8.69074 8.40005 9.12074 8.20005 9.51074 8.34005C11.1207 8.92005 12.8907 8.92005 14.5007 8.34005C14.8907 8.20005 15.3207 8.40005 15.4607 8.79005C15.6007 9.18005 15.4007 9.61005 15.0107 9.75005C14.0407 10.1001 13.0207 10.2801 12.0007 10.2801Z"
+                fill="#292D32"
+              ></path>{" "}
+            </g>
+          </svg>
+        </button>
 
         <input
           className="bg-[#022b3a] border-none focus:outline-none w-fit min-w-[100px] border rounded px-2"
@@ -287,14 +423,14 @@ export const BibleSearch = ({ fetchBibleData }) => {
           onChange={(e) => setBook(e.target.value)}
         />
         <input
-          className="appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [moz-appearance:textfield] bg-[#022b3a] border-none focus:outline-none w-[8ch] border border-gray-300 rounded px-2 appearance-none"
+          className="[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [moz-appearance:textfield] bg-[#022b3a] border-none focus:outline-none w-[8ch] border border-gray-300 rounded px-2 appearance-none"
           type="number"
           placeholder="Chapter"
           value={chapter}
           onChange={(e) => setChapter(e.target.value)}
         />
         <input
-          className="appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [moz-appearance:textfield] bg-[#022b3a] border-none focus:outline-none w-[6ch] border border-gray-300 rounded px-2 appearance-none"
+          className="[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [moz-appearance:textfield] bg-[#022b3a] border-none focus:outline-none w-[6ch] border border-gray-300 rounded px-2 appearance-none"
           type="number"
           placeholder="Verse"
           value={verse}
