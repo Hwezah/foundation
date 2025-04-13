@@ -69,48 +69,6 @@ function BibleDisplay({ result, isVerseByVerse, bibleVersion }) {
     </div>
   );
 }
-function BibleDisplayToggle({ isVerseByVerse, toggleDisplayStyle }) {
-  return (
-    <button
-      onClick={toggleDisplayStyle}
-      className="bg-[#022b3a] text-white px-1.5 py-0.5 lg:py-1 rounded "
-    >
-      {isVerseByVerse ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="3" y="3" width="7" height="7" />
-          <rect x="14" y="3" width="7" height="7" />
-          <rect x="14" y="14" width="7" height="7" />
-          <rect x="3" y="14" width="7" height="7" />
-        </svg>
-      ) : (
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          stroke="#fff"
-          className="w-5 h-5"
-        >
-          <path
-            d="M8 6.00067L21 6.00139M8 12.0007L21 12.0015M8 18.0007L21 18.0015M3.5 6H3.51M3.5 12H3.51M3.5 18H3.51M4 6C4 6.27614 3.77614 6.5 3.5 6.5C3.22386 6.5 3 6.27614 3 6C3 5.72386 3.22386 5.5 3.5 5.5C3.77614 5.5 4 5.72386 4 6ZM4 12C4 12.2761 3.77614 12.5 3.5 12.5C3.22386 12.5 3 12.2761 3 12C3 11.7239 3.22386 11.5 3.5 11.5C3.77614 11.5 4 11.7239 4 12ZM4 18C4 18.2761 3.77614 18.5 3.5 18.5C3.22386 18.5 3 18.2761 3 18C3 17.7239 3.22386 17.5 3.5 17.5C3.77614 17.5 4 17.7239 4 18Z"
-            stroke="#fff"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      )}
-    </button>
-  );
-}
 
 export default function Bible() {
   return (
@@ -369,7 +327,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
   };
 
   return (
-    <div className="p-2">
+    <div className="p-2 w-full mx-auto">
       <form
         className="flex gap-1 justify-end mb-3"
         onSubmit={(e) => {
@@ -377,15 +335,49 @@ export const BibleSearch = ({ fetchBibleData }) => {
           handleBibleSearch();
         }}
       >
-        <BibleDisplayToggle
-          isVerseByVerse={isVerseByVerse}
-          toggleDisplayStyle={toggleDisplayStyle}
-        />
+        <button
+          onClick={toggleDisplayStyle}
+          className="bg-[#022b3a] text-white px-1.5 py-0.5 lg:py-1 rounded "
+        >
+          {isVerseByVerse ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+          ) : (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              stroke="#fff"
+              className="w-5 h-5"
+            >
+              <path
+                d="M8 6.00067L21 6.00139M8 12.0007L21 12.0015M8 18.0007L21 18.0015M3.5 6H3.51M3.5 12H3.51M3.5 18H3.51M4 6C4 6.27614 3.77614 6.5 3.5 6.5C3.22386 6.5 3 6.27614 3 6C3 5.72386 3.22386 5.5 3.5 5.5C3.77614 5.5 4 5.72386 4 6ZM4 12C4 12.2761 3.77614 12.5 3.5 12.5C3.22386 12.5 3 12.2761 3 12C3 11.7239 3.22386 11.5 3.5 11.5C3.77614 11.5 4 11.7239 4 12ZM4 18C4 18.2761 3.77614 18.5 3.5 18.5C3.22386 18.5 3 18.2761 3 18C3 17.7239 3.22386 17.5 3.5 17.5C3.77614 17.5 4 17.7239 4 18Z"
+                stroke="#fff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
+        </button>
         <button
           onClick={() =>
             setBibleVersion((prev) => (prev === "KJV" ? "GANDA" : "KJV"))
           }
-          className="px-1 py-0.5 sm:inline-block bg-[#4a5759] text-white p-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
+          className=" py-0.5 sm:inline-block bg-[#4a5759] text-white p-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
         >
           <svg
             width="24px"
@@ -416,7 +408,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
         </button>
 
         <input
-          className="bg-[#022b3a] border-none focus:outline-none w-fit min-w-[100px] border rounded px-2"
+          className="bg-[#022b3a] border-none focus:outline-none  w-full border rounded px-2"
           type="text"
           placeholder="Book"
           value={book}
@@ -439,7 +431,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
 
         <button
           type="submit"
-          className="hidden sm:inline-block bg-[#4a5759] text-white px-3 py-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
+          className="hidden sm:inline-block bg-[#4a5759] text-white px-2 py-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
         >
           Search
         </button>
