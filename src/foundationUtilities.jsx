@@ -2,8 +2,7 @@ import { useSearch } from "./SearchContext";
 import Bible from "./Services/Bible";
 import User from "./user";
 export default function FoundationUtilities() {
-  const { selectedVideo, isFeedVisible, setIsFeedVisible, verse, chapter } =
-    useSearch();
+  const { selectedVideo, isFeedVisible, setIsFeedVisible } = useSearch();
 
   return (
     <div

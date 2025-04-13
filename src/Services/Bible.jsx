@@ -408,7 +408,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
         </button>
 
         <input
-          className="bg-[#022b3a] border-none focus:outline-none  w-full border rounded px-2"
+          className="bg-[#022b3a] border-none focus:outline-none min-w-[100px] border rounded px-2"
           type="text"
           placeholder="Book"
           value={book}
