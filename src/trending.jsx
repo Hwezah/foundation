@@ -3,6 +3,7 @@ import { useSearch } from "./SearchContext";
 import ReactPlayer from "react-player/youtube";
 import { fetchVideos } from "./Services/api";
 import React, { memo } from "react";
+import Podcasts from "./Curation";
 function Trending() {
   const {
     description,
@@ -15,6 +16,8 @@ function Trending() {
     setTrends,
   } = useSearch();
   const [playingVideoId, setPlayingVideoId] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("Sermons"); // Default category
+
   function handleLoadMore() {
     const nextPageToken = localStorage.getItem("nextPageToken") || "";
 
@@ -43,26 +46,33 @@ function Trending() {
           </span>
         )} */}
       </div>
-      <ContentBar />
-      <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4">
-        {isLoading ? (
-          <Loader />
-        ) : trends.length ? (
-          trends.map((video) => (
-            <VideoItem
-              key={
-                video.id.videoId || video.id.channelId || video.id.playlistId
-              }
-              video={video}
-              isPlaying={playingVideoId === video.id.videoId}
-              onPlay={() => setPlayingVideoId(video.id.videoId)}
-              onClick={() => setSelectedVideo(video)}
-            />
-          ))
-        ) : (
-          <ErrorMessage message={error} />
-        )}
-      </ul>
+      <ContentBar
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+      {selectedCategory === "Podcasts" ? (
+        <Podcasts category={description} />
+      ) : (
+        <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4">
+          {isLoading ? (
+            <Loader />
+          ) : trends.length ? (
+            trends.map((video) => (
+              <VideoItem
+                key={
+                  video.id.videoId || video.id.channelId || video.id.playlistId
+                }
+                video={video}
+                isPlaying={playingVideoId === video.id.videoId}
+                onPlay={() => setPlayingVideoId(video.id.videoId)}
+                onClick={() => setSelectedVideo(video)}
+              />
+            ))
+          ) : (
+            <ErrorMessage message={error} />
+          )}
+        </ul>
+      )}
       <>
         <button
           onClick={handleLoadMore}
@@ -206,7 +216,7 @@ export function Loader() {
     </div>
   );
 }
-function ContentBar() {
+function ContentBar({ selectedCategory, setSelectedCategory }) {
   const categories = [
     "Sermons",
     "Podcasts",
@@ -219,13 +229,18 @@ function ContentBar() {
   return (
     <div className="flex pb-2 xl:pb-3 xl:px-10 md:px-4 sm:px-2 lg:px-6  overflow-x-auto justify-between gap-4 text-sm lg:text-md font-bold scrollbar-hidden">
       {categories.map((category) => (
-        <a
+        <button
           key={category}
+          onClick={() => setSelectedCategory(category)}
           href={`/${category.toLowerCase().replace(" ", "-")}`}
-          className="bg-[#01222e] text-[#78898b] px-2  py-1 lg:px-3 lg:py-1.5 rounded-sm whitespace-nowrap font-semibold"
+          className={`${
+            selectedCategory === category
+              ? "bg-[#78898b] text-[#01222e]"
+              : "bg-[#01222e] text-[#78898b]"
+          } px-2 py-1 lg:px-3 lg:py-1.5 rounded-sm whitespace-nowrap font-semibold`}
         >
           {category}
-        </a>
+        </button>
       ))}
     </div>
   );

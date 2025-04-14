@@ -80,6 +80,8 @@ function SearchBar({ showSearch, setShowSearch }) {
             } else {
               handleSearch(); // Already open, perform search
             }
+          } else {
+            handleSearch(); // Already open, perform search
           }
         }}
         className={`absolute top-1/2 -translate-y-1/2 rounded-full text-white transition ${
