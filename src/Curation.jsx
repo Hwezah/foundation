@@ -63,7 +63,7 @@ export default function Podcasts({ category }) {
     <div className=" xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 ">
       {isLoadingPodcasts && <p>Loading podcasts...</p>}
       {/* {error && <p className="text-red-500">{error}</p>} */}
-      <div className=" grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4">
+      <div className=" grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4 gap-y-2 md:gap-y-4">
         {podcasts.map((podcast) => (
           <div
             key={podcast.id}
@@ -93,8 +93,7 @@ export default function Podcasts({ category }) {
                   />
                   <button
                     onClick={() => handlePlayPause(podcast.id, podcast.audio)}
-                    className="text-blue-400 underline Class	Value	Pixels
-m-0.5"
+                    className=""
                   >
                     {playingPodcastId === podcast.id ? (
                       <svg
