@@ -113,7 +113,7 @@ export function Tools({ setIsFeedVisible }) {
 
 export function BaseTools() {
   return (
-    <div className=" w-full bg-[#01212c] p-[4px] block sm:hidden sticky bottom-0">
+    <div className=" w-full bg-[#01212c] p-[4px] block sm:hidden sticky bottom-0 z-999">
       <div className="flex items-center justify-around ">
         <svg
           height={"32px"}
