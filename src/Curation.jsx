@@ -93,11 +93,12 @@ export default function Podcasts({ category }) {
                   />
                   <button
                     onClick={() => handlePlayPause(podcast.id, podcast.audio)}
-                    className="text-blue-400 underline mt-1 ml-2"
+                    className="text-blue-400 underline Class	Value	Pixels
+m-0.5"
                   >
                     {playingPodcastId === podcast.id ? (
                       <svg
-                        className="absolute bottom-[-5px]"
+                        className="absolute bottom-[-2px] ml-0.25"
                         height={"24px"}
                         width={"24px"}
                         viewBox="0 0 24 24"
@@ -124,7 +125,7 @@ export default function Podcasts({ category }) {
                       </svg>
                     ) : (
                       <svg
-                        className="absolute bottom-[-5px]"
+                        className="absolute bottom-[-2px] ml-0.25"
                         height={"24px"}
                         width={"24px"}
                         viewBox="-0.5 0 25 25"
