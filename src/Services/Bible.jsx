@@ -1,4 +1,4 @@
-import { useSearch } from "../SearchContext";
+// import { useSearch } from "../SearchContext";
 import { useState } from "react";
 import Fuse from "fuse.js";
 
@@ -8,7 +8,7 @@ const API_KEY = "2917b29dcc612336646fc8dd29282dbd";
 const fetchBibleData = async (endpoint, setError, setIsLoading) => {
   try {
     setError(null);
-
+    setIsLoading(true);
     const response = await fetch(endpoint, {
       method: "GET",
       headers: {
@@ -79,16 +79,10 @@ export default function Bible() {
 }
 
 export const BibleSearch = ({ fetchBibleData }) => {
-  const {
-    chapter,
-    setChapter,
-    verse,
-    setVerse,
-    book,
-    setBook,
-    setIsLoading,
-    isLoading,
-  } = useSearch();
+  const [verse, setVerse] = useState("");
+  const [chapter, setChapter] = useState("");
+  const [book, setBook] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Local state
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const BIBLE_IDS = {
@@ -436,7 +430,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
           Search
         </button>
         <button type="submit" className="sm:hidden py-1">
-          <Search />
+          <BibleSearchButton />
         </button>
       </form>
       {error && <p className="text-amber-500">{error}</p>}
@@ -446,8 +440,8 @@ export const BibleSearch = ({ fetchBibleData }) => {
     </div>
   );
 };
-///////////////////////
-function Search() {
+
+function BibleSearchButton() {
   return (
     <div>
       <svg

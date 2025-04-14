@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useSearch } from "./SearchContext";
 import ReactPlayer from "react-player/youtube";
 import { fetchVideos } from "./Services/api";
-export default function Trending() {
+import React, { memo } from "react";
+function Trending() {
   const {
     description,
     isLoading,
@@ -113,6 +114,7 @@ export default function Trending() {
     </div>
   );
 }
+export default memo(Trending);
 
 function VideoItem({ video, onClick, isPlaying }) {
   const videoId = video?.id?.videoId;

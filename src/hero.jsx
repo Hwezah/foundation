@@ -3,16 +3,18 @@ import { useSearch } from "./SearchContext";
 import { Loader } from "./trending";
 import { VideoEmbed } from "./trending";
 import FoundationUtilities from "./foundationUtilities";
+import React, { memo } from "react";
 
-export default function Hero() {
-  const { selectedVideo, isLoading, book, chapter, verse } = useSearch();
-  const isSticky = book && chapter && !verse; // Check if book and chapter are defined
+function Hero() {
+  const { selectedVideo, isLoading } = useSearch();
+
+  // const isSticky = book && chapter && !verse; // Check if book and chapter are defined
 
   return (
     <div
-      className={`bg-[#01212c] w-full ${
-        isSticky ? "" : "sticky top-0 z-10"
-      } xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden`}
+      // ${ isSticky ? "" : "sticky top-0 z-10"}
+      className={`bg-[#01212c] w-full sticky top-0 z-10
+      xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden`}
     >
       {/* If still loading, show the Loader */}
       {isLoading ? (
@@ -55,6 +57,7 @@ export default function Hero() {
     </div>
   );
 }
+export default memo(Hero);
 
 {
   /* <div className="absolute top-1/2 right-10 -translate-y-1/2 transform cursor-pointer rounded-full p-4 bg-white text-white transition hover:bg-gray-100">
