@@ -53,34 +53,46 @@
     -ms-overflow-style: none; /* Internet Explorer */
   }
 }
-/* For WebKit browsers */
-.custom-range::-webkit-slider-thumb {
+
+/* Style the track */
+input[type="range"] {
   -webkit-appearance: none;
-  height: 15px;
-  width: 2px;
-  background: white;
-  cursor: pointer;
-  margin-top: -9px; /* centers it vertically */
-  border-radius: 1px;
-  border: none;
-}
-
-.custom-range::-webkit-slider-runnable-track {
+  background: transparent;
+  width: 100%;
   height: 2px;
-  background: #ccc;
-}
-
-/* For Firefox */
-.custom-range::-moz-range-thumb {
-  height: 15px;
-  width: 2px;
-  background: white;
-  border: none;
-  border-radius: 1px;
+  background-color: white;
   cursor: pointer;
 }
 
-.custom-range::-moz-range-track {
+/* WebKit Track */
+input[type="range"]::-webkit-slider-runnable-track {
   height: 2px;
-  background: #ccc;
+  background: white;
+}
+
+/* WebKit Thumb (custom vertical bar knob) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 2px;
+  background: white;
+  cursor: pointer;
+  margin-top: -9px; /* Align with the track */
+  border-radius: 1px;
+}
+
+/* Firefox Thumb */
+input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 2px;
+  background: white;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+/* Firefox Track */
+input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: white;
 }

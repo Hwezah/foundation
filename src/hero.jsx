@@ -48,12 +48,7 @@ function Hero() {
           </div>
         </>
       )}
-
-      {/* Controls for video */}
-      {selectedVideo && selectedVideo.snippet && (
-        // Show description or title if the selected video exists
-        <FoundationUtilities />
-      )}
+      <FoundationUtilities />
     </div>
   );
 }

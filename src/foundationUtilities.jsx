@@ -25,7 +25,7 @@ export default function FoundationUtilities() {
                 On:
               </span>
               <span className="  font-bold lg:text-lg  text-[#01212c] ">
-                {selectedVideo.snippet.title}...
+                {selectedVideo?.snippet?.title || "Pick something to watch"}...
               </span>
             </h3>
             <div className="">
