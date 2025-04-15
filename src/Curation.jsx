@@ -92,11 +92,11 @@ export default function Podcasts({ category }) {
     <div className=" xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 ">
       {isLoadingPodcasts && <p>Loading podcasts...</p>}
       {/* {error && <p className="text-red-500">{error}</p>} */}
-      <div className=" grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4 gap-y-2 md:gap-y-4">
+      <div className=" grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))]  gap-4 gap-y-2 md:gap-y-4 ">
         {podcasts.map((podcast) => (
           <div
             key={podcast.id}
-            className="bg-[#01222e] p-4 lg:rounded shadow-md text-white relative "
+            className="bg-[#01222e] p-4 lg:rounded shadow-md text-white relative max-h-[8.5rem]"
           >
             <h4 className="text-md font-semibold truncate mr-4">
               {podcast.title_original}
