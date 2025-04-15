@@ -4,6 +4,9 @@ export default function Podcasts({ category }) {
   const [error, setError] = useState(null);
   const [podcasts, setPodcasts] = useState([]);
   const [playingPodcastId, setPlayingPodcastId] = useState(null);
+  const [progress, setProgress] = useState({});
+  const [isSeeking, setIsSeeking] = useState(false);
+
   const audioRefs = useRef({}); // Store references to audio elements
 
   async function PodcastsApi() {
@@ -55,8 +58,34 @@ export default function Podcasts({ category }) {
       if (currentAudio) {
         currentAudio.play();
         setPlayingPodcastId(podcastId);
+
+        currentAudio.onloadedmetadata = () => {
+          setProgress((prev) => ({
+            ...prev,
+            [podcastId]: {
+              ...(prev[podcastId] || {}),
+              duration: currentAudio.duration,
+            },
+          }));
+        };
+
+        currentAudio.ontimeupdate = () => {
+          if (isSeeking) return;
+          setProgress((prev) => ({
+            ...prev,
+            [podcastId]: {
+              ...(prev[podcastId] || {}),
+              currentTime: currentAudio.currentTime,
+            },
+          }));
+        };
       }
     }
+  };
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   return (
@@ -67,12 +96,12 @@ export default function Podcasts({ category }) {
         {podcasts.map((podcast) => (
           <div
             key={podcast.id}
-            className="bg-[#01222e] p-4 lg:rounded shadow-md text-white h-[8rem]"
+            className="bg-[#01222e] p-4 lg:rounded shadow-md text-white relative "
           >
-            <h4 className="text-md font-semibold truncate">
+            <h4 className="text-md font-semibold truncate mr-4">
               {podcast.title_original}
             </h4>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center w-fit">
               <div className="w-16 h-16 flex-shrink-0">
                 <img
                   src={podcast.image}
@@ -80,8 +109,8 @@ export default function Podcasts({ category }) {
                   className=" rounded  object-cover"
                 />
               </div>
-              <div className="w-full">
-                <p className="text-sm text-gray-400 font-medium relative max-w-[90%]">
+              <div className="">
+                <p className="text-sm text-gray-400 font-medium relative ">
                   {podcast.description_original
                     ? podcast.description_original
                         .replace(/<[^>]*>/g, "") // Remove HTML tags
@@ -92,12 +121,12 @@ export default function Podcasts({ category }) {
                     src={podcast.audio}
                   />
                   <button
-                    onClick={() => handlePlayPause(podcast.id, podcast.audio)}
+                    onClick={() => handlePlayPause(podcast.id)}
                     className=""
                   >
                     {playingPodcastId === podcast.id ? (
                       <svg
-                        className="absolute bottom-[-2px] ml-0.25"
+                        className="absolute bottom-[-4px] ml-0.25"
                         height={"24px"}
                         width={"24px"}
                         viewBox="0 0 24 24"
@@ -124,7 +153,7 @@ export default function Podcasts({ category }) {
                       </svg>
                     ) : (
                       <svg
-                        className="absolute bottom-[-2px] ml-0.25"
+                        className="absolute bottom-[-4px] ml-0.25"
                         height={"24px"}
                         width={"24px"}
                         viewBox="-0.5 0 25 25"
@@ -152,6 +181,94 @@ export default function Podcasts({ category }) {
                     )}
                   </button>
                 </p>
+                <a
+                  href={podcast.audio} // Use the audio URL as the href
+                  download // Add the download attribute
+                  className="text-blue-400 underline mt-1 ml-2"
+                >
+                  <svg
+                    className="absolute top-4  right-4"
+                    width="24px"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    stroke="#fff"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      {" "}
+                      <path
+                        d="M22 20.8201C15.426 22.392 8.574 22.392 2 20.8201"
+                        stroke="#fff"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        d="M11.9492 2V16"
+                        stroke="#fff"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        d="M16.8996 11.8L13.3796 15.4099C13.2011 15.5978 12.9863 15.7476 12.7482 15.8499C12.5101 15.9521 12.2538 16.0046 11.9946 16.0046C11.7355 16.0046 11.4791 15.9521 11.241 15.8499C11.0029 15.7476 10.7881 15.5978 10.6096 15.4099L7.09961 11.8"
+                        stroke="#fff"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                    </g>
+                  </svg>
+                </a>
+                {playingPodcastId === podcast.id && (
+                  <div className="">
+                    <div className="flex items-center gap-2 mt-[-1.4rem]">
+                      {/* <span className="text-sm text-gray-400 ">
+                        {formatTime(progress[podcast.id]?.currentTime || 0)}
+                      </span> */}
+                      <input
+                        type="range"
+                        className="custom-range w-full h-[2px] cursor-pointer"
+                        min="0"
+                        max={progress[podcast.id]?.duration || 0}
+                        value={progress[podcast.id]?.currentTime || 0}
+                        onMouseDown={() => setIsSeeking(true)}
+                        onMouseUp={(e) => {
+                          const newTime = parseFloat(e.target.value);
+                          audioRefs.current[podcast.id].currentTime = newTime;
+                          setProgress((prev) => ({
+                            ...prev,
+                            [podcast.id]: {
+                              ...(prev[podcast.id] || {}),
+                              currentTime: newTime,
+                            },
+                          }));
+                          setIsSeeking(false);
+                        }}
+                        onChange={(e) => {
+                          const newTime = parseFloat(e.target.value);
+                          setProgress((prev) => ({
+                            ...prev,
+                            [podcast.id]: {
+                              ...(prev[podcast.id] || {}),
+                              currentTime: newTime,
+                            },
+                          }));
+                        }}
+                      />
+                      <span className="text-sm text-gray-400">
+                        {formatTime(progress[podcast.id]?.currentTime || 0)}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

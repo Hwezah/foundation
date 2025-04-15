@@ -53,3 +53,34 @@
     -ms-overflow-style: none; /* Internet Explorer */
   }
 }
+/* For WebKit browsers */
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 2px;
+  background: white;
+  cursor: pointer;
+  margin-top: -9px; /* centers it vertically */
+  border-radius: 1px;
+  border: none;
+}
+
+.custom-range::-webkit-slider-runnable-track {
+  height: 2px;
+  background: #ccc;
+}
+
+/* For Firefox */
+.custom-range::-moz-range-thumb {
+  height: 15px;
+  width: 2px;
+  background: white;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+.custom-range::-moz-range-track {
+  height: 2px;
+  background: #ccc;
+}
