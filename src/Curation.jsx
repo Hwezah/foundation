@@ -88,6 +88,16 @@ export default function Podcasts({ category }) {
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  const handleDownload = (audioUrl, filename) => {
+    const link = document.createElement("a");
+    link.href = audioUrl;
+    link.download = filename || "podcast.mp3";
+    link.target = "_blank";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className=" xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 ">
       {isLoadingPodcasts && <p>Loading podcasts...</p>}
@@ -181,13 +191,16 @@ export default function Podcasts({ category }) {
                     )}
                   </button>
                 </p>
-                <a
-                  href={podcast.audio} // Use the audio URL as the href
-                  download // Add the download attribute
-                  className="text-blue-400 underline mt-1 ml-2"
+                <button
+                  onClick={() =>
+                    handleDownload(
+                      podcast.audio,
+                      `${podcast.title_original || "podcast"}.mp3`
+                    )
+                  }
                 >
                   <svg
-                    className="absolute top-4  right-4"
+                    className="absolute top-3  right-4"
                     width="24px"
                     height="24px"
                     viewBox="0 0 24 24"
@@ -226,7 +239,7 @@ export default function Podcasts({ category }) {
                       ></path>{" "}
                     </g>
                   </svg>
-                </a>
+                </button>
                 {playingPodcastId === podcast.id && (
                   <div className="">
                     <div className="flex items-center gap-2 mt-[-1.4rem]">
@@ -235,7 +248,7 @@ export default function Podcasts({ category }) {
                       </span> */}
                       <input
                         type="range"
-                        className="custom-range w-full h-[2px] cursor-pointer"
+                        className="custom-range w-full cursor-pointer"
                         min="0"
                         max={progress[podcast.id]?.duration || 0}
                         value={progress[podcast.id]?.currentTime || 0}

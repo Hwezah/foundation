@@ -13,7 +13,7 @@ function Hero() {
   return (
     <div
       // ${ isSticky ? "" : "sticky top-0 z-10"}
-      className={`bg-[#01212c] w-full sticky top-0 z-1
+      className={`bg-[#01212c] w-full sticky top-0 z-1 
       xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden`}
     >
       {/* If still loading, show the Loader */}

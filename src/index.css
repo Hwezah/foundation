@@ -77,13 +77,13 @@ input[type="range"]::-webkit-slider-thumb {
   width: 2px;
   background: white;
   cursor: pointer;
-  margin-top: -9px; /* Align with the track */
+  margin-top: -6.5px; /* Align with the track */
   border-radius: 1px;
 }
 
 /* Firefox Thumb */
 input[type="range"]::-moz-range-thumb {
-  height: 15px;
+  height: 25px;
   width: 2px;
   background: white;
   border: none;
@@ -95,16 +95,4 @@ input[type="range"]::-moz-range-thumb {
 input[type="range"]::-moz-range-track {
   height: 2px;
   background: white;
-}
-
-/* Chrome, Safari, Edge */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
 }
