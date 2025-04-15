@@ -73,7 +73,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 /* WebKit Thumb (custom vertical bar knob) */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 20px;
+  height: 15px;
   width: 2px;
   background: white;
   cursor: pointer;
@@ -83,7 +83,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Firefox Thumb */
 input[type="range"]::-moz-range-thumb {
-  height: 20px;
+  height: 15px;
   width: 2px;
   background: white;
   border: none;
