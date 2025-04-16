@@ -8,7 +8,7 @@ export default function Podcasts({ category }) {
   const [playingPodcastId, setPlayingPodcastId] = useState(null);
   const [progress, setProgress] = useState({});
   const [isSeeking, setIsSeeking] = useState(false);
-
+  const [selectedPodcastId, setSelectedPodcastId] = useState(null);
   const audioRefs = useRef({}); // Store references to audio elements
 
   async function PodcastsApi() {
@@ -83,6 +83,7 @@ export default function Podcasts({ category }) {
         };
       }
     }
+    setSelectedPodcastId(podcastId);
   };
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -108,7 +109,9 @@ export default function Podcasts({ category }) {
         {podcasts.map((podcast) => (
           <div
             key={podcast.id}
-            className="bg-[#01222e] p-4 lg:rounded shadow-md text-white relative max-h-[8.5rem]"
+            className={`${
+              selectedPodcastId === podcast.id ? "bg-[#3f4c4e]" : "bg-[#01222e]"
+            } p-4 lg:rounded shadow-md text-white relative max-h-[8.5rem]`}
           >
             <div className="flex gap-4 items-center ">
               <div className="w-16 h-16 flex-shrink-0">
