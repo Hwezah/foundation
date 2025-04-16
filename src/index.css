@@ -96,3 +96,15 @@ input[type="range"]::-moz-range-track {
   height: 2px;
   background: white;
 }
+
+/* Hide arrows in Chrome, Safari, Edge */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
