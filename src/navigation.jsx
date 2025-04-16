@@ -1,7 +1,7 @@
 import UserDashboard from "./UserDashboard";
 import Donations from "./donations";
 import { useSearch } from "./SearchContext";
-import { fetchVideos } from "./Services/api";
+import { fetchData } from "./Services/api";
 import { useState, useEffect } from "react";
 
 export default function Navigation() {
@@ -41,13 +41,23 @@ function SearchBar({ showSearch, setShowSearch }) {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [inputValue, setInputValue] = useState(description);
 
-  const handleSearch = () => {
+  function handleSearch() {
+    if (!inputValue || inputValue.trim() === "") {
+      setError("Please enter a valid search term.");
+      return;
+    }
+
+    const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
+    const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
+      inputValue
+    )}&maxResults=50&type=video&key=${API_KEY}`;
+
     setIsLoading(true);
-    setDescription(inputValue);
-    fetchVideos(inputValue, setIsLoading, setError, setTrends);
+    setDescription(inputValue); // Update the context
+    fetchData(URL, setIsLoading, setError, setTrends); // Pass the constructed URL
     setShowSearch(false);
     setInputValue("");
-  };
+  }
 
   useEffect(() => {
     const handleResize = () => {

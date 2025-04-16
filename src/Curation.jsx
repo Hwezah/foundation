@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocalStorage } from "./Services/useLocalStorage";
+import { PodcastSearchApi, fetchData } from "./Services/api";
 export default function Podcasts({ category }) {
   const [isLoadingPodcasts, setIsLoadingPodcasts] = useState(false);
   const [error, setError] = useState(null);
-  const [podcasts, setPodcasts] = useState([]);
+  const [podcasts, setPodcasts] = useLocalStorage([], "podcasts");
   const [playingPodcastId, setPlayingPodcastId] = useState(null);
   const [progress, setProgress] = useState({});
   const [isSeeking, setIsSeeking] = useState(false);
@@ -108,10 +110,7 @@ export default function Podcasts({ category }) {
             key={podcast.id}
             className="bg-[#01222e] p-4 lg:rounded shadow-md text-white relative max-h-[8.5rem]"
           >
-            <h4 className="text-md font-semibold truncate mr-4">
-              {podcast.title_original}
-            </h4>
-            <div className="flex gap-4 items-center w-fit">
+            <div className="flex gap-4 items-center ">
               <div className="w-16 h-16 flex-shrink-0">
                 <img
                   src={podcast.image}
@@ -120,6 +119,61 @@ export default function Podcasts({ category }) {
                 />
               </div>
               <div className="">
+                {" "}
+                <div className="flex ">
+                  <h4 className="text-md trancate font-semibold mr-2">
+                    {podcast.title_original}
+                  </h4>
+                  <button
+                    onClick={() =>
+                      handleDownload(
+                        podcast.audio,
+                        `${podcast.title_original || "podcast"}.mp3`
+                      )
+                    }
+                  >
+                    <svg
+                      className=""
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      stroke="#fff"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></g>
+                      <g id="SVGRepo_iconCarrier">
+                        {" "}
+                        <path
+                          d="M22 20.8201C15.426 22.392 8.574 22.392 2 20.8201"
+                          stroke="#fff"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>{" "}
+                        <path
+                          d="M11.9492 2V16"
+                          stroke="#fff"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>{" "}
+                        <path
+                          d="M16.8996 11.8L13.3796 15.4099C13.2011 15.5978 12.9863 15.7476 12.7482 15.8499C12.5101 15.9521 12.2538 16.0046 11.9946 16.0046C11.7355 16.0046 11.4791 15.9521 11.241 15.8499C11.0029 15.7476 10.7881 15.5978 10.6096 15.4099L7.09961 11.8"
+                          stroke="#fff"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>{" "}
+                      </g>
+                    </svg>
+                  </button>
+                </div>
                 <p className="text-sm text-gray-400 font-medium relative ">
                   {podcast.description_original
                     ? podcast.description_original
@@ -191,58 +245,9 @@ export default function Podcasts({ category }) {
                     )}
                   </button>
                 </p>
-                <button
-                  onClick={() =>
-                    handleDownload(
-                      podcast.audio,
-                      `${podcast.title_original || "podcast"}.mp3`
-                    )
-                  }
-                >
-                  <svg
-                    className="absolute top-3  right-4"
-                    width="24px"
-                    height="24px"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    stroke="#fff"
-                  >
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g
-                      id="SVGRepo_tracerCarrier"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></g>
-                    <g id="SVGRepo_iconCarrier">
-                      {" "}
-                      <path
-                        d="M22 20.8201C15.426 22.392 8.574 22.392 2 20.8201"
-                        stroke="#fff"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>{" "}
-                      <path
-                        d="M11.9492 2V16"
-                        stroke="#fff"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>{" "}
-                      <path
-                        d="M16.8996 11.8L13.3796 15.4099C13.2011 15.5978 12.9863 15.7476 12.7482 15.8499C12.5101 15.9521 12.2538 16.0046 11.9946 16.0046C11.7355 16.0046 11.4791 15.9521 11.241 15.8499C11.0029 15.7476 10.7881 15.5978 10.6096 15.4099L7.09961 11.8"
-                        stroke="#fff"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>{" "}
-                    </g>
-                  </svg>
-                </button>
                 {playingPodcastId === podcast.id && (
                   <div className="">
-                    <div className="flex items-center gap-2 mt-[-1.4rem]">
+                    <div className="flex items-center gap-2 mt--1rem]">
                       {/* <span className="text-sm text-gray-400 ">
                         {formatTime(progress[podcast.id]?.currentTime || 0)}
                       </span> */}

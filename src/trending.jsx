@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSearch } from "./SearchContext";
-import ReactPlayer from "react-player/youtube";
-import { fetchVideos } from "./Services/api";
+import { fetchData } from "./Services/api";
 import React, { memo } from "react";
 import Podcasts from "./Curation";
+import { YouTubeSearchApi } from "./Services/api";
 function Trending() {
   const {
     description,
@@ -15,20 +15,28 @@ function Trending() {
     setError,
     setTrends,
   } = useSearch();
+  console.log("useSearch context:", {
+    description,
+    isLoading,
+    trends,
+    error,
+  });
+
   const [playingVideoId, setPlayingVideoId] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("Sermons"); // Default category
+  const [selectedCategory, setSelectedCategory] = useState("Sermons");
 
   function handleLoadMore() {
     const nextPageToken = localStorage.getItem("nextPageToken") || "";
+    if (!description || description.trim() === "") {
+      setError("Please enter a valid search term.");
+      return;
+    }
 
-    if (nextPageToken) {
-      fetchVideos(
-        description,
-        setIsLoading,
-        setError,
-        setTrends,
-        nextPageToken
-      );
+    if (nextPageToken || trends.length === 0) {
+      const URL = YouTubeSearchApi(description, nextPageToken);
+
+      // Pass arguments in the correct order
+      fetchData(URL, setIsLoading, setError, setTrends, nextPageToken);
     } else {
       setError("No next page available.");
     }
