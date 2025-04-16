@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSearch } from "./SearchContext";
 import { fetchData } from "./Services/api";
 import React, { memo } from "react";
-import Podcasts from "./Curation";
+import Podcasts from "./Podcasts";
 import { YouTubeSearchApi } from "./Services/api";
 function Trending() {
   const {
