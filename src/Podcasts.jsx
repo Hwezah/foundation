@@ -181,23 +181,28 @@ export default function Podcasts({ category }) {
                     </svg>
                   </button>
                 </div>
-                <p className="text-sm text-gray-400 font-medium relative ">
-                  {podcast.description_original
-                    ? podcast.description_original
-                        .replace(/<[^>]*>/g, "") // Remove HTML tags
-                        .slice(0, 70) + "..." // Limit to 100 characters and add "..."
-                    : "No description available."}
-                  <audio
-                    ref={(el) => (audioRefs.current[podcast.id] = el)} // Store reference to the audio element
-                    src={podcast.audio}
-                  />
+                <div className="flex items-baseline">
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-400 font-medium  line-clamp-2 relative">
+                      {podcast.description_original
+                        ? podcast.description_original
+                            .replace(/<[^>]*>/g, "")
+                            .slice(0, 70) + "..."
+                        : "No description available."}
+                      <audio
+                        ref={(el) => (audioRefs.current[podcast.id] = el)}
+                        src={podcast.audio}
+                      />
+                    </p>
+                  </div>
+
                   <button
                     onClick={() => handlePlayPause(podcast.id)}
-                    className=""
+                    className="self-end ml-auto"
                   >
                     {playingPodcastId === podcast.id ? (
                       <svg
-                        className="absolute bottom-[-4px] ml-0.25"
+                        className=""
                         height={"24px"}
                         width={"24px"}
                         viewBox="0 0 24 24"
@@ -224,7 +229,7 @@ export default function Podcasts({ category }) {
                       </svg>
                     ) : (
                       <svg
-                        className="absolute bottom-[-4px] ml-0.25"
+                        className=" "
                         height={"24px"}
                         width={"24px"}
                         viewBox="-0.5 0 25 25"
@@ -251,7 +256,7 @@ export default function Podcasts({ category }) {
                       </svg>
                     )}
                   </button>
-                </p>
+                </div>
                 {playingPodcastId === podcast.id && (
                   <div className="">
                     <div className="flex items-center gap-2 mt--1rem]">
