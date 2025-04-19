@@ -111,7 +111,7 @@ export default function Podcasts({ category }) {
             key={podcast.id}
             className={`${
               selectedPodcastId === podcast.id ? "bg-[#3f4c4e]" : "bg-[#01222e]"
-            } p-4 lg:rounded shadow-md text-white relative max-h-[8.5rem]`}
+            } p-3 lg:rounded shadow-md text-white relative max-h-[8.5rem]`}
           >
             <div className="flex gap-4 items-center ">
               <div className="w-16 h-16 flex-shrink-0">
