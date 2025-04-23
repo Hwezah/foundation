@@ -1,6 +1,26 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocalStorage } from "./Services/useLocalStorage";
-import { PodcastSearchApi, fetchData } from "./Services/api";
+import { fetchData } from "./Services/api";
+import { Loader } from "./loader";
+
+export async function PodcastsApi(category) {
+  if (!category) return []; // Return an empty array if no category is provided
+  const query = category;
+  const API_KEY = "8bdff6c6a5a94d2d9f43c1ad32b5d19e";
+  const URL = `https://listen-api.listennotes.com/api/v2/search?q=${query}&type=episode&sort_by_date=0&len_min=0&len_max=0&only_in=title,description,fulltext&offset=0&safe_mode=0&episode_count_max=10`;
+
+  try {
+    const data = await fetchData(URL, {
+      headers: {
+        "X-ListenAPI-Key": API_KEY,
+      },
+    });
+
+    return data.results || [];
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 export default function Podcasts({ category }) {
   const [isLoadingPodcasts, setIsLoadingPodcasts] = useState(false);
   const [error, setError] = useState(null);
@@ -11,36 +31,23 @@ export default function Podcasts({ category }) {
   const [selectedPodcastId, setSelectedPodcastId] = useState(null);
   const audioRefs = useRef({}); // Store references to audio elements
 
-  async function PodcastsApi() {
-    setIsLoadingPodcasts(true);
-    setError(null); // setError(null); // Clear previous errors
-    const search_query = category;
-    const API_KEY = "8bdff6c6a5a94d2d9f43c1ad32b5d19e";
-    const URL = `https://listen-api.listennotes.com/api/v2/search?q=${search_query}&type=episode&sort_by_date=0&len_min=0&len_max=0&only_in=title,description,fulltext&offset=0&safe_mode=0&episode_count_max=10`;
-
-    try {
-      const response = await fetch(URL, {
-        headers: {
-          "X-ListenAPI-Key": API_KEY,
-        },
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error.message);
-      }
-      const data = await response.json();
-      setPodcasts(data.results || []);
-      console.log(data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoadingPodcasts(false);
-    }
-  }
   useEffect(() => {
-    if (category) {
-      PodcastsApi();
-    }
+    const fetchPodcasts = async () => {
+      if (!category) return;
+      setIsLoadingPodcasts(true);
+      setError(null);
+
+      try {
+        const results = await PodcastsApi(category); // Call the exported function
+        setPodcasts(results);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoadingPodcasts(false);
+      }
+    };
+
+    fetchPodcasts();
   }, [category]);
 
   const handlePlayPause = (podcastId, audioUrl) => {
@@ -103,7 +110,7 @@ export default function Podcasts({ category }) {
 
   return (
     <div className=" xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 ">
-      {isLoadingPodcasts && <p>Loading podcasts...</p>}
+      {isLoadingPodcasts && <Loader />}
       {/* {error && <p className="text-red-500">{error}</p>} */}
       <div className=" grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))]  gap-4 gap-y-2 md:gap-y-4 ">
         {podcasts.map((podcast) => (

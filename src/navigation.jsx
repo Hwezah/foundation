@@ -1,9 +1,9 @@
 import UserDashboard from "./UserDashboard";
 import Donations from "./donations";
 import { useSearch } from "./SearchContext";
-import { fetchData } from "./Services/api";
 import { useState, useEffect } from "react";
-
+import { PodcastsApi } from "./Podcasts";
+import { sermonsApi } from "./sermons";
 export default function Navigation() {
   const [showSearch, setShowSearch] = useState(false);
   return (
@@ -36,7 +36,7 @@ export default function Navigation() {
   );
 }
 function SearchBar({ showSearch, setShowSearch }) {
-  const { description, setDescription, setIsLoading, setError, setTrends } =
+  const { description, setDescription, setIsLoading, setError, setSermons } =
     useSearch();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [inputValue, setInputValue] = useState(description);
@@ -46,15 +46,22 @@ function SearchBar({ showSearch, setShowSearch }) {
       setError("Please enter a valid search term.");
       return;
     }
-
-    const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
-    const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
-      inputValue
-    )}&maxResults=50&type=video&key=${API_KEY}`;
-
+    console.log("Input Value (description):", inputValue);
     setIsLoading(true);
     setDescription(inputValue); // Update the context
-    fetchData(URL, setIsLoading, setError, setTrends); // Pass the constructed URL
+    PodcastsApi(URL, setIsLoading, setError);
+    // Retrieve pageToken
+    sermonsApi(inputValue) // Pass the pageToken
+      .then((results) => {
+        setSermons(results);
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+
     setShowSearch(false);
     setInputValue("");
   }

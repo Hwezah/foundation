@@ -1,7 +1,7 @@
 // import { strokeColor } from "./App";
 import { useSearch } from "./SearchContext";
-import { Loader } from "./trending";
-import { VideoEmbed } from "./trending";
+import { Loader } from "./loader";
+import { VideoEmbed } from "./sermons";
 import FoundationUtilities from "./foundationUtilities";
 import React, { memo } from "react";
 

@@ -1,5 +1,5 @@
 import { useSearch } from "./SearchContext";
-import Bible from "./Services/Bible";
+import Bible from "./Bible";
 import User from "./user";
 export default function FoundationUtilities() {
   const { selectedVideo, isFeedVisible, setIsFeedVisible } = useSearch();

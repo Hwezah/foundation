@@ -10,7 +10,7 @@ export function useSearch() {
 
 export function SearchProvider({ children }) {
   const [description, setDescription] = useState("");
-  const [trends, setTrends] = useLocalStorage([], "trends");
+  const [sermons, setSermons] = useLocalStorage([], "sermons");
   const [selectedVideo, setSelectedVideo] = useState();
   const [isFeedVisible, setIsFeedVisible] = useState(false);
   const [error, setError] = useState("");
@@ -27,8 +27,8 @@ export function SearchProvider({ children }) {
       isLoading,
       setIsLoading,
       strokeColor,
-      trends,
-      setTrends,
+      sermons,
+      setSermons,
       error,
       setError,
     }),
@@ -37,9 +37,9 @@ export function SearchProvider({ children }) {
       selectedVideo,
       description,
       isLoading,
-      trends,
+      sermons,
       error,
-      setTrends,
+      setSermons,
     ]
   );
 
