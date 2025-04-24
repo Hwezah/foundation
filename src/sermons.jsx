@@ -3,14 +3,13 @@ import { fetchData } from "./Services/api";
 import { useSearch } from "./SearchContext";
 import ReactPlayer from "react-player";
 import { Loader } from "./loader";
-
-export async function sermonsApi(query, pageToken = "") {
+import { useLocalStorage } from "./Services/useLocalStorage";
+export async function SermonsApi(query, pageToken = "") {
   //   const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
   //   const API_KEY = "AIzaSyB-t8E-UrOC8CMTfpjLdMd7dZUejXvwx1c";
+  //   const API_KEY = "AIzaSyCNyHlY3nfI0eJYR7_xHTobtrRTX3puk94";
   const API_KEY = "AIzaSyCyDM6zL56RjPY62zE30wi6TweFQXjCIYo";
-
   if (!query) return []; // Return an empty array if no searchQuery is provided
-
   const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
     query
   )}&maxResults=2&pageToken=${pageToken}&type=video&key=${API_KEY}`;
@@ -24,11 +23,11 @@ export async function sermonsApi(query, pageToken = "") {
   }
 }
 
-export default function Sermons({ query, pageToken = "" }) {
+export default function Sermons({ query }) {
   const [isLoadingSermons, setIsLoadingSermons] = useState(false);
+  const [sermons, setSermons] = useLocalStorage([], "sermons");
   const [error, setError] = useState(null);
   const { setSelectedVideo } = useSearch(); // Assuming you have a context or prop for this
-  const [sermons, setSermons] = useState([]); // Add podcasts state for demonstration
   const [playingVideoId, setPlayingVideoId] = useState(null);
 
   useEffect(() => {
@@ -36,9 +35,9 @@ export default function Sermons({ query, pageToken = "" }) {
       if (!query || typeof query !== "string") {
         return;
       }
-      const pageToken = localStorage.getItem("nextPageToken") || ""; // Retrieve pageToken
+      const token = localStorage.getItem("nextPageToken") || ""; // Retrieve pageToken
 
-      if (pageToken && typeof pageToken !== "string") {
+      if (token && typeof token !== "string") {
         return;
       }
       setIsLoadingSermons(true);
@@ -46,8 +45,7 @@ export default function Sermons({ query, pageToken = "" }) {
 
       try {
         // Retrieve pageToken
-
-        const results = await sermonsApi(query); // Call the exported function
+        const results = await SermonsApi(query, token); // Call the exported function
         setSermons(results);
       } catch (error) {
         setError(error.message);

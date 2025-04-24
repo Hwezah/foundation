@@ -9,7 +9,7 @@ export async function PodcastsApi(query) {
   // const API_KEY = "8bdff6c6a5a94d2d9f43c1ad32b5d19e";
   const API_KEY = "5499e7a41f314beaab46610580e99eaf";
 
-  const URL = `https://listen-api.listennotes.com/api/v2/search?q=${query}&type=episode&sort_by_date=1&len_min=0&len_max=0&only_in=title,query,fulltext&offset=0&safe_mode=0&episode_count_max=2`;
+  const URL = `https://listen-api.listennotes.com/api/v2/search?q=${query}&type=episode&sort_by_date=1&len_min=0&len_max=0&only_in=title,query,fulltext&offset=0&safe_mode=0&episode_count_max=10`;
 
   try {
     const endpoint = {
@@ -54,7 +54,7 @@ export default function Podcasts({ query }) {
     fetchPodcasts();
   }, [query, setPodcasts]);
 
-  const handlePlayPause = (podcastId, audioUrl) => {
+  const handlePlayPause = (podcastId) => {
     const currentAudio = audioRefs.current[podcastId];
 
     if (playingPodcastId === podcastId) {
@@ -195,8 +195,8 @@ export default function Podcasts({ query }) {
                 <div className="flex items-baseline">
                   <div className="flex-1">
                     <p className="text-sm text-gray-400 font-medium  line-clamp-2 relative">
-                      {podcast.query_original
-                        ? podcast.query_original
+                      {podcast.description_original
+                        ? podcast.description_original
                             .replace(/<[^>]*>/g, "")
                             .slice(0, 70) + "..."
                         : "No query available."}

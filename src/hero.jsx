@@ -29,7 +29,7 @@ function Hero() {
         // </video>
 
         <img
-          className="w-full max-h-[60vh] object-cover object-center"
+          className="w-full max-h-[60vh] object-cover object-center block"
           src="\Assets\pexels-jibarofoto-13963623.jpg"
           alt=""
         />

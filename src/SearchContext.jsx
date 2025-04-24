@@ -1,6 +1,5 @@
 import { createContext, useState, useContext, useMemo } from "react";
 import { strokeColor } from "./constants";
-import { useLocalStorage } from "./Services/useLocalStorage";
 
 const SearchContext = createContext();
 
@@ -14,7 +13,7 @@ export function useSearch() {
 
 export function SearchProvider({ children }) {
   const [query, setquery] = useState("");
-  const [sermons, setSermons] = useLocalStorage([], "sermons");
+
   const [selectedVideo, setSelectedVideo] = useState();
   const [isFeedVisible, setIsFeedVisible] = useState(false);
   const [error, setError] = useState("");
@@ -31,12 +30,10 @@ export function SearchProvider({ children }) {
       isLoading,
       setIsLoading,
       strokeColor,
-      sermons,
-      setSermons,
       error,
       setError,
     }),
-    [isFeedVisible, selectedVideo, query, isLoading, sermons, error, setSermons]
+    [isFeedVisible, selectedVideo, query, isLoading, error]
   );
 
   return (
