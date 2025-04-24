@@ -4,26 +4,27 @@ import { useSearch } from "./SearchContext";
 import ReactPlayer from "react-player";
 import { Loader } from "./loader";
 
-export async function sermonsApi(description, pageToken = "") {
-  const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
-  console.log("Description:", description);
-  console.log("Page Token:", pageToken);
-  if (!description) return []; // Return an empty array if no category is provided
+export async function sermonsApi(query, pageToken = "") {
+  //   const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
+  //   const API_KEY = "AIzaSyB-t8E-UrOC8CMTfpjLdMd7dZUejXvwx1c";
+  const API_KEY = "AIzaSyCyDM6zL56RjPY62zE30wi6TweFQXjCIYo";
+
+  if (!query) return []; // Return an empty array if no searchQuery is provided
 
   const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
-    description
-  )}&maxResults=50&pageToken=${pageToken}&type=video&key=${API_KEY}`;
+    query
+  )}&maxResults=2&pageToken=${pageToken}&type=video&key=${API_KEY}`;
 
   try {
     const data = await fetchData(URL);
-
+    // Removed unused 'endpoint' variable
     return data.items || [];
   } catch (error) {
     throw new Error(error.message);
   }
 }
 
-export default function Sermons({ description, pageToken = "" }) {
+export default function Sermons({ query, pageToken = "" }) {
   const [isLoadingSermons, setIsLoadingSermons] = useState(false);
   const [error, setError] = useState(null);
   const { setSelectedVideo } = useSearch(); // Assuming you have a context or prop for this
@@ -32,14 +33,12 @@ export default function Sermons({ description, pageToken = "" }) {
 
   useEffect(() => {
     const fetchSermons = async () => {
-      if (!description || typeof description !== "string") {
-        console.error("Invalid description:", description);
+      if (!query || typeof query !== "string") {
         return;
       }
       const pageToken = localStorage.getItem("nextPageToken") || ""; // Retrieve pageToken
 
       if (pageToken && typeof pageToken !== "string") {
-        console.error("Invalid pageToken:", pageToken);
         return;
       }
       setIsLoadingSermons(true);
@@ -48,7 +47,7 @@ export default function Sermons({ description, pageToken = "" }) {
       try {
         // Retrieve pageToken
 
-        const results = await sermonsApi(description); // Call the exported function
+        const results = await sermonsApi(query); // Call the exported function
         setSermons(results);
       } catch (error) {
         setError(error.message);
@@ -58,7 +57,7 @@ export default function Sermons({ description, pageToken = "" }) {
     };
 
     fetchSermons();
-  }, [description, pageToken]); // Add category to the dependency array
+  }, [query]); // Add searchQuery to the dependency array
 
   return (
     <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4">

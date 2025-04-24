@@ -1,9 +1,7 @@
 export async function fetchData(URL, endpoint) {
   const response = await fetch(URL, endpoint);
   if (!response.ok) {
-    const errorData = await response.json();
-    console.error("Error response:", errorData);
-    throw new Error(`Error ${response.status}: ${errorData.error.message}`);
+    throw new Error(`Error ${response.status}: ${response.statusText}`);
   }
   const data = await response.json();
   if (data.nextPageToken) {
@@ -32,8 +30,7 @@ export async function fetchData(URL, endpoint) {
 //       throw new Error(`Error ${response.status}: Unable to fetch data.`);
 //     }
 //     const data = await response.json();
-//     console.log(data);
-//     if (response.ok) {
+//     //     if (response.ok) {
 //       // Update sermons with the new results
 //       setSermons((prevsermons) =>
 //         pageToken === "" ? data.items : [...prevsermons, ...data.items]

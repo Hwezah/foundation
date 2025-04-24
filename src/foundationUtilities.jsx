@@ -17,7 +17,7 @@ export default function FoundationUtilities() {
         <div className="sticky top-0 bg-[#01212c]">
           {/* <h2 className="hidden xl:block text-2xl md:text-3xl font-black mb-3 px-4  pt-3">
             <span className="text-[#4a5759] uppercase">Following,</span>{" "}
-            <p>{description ? `${description}'s Foundation.` : ""}</p>
+            <p>{query ? `${query}'s Foundation.` : ""}</p>
           </h2> */}
           <div className="flex justify-between bg-[#4a5759] px-3 py-1 md:py-1.5 lg:py-2 items-center">
             <h3 className="w-3/4 xl:w-full truncate xl:truncate-two-lines">
@@ -303,8 +303,7 @@ export function BaseTools() {
 //     const data = await response.json();
 //     return data;
 //   } catch (error) {
-//     console.error("Bible API Error:", error.message);
-//     return { error: error.message };
+//     //     return { error: error.message };
 //   } finally {
 //     setIsLoading(false);
 //   }

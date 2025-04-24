@@ -3,25 +3,29 @@ import { useLocalStorage } from "./Services/useLocalStorage";
 import { fetchData } from "./Services/api";
 import { Loader } from "./loader";
 
-export async function PodcastsApi(category) {
-  if (!category) return []; // Return an empty array if no category is provided
-  const query = category;
-  const API_KEY = "8bdff6c6a5a94d2d9f43c1ad32b5d19e";
-  const URL = `https://listen-api.listennotes.com/api/v2/search?q=${query}&type=episode&sort_by_date=0&len_min=0&len_max=0&only_in=title,description,fulltext&offset=0&safe_mode=0&episode_count_max=10`;
+export async function PodcastsApi(query) {
+  if (!query) return []; // Return an empty array if no query is provided
+
+  // const API_KEY = "8bdff6c6a5a94d2d9f43c1ad32b5d19e";
+  const API_KEY = "5499e7a41f314beaab46610580e99eaf";
+
+  const URL = `https://listen-api.listennotes.com/api/v2/search?q=${query}&type=episode&sort_by_date=1&len_min=0&len_max=0&only_in=title,query,fulltext&offset=0&safe_mode=0&episode_count_max=2`;
 
   try {
-    const data = await fetchData(URL, {
+    const endpoint = {
       headers: {
         "X-ListenAPI-Key": API_KEY,
       },
-    });
+    };
+
+    const data = await fetchData(URL, endpoint);
 
     return data.results || [];
   } catch (error) {
     throw new Error(error.message);
   }
 }
-export default function Podcasts({ category }) {
+export default function Podcasts({ query }) {
   const [isLoadingPodcasts, setIsLoadingPodcasts] = useState(false);
   const [error, setError] = useState(null);
   const [podcasts, setPodcasts] = useLocalStorage([], "podcasts");
@@ -33,12 +37,12 @@ export default function Podcasts({ category }) {
 
   useEffect(() => {
     const fetchPodcasts = async () => {
-      if (!category) return;
+      if (!query) return;
       setIsLoadingPodcasts(true);
       setError(null);
 
       try {
-        const results = await PodcastsApi(category); // Call the exported function
+        const results = await PodcastsApi(query); // Call the exported function
         setPodcasts(results);
       } catch (error) {
         setError(error.message);
@@ -48,7 +52,7 @@ export default function Podcasts({ category }) {
     };
 
     fetchPodcasts();
-  }, [category]);
+  }, [query, setPodcasts]);
 
   const handlePlayPause = (podcastId, audioUrl) => {
     const currentAudio = audioRefs.current[podcastId];
@@ -191,11 +195,11 @@ export default function Podcasts({ category }) {
                 <div className="flex items-baseline">
                   <div className="flex-1">
                     <p className="text-sm text-gray-400 font-medium  line-clamp-2 relative">
-                      {podcast.description_original
-                        ? podcast.description_original
+                      {podcast.query_original
+                        ? podcast.query_original
                             .replace(/<[^>]*>/g, "")
                             .slice(0, 70) + "..."
-                        : "No description available."}
+                        : "No query available."}
                       <audio
                         ref={(el) => (audioRefs.current[podcast.id] = el)}
                         src={podcast.audio}

@@ -2,8 +2,7 @@ import UserDashboard from "./UserDashboard";
 import Donations from "./donations";
 import { useSearch } from "./SearchContext";
 import { useState, useEffect } from "react";
-import { PodcastsApi } from "./Podcasts";
-import { sermonsApi } from "./sermons";
+
 export default function Navigation() {
   const [showSearch, setShowSearch] = useState(false);
   return (
@@ -36,34 +35,18 @@ export default function Navigation() {
   );
 }
 function SearchBar({ showSearch, setShowSearch }) {
-  const { description, setDescription, setIsLoading, setError, setSermons } =
-    useSearch();
+  const { query, setquery, setError } = useSearch();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [inputValue, setInputValue] = useState(description);
+  const [searchQuery, setsearchQuery] = useState(query);
 
   function handleSearch() {
-    if (!inputValue || inputValue.trim() === "") {
+    if (!searchQuery || searchQuery.trim() === "") {
       setError("Please enter a valid search term.");
       return;
     }
-    console.log("Input Value (description):", inputValue);
-    setIsLoading(true);
-    setDescription(inputValue); // Update the context
-    PodcastsApi(URL, setIsLoading, setError);
-    // Retrieve pageToken
-    sermonsApi(inputValue) // Pass the pageToken
-      .then((results) => {
-        setSermons(results);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
 
+    setquery(searchQuery); // Update the context
     setShowSearch(false);
-    setInputValue("");
   }
 
   useEffect(() => {
@@ -123,8 +106,8 @@ function SearchBar({ showSearch, setShowSearch }) {
 
       {/* Full search bar */}
       <input
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={searchQuery}
+        onChange={(e) => setsearchQuery(e.target.value)}
         className={`flex xl:w-[350px] rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
           showSearch ? "block" : "hidden"
         } md:block`}

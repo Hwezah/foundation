@@ -6,20 +6,19 @@ import Podcasts from "./Podcasts";
 import Sermons from "./sermons";
 
 function Trending() {
-  const { description, setError, setIsLoading, setSermons } = useSearch(); // Use context for shared state
-  const [selectedCategory, setSelectedCategory] = useState("Sermons");
-  console.log("Description from useSearch in Trending:", description);
+  const { query, setError, setIsLoading, setSermons } = useSearch(); // Use context for shared state
+  const [selectedsearchQuery, setSelectedsearchQuery] = useState("Sermons");
   async function handleLoadMore() {
     const nextPageToken = localStorage.getItem("nextPageToken") || "";
-    if (!description || description.trim() === "") {
+    if (!query || query.trim() === "") {
       setError("Please enter a valid search term.");
       return;
     }
 
-    if (nextPageToken || selectedCategory === "Sermons") {
+    if (nextPageToken || selectedsearchQuery === "Sermons") {
       const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY"; // Replace with your actual API key
       const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
-        description
+        query
       )}&maxResults=50&type=video&key=${API_KEY}`;
 
       try {
@@ -45,15 +44,15 @@ function Trending() {
     <div>
       <div className="lg:pt-6 px-2 pt-6 xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 xl:pt-10">
         <span className="text-xl md:text-3xl font-black tracking-wide pb-1">
-          {selectedCategory}.
+          {selectedsearchQuery}.
         </span>
       </div>
       <ContentBar
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        selectedsearchQuery={selectedsearchQuery}
+        setSelectedsearchQuery={setSelectedsearchQuery}
       />
-      {selectedCategory === "Podcasts" && <Podcasts category={description} />}
-      {selectedCategory === "Sermons" && <Sermons description={description} />}
+      {selectedsearchQuery === "Podcasts" && <Podcasts query={query} />}
+      {selectedsearchQuery === "Sermons" && <Sermons query={query} />}
       <div className="flex justify-center mt-4">
         <button
           onClick={handleLoadMore}
@@ -99,7 +98,7 @@ function Trending() {
 
 export default memo(Trending);
 
-function ContentBar({ selectedCategory, setSelectedCategory }) {
+function ContentBar({ selectedsearchQuery, setSelectedsearchQuery }) {
   const categories = [
     "Sermons",
     "Podcasts",
@@ -111,17 +110,17 @@ function ContentBar({ selectedCategory, setSelectedCategory }) {
   ];
   return (
     <div className="flex pb-2 xl:pb-3 xl:px-10 md:px-4 sm:px-2 lg:px-6 overflow-x-auto justify-between gap-4 text-sm lg:text-md font-bold scrollbar-hidden">
-      {categories.map((category) => (
+      {categories.map((searchQuery) => (
         <button
-          key={category}
-          onClick={() => setSelectedCategory(category)}
+          key={searchQuery}
+          onClick={() => setSelectedsearchQuery(searchQuery)}
           className={`${
-            selectedCategory === category
+            selectedsearchQuery === searchQuery
               ? "bg-[#78898b] text-[#01222e]"
               : "bg-[#01222e] text-[#78898b]"
           } px-2 py-1 lg:px-3 lg:py-1.5 rounded-sm whitespace-nowrap font-semibold`}
         >
-          {category}
+          {searchQuery}
         </button>
       ))}
     </div>

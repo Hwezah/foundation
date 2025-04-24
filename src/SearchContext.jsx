@@ -5,11 +5,15 @@ import { useLocalStorage } from "./Services/useLocalStorage";
 const SearchContext = createContext();
 
 export function useSearch() {
-  return useContext(SearchContext);
+  const context = useContext(SearchContext);
+  if (context === undefined) {
+    throw new Error("useSearch must be used within a SearchProvider");
+  }
+  return context;
 }
 
 export function SearchProvider({ children }) {
-  const [description, setDescription] = useState("");
+  const [query, setquery] = useState("");
   const [sermons, setSermons] = useLocalStorage([], "sermons");
   const [selectedVideo, setSelectedVideo] = useState();
   const [isFeedVisible, setIsFeedVisible] = useState(false);
@@ -22,8 +26,8 @@ export function SearchProvider({ children }) {
       setIsFeedVisible,
       selectedVideo,
       setSelectedVideo,
-      description,
-      setDescription,
+      query,
+      setquery,
       isLoading,
       setIsLoading,
       strokeColor,
@@ -32,15 +36,7 @@ export function SearchProvider({ children }) {
       error,
       setError,
     }),
-    [
-      isFeedVisible,
-      selectedVideo,
-      description,
-      isLoading,
-      sermons,
-      error,
-      setSermons,
-    ]
+    [isFeedVisible, selectedVideo, query, isLoading, sermons, error, setSermons]
   );
 
   return (
