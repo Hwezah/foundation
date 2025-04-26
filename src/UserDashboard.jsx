@@ -23,7 +23,7 @@ export default function UserDashboard() {
     >
       <Cast />
       <Notifications />
-      <div className="hidden lg:block">
+      <div className="hidden sm:block">
         <User />
       </div>
       <Settings />
