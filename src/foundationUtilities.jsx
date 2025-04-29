@@ -2,7 +2,7 @@ import { useSearch } from "./SearchContext";
 import Bible from "./Bible";
 import User from "./user";
 export default function FoundationUtilities() {
-  const { selectedVideo, isFeedVisible, setIsFeedVisible } = useSearch();
+  const { selectedVideo, isFeedVisible, dispatch } = useSearch();
 
   return (
     <div
@@ -29,7 +29,7 @@ export default function FoundationUtilities() {
               </span>
             </h3>
             <div className="">
-              <Tools setIsFeedVisible={setIsFeedVisible} />
+              <Tools isFeedVisible={isFeedVisible} dispatch={dispatch} />
             </div>
           </div>
         </div>
@@ -41,14 +41,16 @@ export default function FoundationUtilities() {
   );
 }
 
-export function Tools({ setIsFeedVisible }) {
+export function Tools({ dispatch, isFeedVisible }) {
   return (
     <div className=" flex gap-2">
       <svg
         height={"34px"}
         width={"34px"}
         onClick={() => {
-          setIsFeedVisible((prev) => !prev);
+          dispatch({
+            type: "SET_IS_FEED_VISIBLE",
+          });
         }}
         viewBox="0 0 24 24"
         fill="none"
@@ -78,7 +80,12 @@ export function Tools({ setIsFeedVisible }) {
         </g>
       </svg>
       <svg
-        onClick={() => setIsFeedVisible((prev) => !prev)}
+        onClick={() =>
+          dispatch({
+            type: "SET_IS_FEED_VISIBLE",
+            // payload: !isFeedVisible,
+          })
+        }
         height={"34px"}
         width={"34px"}
         viewBox="0 0 24 24"

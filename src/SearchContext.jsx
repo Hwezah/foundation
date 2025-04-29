@@ -1,7 +1,35 @@
-import { createContext, useState, useContext, useMemo } from "react";
+import { createContext, useContext, useMemo, useReducer } from "react";
 import { strokeColor } from "./constants";
 
 const SearchContext = createContext();
+
+const initialState = {
+  query: "",
+  selectedVideo: null,
+  isFeedVisible: false,
+  error: "",
+  isLoading: false, // Added this line
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "LOADING":
+      return { ...state, isLoading: true }; // Added this line
+    case "LOADED":
+      return { ...state, isLoading: false }; // Added this line
+    case "SET_QUERY":
+      return { ...state, query: action.payload };
+    case "SET_SELECTED_VIDEO":
+      return { ...state, selectedVideo: action.payload };
+    case "SET_IS_FEED_VISIBLE":
+      return { ...state, isFeedVisible: !state.isFeedVisible };
+    case "REJECTED":
+      return { ...state, isLoading: false, error: action.payload };
+
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
+}
 
 export function useSearch() {
   const context = useContext(SearchContext);
@@ -12,26 +40,18 @@ export function useSearch() {
 }
 
 export function SearchProvider({ children }) {
-  const [query, setquery] = useState("");
-
-  const [selectedVideo, setSelectedVideo] = useState();
-  const [isFeedVisible, setIsFeedVisible] = useState(false);
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Added this line
+  const [{ query, selectedVideo, isFeedVisible, error, isLoading }, dispatch] =
+    useReducer(reducer, initialState);
 
   const value = useMemo(
     () => ({
       isFeedVisible,
-      setIsFeedVisible,
       selectedVideo,
-      setSelectedVideo,
       query,
-      setquery,
       isLoading,
-      setIsLoading,
       strokeColor,
       error,
-      setError,
+      dispatch,
     }),
     [isFeedVisible, selectedVideo, query, isLoading, error]
   );

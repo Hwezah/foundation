@@ -2,27 +2,25 @@
 import { useState } from "react";
 import Fuse from "fuse.js";
 import { fetchData } from "./Services/api";
+import { useSearch } from "./SearchContext";
 const BASE_URL = "https://api.scripture.api.bible/v1/bibles";
 const API_KEY = "2917b29dcc612336646fc8dd29282dbd";
 
-const fetchBibleData = async (endpoint, setError, setIsLoading) => {
+const fetchBibleData = async (endpoint) => {
   try {
-    setError(null); // Reset error state
-    setIsLoading(true); // Start loading
-    const data = await fetchData(endpoint, {
+    const response = await fetchData(endpoint, {
       method: "GET",
       headers: {
         "api-key": API_KEY,
       },
     });
-    return data; // Return the data to the caller
+
+    return response; // Return the data to the caller
   } catch (error) {
-    setError(error.message); // Handle the error
-    return null; // Return null in case of an error
-  } finally {
-    setIsLoading(false); // Stop loading
+    throw new Error(error.message); // Throw error to be handled by the component
   }
 };
+
 function BibleDisplay({ result, isVerseByVerse, bibleVersion }) {
   return (
     <div className="bible-display">
@@ -73,9 +71,8 @@ export const BibleSearch = ({ fetchBibleData }) => {
   const [verse, setVerse] = useState("");
   const [chapter, setChapter] = useState("");
   const [book, setBook] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Local state
+  const { isLoading, dispatch, error } = useSearch();
   const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
   const BIBLE_IDS = {
     KJV: "f276be3571f516cb-01",
     GANDA: "de4e12af7f28f599-01",
@@ -274,15 +271,16 @@ export const BibleSearch = ({ fetchBibleData }) => {
   };
 
   const handleBibleSearch = async () => {
-    setError(null);
     setResult(null);
-    setIsLoading(true);
-
-    if (isLoading || !book || !chapter) return;
+    dispatch({ type: "LOADING" });
+    dispatch({ type: "REJECTED", payload: "" });
 
     if (!book || !chapter) {
-      setError("Please provide both the book and chapter.");
-      setIsLoading(false);
+      dispatch({
+        type: "REJECTED",
+        payload: "Please provide both the book and chapter.",
+      });
+      dispatch({ type: "LOADING" });
       return;
     }
 
@@ -290,8 +288,11 @@ export const BibleSearch = ({ fetchBibleData }) => {
     // const abbr = getFuzzyBookAbbr(userInput);
 
     if (!abbr) {
-      setError("Book not recognized.");
-      setIsLoading(false);
+      dispatch({
+        type: "REJECTED",
+        payload: "Book not recognised.",
+      });
+      dispatch({ type: "LOADED" });
       return;
     }
 
@@ -303,7 +304,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
       ? `${BASE_URL}/${bibleId}/verses/${verseId}`
       : `${BASE_URL}/${bibleId}/chapters/${verseId}`;
 
-    const data = await fetchBibleData(endpoint, setError, setIsLoading);
+    const data = await fetchBibleData(endpoint, error, isLoading, dispatch);
 
     if (data && !data.error) {
       const cleanContent = data.data.content.replace(/<[^>]*>/g, "");

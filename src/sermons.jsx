@@ -24,10 +24,8 @@ export async function SermonsApi(query, pageToken = "") {
 }
 
 export default function Sermons({ query }) {
-  const [isLoadingSermons, setIsLoadingSermons] = useState(false);
+  const { error, dispatch, isloading } = useSearch();
   const [sermons, setSermons] = useLocalStorage([], "sermons");
-  const [error, setError] = useState(null);
-  const { setSelectedVideo } = useSearch(); // Assuming you have a context or prop for this
   const [playingVideoId, setPlayingVideoId] = useState(null);
 
   useEffect(() => {
@@ -40,17 +38,17 @@ export default function Sermons({ query }) {
       if (token && typeof token !== "string") {
         return;
       }
-      setIsLoadingSermons(true);
-      setError(null);
+      dispatch({ type: "LOADING" });
+      dispatch({ type: "REJECTED", payload: "" });
 
       try {
         // Retrieve pageToken
         const results = await SermonsApi(query, token); // Call the exported function
         setSermons(results);
       } catch (error) {
-        setError(error.message);
+        dispatch({ type: "REJECTED", payload: error.message });
       } finally {
-        setIsLoadingSermons(false);
+        dispatch({ type: "LOADED" });
       }
     };
 
@@ -59,7 +57,7 @@ export default function Sermons({ query }) {
 
   return (
     <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4">
-      {isLoadingSermons ? (
+      {isloading ? (
         <Loader />
       ) : sermons.length ? (
         sermons.map((video) => (
@@ -68,7 +66,10 @@ export default function Sermons({ query }) {
             video={video}
             isPlaying={playingVideoId === video.id.videoId}
             onPlay={() => setPlayingVideoId(video.id.videoId)}
-            onClick={() => setSelectedVideo(video)}
+            onClick={() =>
+              dispatch({ type: "SET_SELECTED_VIDEO", payload: video })
+            }
+            onPause={() => setPlayingVideoId(video)}
           />
         ))
       ) : (

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocalStorage } from "./Services/useLocalStorage";
 import { fetchData } from "./Services/api";
 import { Loader } from "./loader";
+import { useSearch } from "./SearchContext";
 
 export async function PodcastsApi(query) {
   if (!query) return []; // Return an empty array if no query is provided
@@ -26,8 +27,7 @@ export async function PodcastsApi(query) {
   }
 }
 export default function Podcasts({ query }) {
-  const [isLoadingPodcasts, setIsLoadingPodcasts] = useState(false);
-  const [error, setError] = useState(null);
+  const { error, dispatch, isloading } = useSearch();
   const [podcasts, setPodcasts] = useLocalStorage([], "podcasts");
   const [playingPodcastId, setPlayingPodcastId] = useState(null);
   const [progress, setProgress] = useState({});
@@ -37,17 +37,19 @@ export default function Podcasts({ query }) {
 
   useEffect(() => {
     const fetchPodcasts = async () => {
-      if (!query) return;
-      setIsLoadingPodcasts(true);
-      setError(null);
+      if (!query || typeof query !== "string") {
+        return;
+      }
+      dispatch({ type: "LOADING" });
+      dispatch({ type: "REJECTED", payload: "" });
 
       try {
         const results = await PodcastsApi(query); // Call the exported function
         setPodcasts(results);
       } catch (error) {
-        setError(error.message);
+        dispatch({ type: "REJECTED", payload: error.message });
       } finally {
-        setIsLoadingPodcasts(false);
+        dispatch({ type: "LOADED" });
       }
     };
 
@@ -114,7 +116,7 @@ export default function Podcasts({ query }) {
 
   return (
     <div className=" xl:pb-1 xl:px-10 md:px-4 sm:px-2 lg:px-6 ">
-      {isLoadingPodcasts && <Loader />}
+      {isloading && <Loader />}
       {/* {error && <p className="text-red-500">{error}</p>} */}
       <div className=" grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))]  gap-4 gap-y-2 md:gap-y-4 ">
         {podcasts.map((podcast) => (

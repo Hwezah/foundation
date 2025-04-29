@@ -35,17 +35,20 @@ export default function Navigation() {
   );
 }
 function SearchBar({ showSearch, setShowSearch }) {
-  const { query, setquery, setError } = useSearch();
+  const { query, dispatch } = useSearch();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [searchQuery, setsearchQuery] = useState(query);
 
   function handleSearch() {
     if (!searchQuery || searchQuery.trim() === "") {
-      setError("Please enter a valid search term.");
+      dispatch({
+        type: "REJECTED",
+        payload: "Please enter a valid search term.",
+      });
       return;
     }
 
-    setquery(searchQuery); // Update the context
+    dispatch({ type: "SET_QUERY", payload: searchQuery });
     setShowSearch(false);
   }
 

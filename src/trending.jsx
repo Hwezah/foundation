@@ -6,7 +6,7 @@ import Podcasts from "./Podcasts";
 import Sermons from "./sermons";
 
 function Trending() {
-  const { query, setError, setIsLoading, setSermons } = useSearch(); // Use context for shared state
+  const { query, setError, setIsLoading, setSermons, dispatch } = useSearch(); // Use context for shared state
   const [selectedsearchQuery, setSelectedsearchQuery] = useState("Sermons");
   async function handleLoadMore() {
     const nextPageToken = localStorage.getItem("nextPageToken") || "";
@@ -24,7 +24,8 @@ function Trending() {
       }&key=${API_KEY}`;
 
       try {
-        setIsLoading(true);
+        dispatch({ type: "LOADING" });
+        dispatch({ type: "REJECTED", payload: "" });
         await fetchSermons(
           URL,
           setIsLoading,
@@ -33,12 +34,12 @@ function Trending() {
           nextPageToken
         );
       } catch (error) {
-        setError(error.message);
+        dispatch({ type: "REJECTED", payload: error.message });
       } finally {
-        setIsLoading(false);
+        dispatch({ type: "LOADED" });
       }
     } else {
-      setError("No next page available.");
+      dispatch({ type: "REJECTED", payload: "No more results" });
     }
   }
 
