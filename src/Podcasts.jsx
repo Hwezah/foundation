@@ -4,13 +4,13 @@ import { fetchData } from "./Services/api";
 import { Loader } from "./loader";
 import { useSearch } from "./SearchContext";
 
-export async function PodcastsApi(query) {
+export async function PodcastsApi(query, offset = 0) {
   if (!query) return []; // Return an empty array if no query is provided
 
-  // const API_KEY = "8bdff6c6a5a94d2d9f43c1ad32b5d19e";
   const API_KEY = "5499e7a41f314beaab46610580e99eaf";
-
-  const URL = `https://listen-api.listennotes.com/api/v2/search?q=${query}&type=episode&sort_by_date=1&len_min=0&len_max=0&only_in=title,query,fulltext&offset=0&safe_mode=0&episode_count_max=10`;
+  const URL = `https://listen-api.listennotes.com/api/v2/search?q=${encodeURIComponent(
+    query
+  )}&type=episode&sort_by_date=1&len_min=0&len_max=0&only_in=title,query,fulltext&&safe_mode=0&offset=${offset}&page_size=4`;
 
   try {
     const endpoint = {
@@ -20,14 +20,14 @@ export async function PodcastsApi(query) {
     };
 
     const data = await fetchData(URL, endpoint);
-
     return data.results || [];
   } catch (error) {
     throw new Error(error.message);
   }
 }
+
 export default function Podcasts({ query }) {
-  const { error, dispatch, isloading } = useSearch();
+  const { dispatch, isloading } = useSearch();
   const [podcasts, setPodcasts] = useLocalStorage([], "podcasts");
   const [playingPodcastId, setPlayingPodcastId] = useState(null);
   const [progress, setProgress] = useState({});
@@ -35,26 +35,54 @@ export default function Podcasts({ query }) {
   const [selectedPodcastId, setSelectedPodcastId] = useState(null);
   const audioRefs = useRef({}); // Store references to audio elements
 
-  useEffect(() => {
-    const fetchPodcasts = async () => {
-      if (!query || typeof query !== "string") {
-        return;
-      }
+  // Fetch and set podcasts
+  async function fetchAndSetPodcasts(query, offset = 0, append = false) {
+    try {
       dispatch({ type: "LOADING" });
       dispatch({ type: "REJECTED", payload: "" });
 
-      try {
-        const results = await PodcastsApi(query); // Call the exported function
-        setPodcasts(results);
-      } catch (error) {
-        dispatch({ type: "REJECTED", payload: error.message });
-      } finally {
-        dispatch({ type: "LOADED" });
-      }
-    };
+      const results = await PodcastsApi(query, offset);
+      const nextOffset = offset + 4; // 4 = page_size
+      localStorage.setItem("nextPage", nextOffset); // Update next page offset in localStorage
 
-    fetchPodcasts();
-  }, [query, setPodcasts]);
+      setPodcasts((prev) => {
+        const existingIds = new Set(prev.map((p) => p.id));
+        const newUnique = results.filter((p) => !existingIds.has(p.id));
+        return append ? [...prev, ...newUnique] : newUnique;
+      });
+    } catch (error) {
+      dispatch({ type: "REJECTED", payload: error.message });
+    } finally {
+      dispatch({ type: "LOADED" });
+    }
+  }
+
+  // Initial fetch when query changes
+  useEffect(() => {
+    if (!query || typeof query !== "string") return;
+
+    localStorage.setItem("nextPage", 4); // Set initial next page offset
+    fetchAndSetPodcasts(query, 0, false); // Fetch and set the first set of podcasts
+  }, [query]);
+
+  // Load more podcasts
+  async function handleLoadMorePodcasts() {
+    const nextPage = parseInt(localStorage.getItem("nextPage"), 10); // Parse offset from localStorage
+
+    if (!query || query.trim() === "") {
+      dispatch({
+        type: "REJECTED",
+        payload: "Please enter a valid search term.",
+      });
+      return;
+    }
+
+    if (!isNaN(nextPage)) {
+      await fetchAndSetPodcasts(query, nextPage, true); // true = append results
+    } else {
+      dispatch({ type: "REJECTED", payload: "No more results" });
+    }
+  }
 
   const handlePlayPause = (podcastId) => {
     const currentAudio = audioRefs.current[podcastId];
@@ -317,6 +345,43 @@ export default function Podcasts({ query }) {
           </div>
         ))}
       </div>
+      <button
+        onClick={handleLoadMorePodcasts}
+        className="flex items-center gap-2 mx-auto text-white px-4 py-2 rounded-lg cursor-pointer"
+      >
+        <svg
+          height={"34px"}
+          width={"34px"}
+          viewBox="-2.24 -2.24 36.48 36.48"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          fill="#fff"
+          stroke="#fff"
+          strokeWidth="0.64"
+        >
+          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M20.462 10.824l-9.265 9.196 0.753 0.756 9.265-9.196z"
+              fill="#fff"
+            ></path>
+            <path
+              d="M6.937 21.864c-3.234 0-5.864-2.631-5.864-5.864s2.631-5.864 5.864-5.864c1.566 0 2.987 0.621 4.040 1.624l0.001-0.006 0.054 0.047 2.076 2.066h-1.905v1.066h3.732v-3.732h-1.066v1.918l-2.084-2.074-0.005 0.005c-1.251-1.224-2.959-1.982-4.842-1.982-3.821 0-6.931 3.109-6.931 6.931s3.109 6.931 6.931 6.931c1.971 0 3.747-0.831 5.011-2.156l-0.753-0.754c-1.070 1.132-2.581 1.844-4.258 1.844z"
+              fill="#fff"
+            ></path>
+            <path
+              d="M25.063 9.069c-1.765 0-3.373 0.668-4.597 1.759l0.753 0.753c1.030-0.898 2.373-1.446 3.844-1.446 3.234 0 5.864 2.631 5.864 5.864s-2.631 5.864-5.864 5.864c-1.56 0-2.976-0.616-4.028-1.613l-0.002 0.010-3.531-3.518-0.757 0.751 3.535 3.522 0.006-0.006c1.245 1.187 2.925 1.921 4.776 1.921 3.821 0 6.931-3.109 6.931-6.931s-3.109-6.931-6.931-6.931z"
+              fill="#fff"
+            ></path>
+          </g>
+        </svg>
+      </button>
     </div>
   );
 }

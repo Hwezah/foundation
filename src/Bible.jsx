@@ -3,6 +3,13 @@ import { useState } from "react";
 import Fuse from "fuse.js";
 import { fetchData } from "./Services/api";
 import { useSearch } from "./SearchContext";
+import { NavLink } from "react-router-dom";
+import {
+  HiMiniMagnifyingGlass,
+  HiMiniBars3BottomLeft,
+  HiMiniBars3,
+  HiMiniPencilSquare,
+} from "react-icons/hi2";
 const BASE_URL = "https://api.scripture.api.bible/v1/bibles";
 const API_KEY = "2917b29dcc612336646fc8dd29282dbd";
 
@@ -326,37 +333,13 @@ export const BibleSearch = ({ fetchBibleData }) => {
           className="bg-[#022b3a] text-white px-1.5 py-0.5 lg:py-1 rounded "
         >
           {isVerseByVerse ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="3" y="3" width="7" height="7" />
-              <rect x="14" y="3" width="7" height="7" />
-              <rect x="14" y="14" width="7" height="7" />
-              <rect x="3" y="14" width="7" height="7" />
-            </svg>
+            <NavLink>
+              <HiMiniBars3BottomLeft className="w-6.5 h-6.5" />
+            </NavLink>
           ) : (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              stroke="#fff"
-              className="w-5 h-5"
-            >
-              <path
-                d="M8 6.00067L21 6.00139M8 12.0007L21 12.0015M8 18.0007L21 18.0015M3.5 6H3.51M3.5 12H3.51M3.5 18H3.51M4 6C4 6.27614 3.77614 6.5 3.5 6.5C3.22386 6.5 3 6.27614 3 6C3 5.72386 3.22386 5.5 3.5 5.5C3.77614 5.5 4 5.72386 4 6ZM4 12C4 12.2761 3.77614 12.5 3.5 12.5C3.22386 12.5 3 12.2761 3 12C3 11.7239 3.22386 11.5 3.5 11.5C3.77614 11.5 4 11.7239 4 12ZM4 18C4 18.2761 3.77614 18.5 3.5 18.5C3.22386 18.5 3 18.2761 3 18C3 17.7239 3.22386 17.5 3.5 17.5C3.77614 17.5 4 17.7239 4 18Z"
-                stroke="#fff"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <NavLink>
+              <HiMiniBars3 className="w-6.5 h-6.5" />
+            </NavLink>
           )}
         </button>
         <button
@@ -365,32 +348,9 @@ export const BibleSearch = ({ fetchBibleData }) => {
           }
           className=" py-0.5 sm:inline-block bg-[#4a5759] text-white p-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
         >
-          <svg
-            width="24px"
-            height="24px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              {" "}
-              <path
-                opacity="0.4"
-                d="M16.8203 2H7.18031C5.05031 2 3.32031 3.74 3.32031 5.86V19.95C3.32031 21.75 4.61031 22.51 6.19031 21.64L11.0703 18.93C11.5903 18.64 12.4303 18.64 12.9403 18.93L17.8203 21.64C19.4003 22.52 20.6903 21.76 20.6903 19.95V5.86C20.6803 3.74 18.9503 2 16.8203 2Z"
-                fill="#fff"
-              ></path>{" "}
-              <path
-                d="M12.0007 10.2801C10.9807 10.2801 9.96074 10.1001 8.99074 9.75005C8.60074 9.61005 8.40074 9.18005 8.54074 8.79005C8.69074 8.40005 9.12074 8.20005 9.51074 8.34005C11.1207 8.92005 12.8907 8.92005 14.5007 8.34005C14.8907 8.20005 15.3207 8.40005 15.4607 8.79005C15.6007 9.18005 15.4007 9.61005 15.0107 9.75005C14.0407 10.1001 13.0207 10.2801 12.0007 10.2801Z"
-                fill="#292D32"
-              ></path>{" "}
-            </g>
-          </svg>
+          <NavLink>
+            <HiMiniPencilSquare className="w-6.5 h-6.5" />
+          </NavLink>
         </button>
 
         <input
@@ -435,21 +395,8 @@ export const BibleSearch = ({ fetchBibleData }) => {
 
 function BibleSearchButton() {
   return (
-    <div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        className="h-5 w-5"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010 17.5 7.5 7.5 0 0016.65 16.65z"
-        />
-      </svg>
-    </div>
+    <NavLink>
+      <HiMiniMagnifyingGlass className="w-6 h-6" />
+    </NavLink>
   );
 }

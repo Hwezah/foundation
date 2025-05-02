@@ -11,6 +11,9 @@ export default {
           "100%": { transform: "translateX(-100%)" },
         },
       },
+      screens: {
+        custom748: "748px",
+      },
       animation: {
         marquee: "marquee 10s linear infinite",
         "marquee-hover": "marquee 10s linear infinite paused", // optional for hover effect

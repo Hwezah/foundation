@@ -2,8 +2,10 @@ import UserDashboard from "./UserDashboard";
 import Donations from "./donations";
 import { useSearch } from "./SearchContext";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
-export default function Navigation() {
+export default function Header() {
   const [showSearch, setShowSearch] = useState(false);
   return (
     <>
@@ -74,6 +76,7 @@ function SearchBar({ showSearch, setShowSearch }) {
       className="relative flex items-center md:block rounded-lg"
     >
       {/* Button for small screens */}
+
       <button
         type="button"
         onClick={() => {
@@ -91,20 +94,9 @@ function SearchBar({ showSearch, setShowSearch }) {
           showSearch ? "right-2" : "right-1"
         } md:right-6`}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          className="h-5 w-5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010 17.5 7.5 7.5 0 0016.65 16.65z"
-          />
-        </svg>
+        <NavLink>
+          <HiMiniMagnifyingGlass className="w-6 h-6" />
+        </NavLink>
       </button>
 
       {/* Full search bar */}

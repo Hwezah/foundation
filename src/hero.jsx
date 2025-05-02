@@ -6,7 +6,7 @@ import FoundationUtilities from "./foundationUtilities";
 import React, { memo } from "react";
 
 function Hero() {
-  const { selectedVideo, isLoading, dispatch } = useSearch();
+  const { selectedVideo, isLoading } = useSearch();
 
   // const isSticky = book && chapter && !verse; // Check if book and chapter are defined
 
