@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import {
   HiAdjustmentsHorizontal,
   HiOutlineUser,
@@ -8,10 +7,12 @@ import {
   HiOutlineVideoCamera,
   HiBookmark,
   HiMiniBookOpen,
+  HiMiniPlus,
 } from "react-icons/hi2";
-
+import { NavLink } from "react-router-dom";
 import { useSearch } from "./SearchContext";
 import Bible from "./Bible";
+// import FileInput from "./FileInput";
 // import User from "./user";
 export default function FoundationUtilities() {
   const { selectedVideo, isFeedVisible, dispatch } = useSearch();
@@ -87,11 +88,14 @@ export function BaseTools() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/downloads">
-            <HiOutlineVideoCamera className="w-6 h-6" />
-            {/* <span>Bookings</span> */}
-          </NavLink>
+          <IconFilePicker />
         </li>
+
+        <li>
+          <HiOutlineVideoCamera className="w-6 h-6" />
+          {/* <span>Cabins</span> */}
+        </li>
+
         <li>
           <NavLink to="/subscriptions">
             <HiOutlineRectangleStack className="w-6 h-6" />
@@ -99,8 +103,9 @@ export function BaseTools() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/capture">
+          <NavLink to="">
             <HiAdjustmentsHorizontal className="w-6 h-6" />
+
             {/* <span>Users</span> */}
           </NavLink>
         </li>
@@ -112,6 +117,23 @@ export function BaseTools() {
         </li>
       </ul>
     </nav>
+  );
+}
+
+function IconFilePicker() {
+  return (
+    <label className="cursor-pointer inline-flex items-center">
+      <HiMiniPlus className="w-6 h-6 " />
+      <input
+        type="file"
+        accept="video/*"
+        className="hidden"
+        onChange={(e) => {
+          const file = e.target.files[0];
+          console.log("Picked file:", file);
+        }}
+      />
+    </label>
   );
 }
 

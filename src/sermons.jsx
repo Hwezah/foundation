@@ -5,6 +5,8 @@ import { useSearch } from "./SearchContext";
 import ReactPlayer from "react-player";
 import { Loader } from "./loader";
 import { useLocalStorage } from "./Services/useLocalStorage";
+import { toast } from "react-hot-toast";
+
 export default function Sermons() {
   const [sermons, setSermons] = useLocalStorage([], "sermons");
   const [playingVideoId, setPlayingVideoId] = useState(null);
@@ -15,14 +17,21 @@ export default function Sermons() {
   //   const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
   //   const API_KEY = "AIzaSyB-t8E-UrOC8CMTfpjLdMd7dZUejXvwx1c";
   //   const API_KEY = "AIzaSyCNyHlY3nfI0eJYR7_xHTobtrRTX3puk94";
-
   const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
     query
   )}&maxResults=4&pageToken=${pageToken}&type=video&key=${API_KEY}`;
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["sermons", query, pageToken],
     queryFn: () => fetchData(URL),
+    onSuccess: () => {
+      console.log("onSuccess triggered in Sermons.jsx. Data received:");
+      toast.success("Sermons loaded successfully!");
+    },
+
+    onError: (err) => {
+      toast.error(err.message);
+    },
     enabled: !!query, // only fetch if query exists
     keepPreviousData: true, // keep old data while fetching new
   });
@@ -30,7 +39,9 @@ export default function Sermons() {
   // Update sermons when data changes
   useEffect(() => {
     if (data?.items) {
-      setSermons((prev) => (pageToken ? [...prev, ...data.items] : data.items));
+      setSermons((prevData) =>
+        pageToken ? [...prevData, ...data.items] : data.items
+      );
     }
   }, [data, pageToken, setSermons]);
 
