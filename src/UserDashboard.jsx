@@ -26,7 +26,9 @@ export default function UserDashboard() {
       <div className="hidden sm:block">
         <User />
       </div>
-      <Settings />
+      <div className="hidden sm:block">
+        <Settings />
+      </div>
     </div>
   );
 }

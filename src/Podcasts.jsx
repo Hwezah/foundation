@@ -6,8 +6,9 @@ import { useSearch } from "./SearchContext";
 
 export async function PodcastsApi(query, offset = 0) {
   if (!query) return []; // Return an empty array if no query is provided
+  // const API_KEY = "5499e7a41f314beaab46610580e99eaf";
 
-  const API_KEY = "5499e7a41f314beaab46610580e99eaf";
+  const API_KEY = "8bdff6c6a5a94d2d9f43c1ad32b5d19e";
   const URL = `https://listen-api.listennotes.com/api/v2/search?q=${encodeURIComponent(
     query
   )}&type=episode&sort_by_date=1&len_min=0&len_max=0&only_in=title,query,fulltext&&safe_mode=0&offset=${offset}&page_size=4`;

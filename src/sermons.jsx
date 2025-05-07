@@ -1,54 +1,41 @@
 import React, { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "./Services/api";
 import { useSearch } from "./SearchContext";
 import ReactPlayer from "react-player";
 import { Loader } from "./loader";
 import { useLocalStorage } from "./Services/useLocalStorage";
-export async function SermonsApi(query, pageToken = "") {
+export default function Sermons() {
+  const [sermons, setSermons] = useLocalStorage([], "sermons");
+  const [playingVideoId, setPlayingVideoId] = useState(null);
+  const { query, dispatch } = useSearch(); // assuming query comes from context
+  const [pageToken, setPageToken] = useState("");
+
+  const API_KEY = "AIzaSyCyDM6zL56RjPY62zE30wi6TweFQXjCIYo";
   //   const API_KEY = "AIzaSyA_9QSamWQ-yBKdZCYbzI-ywkRy3fpGrWY";
   //   const API_KEY = "AIzaSyB-t8E-UrOC8CMTfpjLdMd7dZUejXvwx1c";
   //   const API_KEY = "AIzaSyCNyHlY3nfI0eJYR7_xHTobtrRTX3puk94";
-  const API_KEY = "AIzaSyCyDM6zL56RjPY62zE30wi6TweFQXjCIYo";
-  if (!query) return []; // Return an empty array if no searchQuery is provided
+
   const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
     query
   )}&maxResults=4&pageToken=${pageToken}&type=video&key=${API_KEY}`;
 
-  try {
-    const data = await fetchData(URL);
-    return data.items || [];
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["sermons", query, pageToken],
+    queryFn: () => fetchData(URL),
+    enabled: !!query, // only fetch if query exists
+    keepPreviousData: true, // keep old data while fetching new
+  });
 
-export default function Sermons({ query }) {
-  const { error, dispatch, isloading } = useSearch();
-  const [sermons, setSermons] = useLocalStorage([], "sermons");
-  const [playingVideoId, setPlayingVideoId] = useState(null);
-
-  async function fetchAndSetSermons(query, pageToken, append = false) {
-    try {
-      dispatch({ type: "LOADING" });
-      dispatch({ type: "REJECTED", payload: "" });
-
-      const results = await SermonsApi(query, pageToken);
-
-      setSermons((prev) => (append ? [...prev, ...results] : results));
-    } catch (error) {
-      dispatch({ type: "REJECTED", payload: error.message });
-    } finally {
-      dispatch({ type: "LOADED" });
-    }
-  }
-
+  // Update sermons when data changes
   useEffect(() => {
-    if (!query || typeof query !== "string") return;
-    fetchAndSetSermons(query, "", false); // No token on first load
-  }, [query]);
+    if (data?.items) {
+      setSermons((prev) => (pageToken ? [...prev, ...data.items] : data.items));
+    }
+  }, [data, pageToken, setSermons]);
 
-  async function handleLoadMoreSermons() {
-    const nextPageToken = localStorage.getItem("nextPageToken") || "";
+  function handleLoadMoreSermons() {
+    const nextPageToken = localStorage.getItem("nextPageToken");
     if (!query || query.trim() === "") {
       dispatch({
         type: "REJECTED",
@@ -58,16 +45,16 @@ export default function Sermons({ query }) {
     }
 
     if (nextPageToken) {
-      await fetchAndSetSermons(query, nextPageToken, true); // true = append results
+      setPageToken(nextPageToken); // triggers a new query because pageToken changes
     } else {
       dispatch({ type: "REJECTED", payload: "No more results" });
     }
   }
 
   return (
-    <div className="">
-      <ul className=" xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4">
-        {isloading ? (
+    <div>
+      <ul className="xl:p-10 md:p-4 sm:p-2 lg:p-6 !pt-0 grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] min-h-[40vh] gap-4">
+        {isLoading ? (
           <Loader />
         ) : sermons.length ? (
           sermons.map((video) => (
@@ -85,7 +72,7 @@ export default function Sermons({ query }) {
             />
           ))
         ) : (
-          <ErrorMessage message={error} />
+          error && <ErrorMessage message={error.message} />
         )}
       </ul>
       <button
