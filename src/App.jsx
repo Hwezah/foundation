@@ -4,7 +4,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AppLayout from "./AppLayout";
 import Downloads from "./downloads";
-import Subscriptions from "./subscriptions";
+import Subscription from "./Subscription";
 import Capture from "./capture";
 import User from "./user";
 import Cast from "./cast";
@@ -38,7 +38,7 @@ export default function App() {
               <Route path="/settings" element={<Settings />} />
               {/* <Route path="/dashboard" element={<Dashboard />} /> */}
               <Route path="/downloads" element={<Downloads />} />
-              <Route path="/subscriptions" element={<Subscriptions />} />
+              <Route path="/subscription" element={<Subscription />} />
               <Route path="/capture" element={<Capture />} />
             </Route>
             <Route path="*" element={<PageNotFound />} />
