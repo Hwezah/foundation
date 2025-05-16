@@ -3,7 +3,12 @@ import { useLocalStorage } from "./Services/useLocalStorage";
 import { fetchData } from "./Services/api";
 import { Loader } from "./loader";
 import { useSearch } from "./SearchContext";
-
+import {
+  HiOutlinePlay,
+  HiOutlinePause,
+  HiMiniArrowDownTray,
+} from "react-icons/hi2";
+import { AiOutlineReload } from "react-icons/ai";
 export async function PodcastsApi(query, offset = 0) {
   if (!query) return []; // Return an empty array if no query is provided
   // const API_KEY = "5499e7a41f314beaab46610580e99eaf";
@@ -47,13 +52,17 @@ export default function Podcasts({ query }) {
       dispatch({ type: "REJECTED", payload: "" });
 
       const results = await PodcastsApi(query, offset);
-      const nextOffset = offset + 4; // 4 = page_size
+      const nextOffset = offset + 2; // 4 = page_size
       localStorage.setItem("nextPage", nextOffset); // Update next page offset in localStorage
 
       setPodcasts((prev) => {
-        const existingIds = new Set(prev.map((p) => p.id));
-        const newUnique = results.filter((p) => !existingIds.has(p.id));
-        return append ? [...prev, ...newUnique] : newUnique;
+        if (append) {
+          const existingIds = new Set(prev.map((p) => p.id));
+          const newUnique = results.filter((p) => !existingIds.has(p.id));
+          return [...prev, ...newUnique];
+        } else {
+          return results;
+        }
       });
     } catch (error) {
       dispatch({ type: "REJECTED", payload: error.message });
@@ -64,11 +73,13 @@ export default function Podcasts({ query }) {
 
   // Initial fetch when query changes
   useEffect(() => {
-    if (!query || typeof query !== "string") return;
+    if (!query || typeof query !== "string" || query.trim() === "") {
+      return;
+    }
 
     localStorage.setItem("nextPage", 4); // Set initial next page offset
     fetchAndSetPodcasts(query, 0, false); // Fetch and set the first set of podcasts
-  }, [query]);
+  }, [query, dispatch]);
 
   // Load more podcasts
   async function handleLoadMorePodcasts() {
@@ -185,46 +196,7 @@ export default function Podcasts({ query }) {
                       )
                     }
                   >
-                    <svg
-                      className=""
-                      width="24px"
-                      height="24px"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      stroke="#fff"
-                    >
-                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                      <g
-                        id="SVGRepo_tracerCarrier"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></g>
-                      <g id="SVGRepo_iconCarrier">
-                        {" "}
-                        <path
-                          d="M22 20.8201C15.426 22.392 8.574 22.392 2 20.8201"
-                          stroke="#fff"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>{" "}
-                        <path
-                          d="M11.9492 2V16"
-                          stroke="#fff"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>{" "}
-                        <path
-                          d="M16.8996 11.8L13.3796 15.4099C13.2011 15.5978 12.9863 15.7476 12.7482 15.8499C12.5101 15.9521 12.2538 16.0046 11.9946 16.0046C11.7355 16.0046 11.4791 15.9521 11.241 15.8499C11.0029 15.7476 10.7881 15.5978 10.6096 15.4099L7.09961 11.8"
-                          stroke="#fff"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>{" "}
-                      </g>
-                    </svg>
+                    <HiMiniArrowDownTray className="w-6 h-6" />
                   </button>
                 </div>
                 <div className="flex items-baseline">
@@ -247,59 +219,9 @@ export default function Podcasts({ query }) {
                     className="self-end ml-auto"
                   >
                     {playingPodcastId === podcast.id ? (
-                      <svg
-                        className=""
-                        height={"24px"}
-                        width={"24px"}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        stroke="#fff"
-                      >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g
-                          id="SVGRepo_tracerCarrier"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></g>
-                        <g id="SVGRepo_iconCarrier">
-                          {" "}
-                          <path
-                            d="M15 6C15 6 15.5 9 15.5 12C15.5 15 15 18 15 18M9 6C9 6 8.5 9 8.5 12C8.5 15 9 18 9 18"
-                            stroke="#fff"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          ></path>{" "}
-                        </g>
-                      </svg>
+                      <HiOutlinePause className="w-6 h-6" />
                     ) : (
-                      <svg
-                        className=" "
-                        height={"24px"}
-                        width={"24px"}
-                        viewBox="-0.5 0 25 25"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        stroke="#fff"
-                      >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g
-                          id="SVGRepo_tracerCarrier"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></g>
-                        <g id="SVGRepo_iconCarrier">
-                          {" "}
-                          <path
-                            d="M7.98047 3.51001C5.43047 4.39001 4.98047 9.09992 4.98047 12.4099C4.98047 15.7199 5.41047 20.4099 7.98047 21.3199C10.6905 22.2499 18.9805 16.1599 18.9805 12.4099C18.9805 8.65991 10.6905 2.58001 7.98047 3.51001Z"
-                            stroke="#fff"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          ></path>{" "}
-                        </g>
-                      </svg>
+                      <HiOutlinePlay className="w-6 h-6" />
                     )}
                   </button>
                 </div>
@@ -354,38 +276,7 @@ export default function Podcasts({ query }) {
         onClick={handleLoadMorePodcasts}
         className="flex items-center gap-2 mx-auto text-white px-4 py-2 rounded-lg cursor-pointer"
       >
-        <svg
-          height={"34px"}
-          width={"34px"}
-          viewBox="-2.24 -2.24 36.48 36.48"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          fill="#fff"
-          stroke="#fff"
-          strokeWidth="0.64"
-        >
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            <path
-              d="M20.462 10.824l-9.265 9.196 0.753 0.756 9.265-9.196z"
-              fill="#fff"
-            ></path>
-            <path
-              d="M6.937 21.864c-3.234 0-5.864-2.631-5.864-5.864s2.631-5.864 5.864-5.864c1.566 0 2.987 0.621 4.040 1.624l0.001-0.006 0.054 0.047 2.076 2.066h-1.905v1.066h3.732v-3.732h-1.066v1.918l-2.084-2.074-0.005 0.005c-1.251-1.224-2.959-1.982-4.842-1.982-3.821 0-6.931 3.109-6.931 6.931s3.109 6.931 6.931 6.931c1.971 0 3.747-0.831 5.011-2.156l-0.753-0.754c-1.070 1.132-2.581 1.844-4.258 1.844z"
-              fill="#fff"
-            ></path>
-            <path
-              d="M25.063 9.069c-1.765 0-3.373 0.668-4.597 1.759l0.753 0.753c1.030-0.898 2.373-1.446 3.844-1.446 3.234 0 5.864 2.631 5.864 5.864s-2.631 5.864-5.864 5.864c-1.56 0-2.976-0.616-4.028-1.613l-0.002 0.010-3.531-3.518-0.757 0.751 3.535 3.522 0.006-0.006c1.245 1.187 2.925 1.921 4.776 1.921 3.821 0 6.931-3.109 6.931-6.931s-3.109-6.931-6.931-6.931z"
-              fill="#fff"
-            ></path>
-          </g>
-        </svg>
+        <AiOutlineReload className="w-6 h-6 mt-8" />
       </button>
     </div>
   );
