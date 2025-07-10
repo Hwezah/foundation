@@ -2,39 +2,29 @@
 import { useSearch } from "./SearchContext";
 import { Loader } from "./loader";
 import { VideoEmbed } from "./sermons";
-import FoundationUtilities from "./foundationUtilities";
-import React, { memo } from "react";
+import Bible from "./Bible";
+import React, { memo, useState } from "react";
+import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 
 function Hero() {
   const { selectedVideo, isLoading } = useSearch();
-
-  // const isSticky = book && chapter && !verse; // Check if book and chapter are defined
+  const [showBiblePanel, setShowBiblePanel] = useState(false);
 
   return (
     <div
-      // ${ isSticky ? "" : "sticky top-0 z-10"}
       className={`bg-[#01212c] w-full sticky top-0 z-1 
-      xl:flex xl:justify-between items-start scrollbar-hidden overflow-hidden`}
+      xl:flex xl:justify-between items-start scrollbar-hidden`}
     >
       {/* If still loading, show the Loader */}
       {isLoading ? (
         <Loader />
       ) : !selectedVideo ? (
-        // Show fallback video while waiting for the selected video
-        // <video autoPlay muted loop className="w-full h-[70vh] object-cover">
-        //   <source
-        //     src="public\Assets\5875774-uhd_3840_2160_24fps.mp4" // Ensure the path is correct
-        //     type="video/mp4"
-        //   />
-        // </video>
-
         <img
           className="w-full max-h-[60vh] object-cover object-center block"
-          src="\Assets\pexels-jibarofoto-13963623.jpg"
+          src="/Assets/pexels-jibarofoto-13963623.jpg"
           alt=""
         />
       ) : (
-        // Once the selected video is available, show the selected video
         <>
           <div className="hidden xl:block h-full">
             {/* <Tools setIsFeedVisible={setIsFeedVisible} /> */}
@@ -48,10 +38,39 @@ function Hero() {
           </div>
         </>
       )}
-      <FoundationUtilities />
+
+      {/* Slide-out Bible Panel */}
+      <div
+        className={`absolute top-0 right-0 h-screen z-20 bg-[#01212c]
+          transition-transform duration-300 ease-in-out transform
+          ${showBiblePanel ? "translate-x-0" : "translate-x-full"}
+          w-full sm:w-3/4 md:w-1/2 xl:w-[40%]
+          overflow-y-auto scrollbar-hidden shadow-xl`}
+      >
+        <Bible />
+      </div>
+
+      {/* Toggle Button */}
+      <button
+        className="absolute top-24 right-4 -translate-y-1/2 transform cursor-pointer z-30
+          rounded-full opacity-30 hover:bg-opacity-100 hover:scale-110 
+          transition-all duration-200"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowBiblePanel((prev) => !prev);
+        }}
+        aria-label={showBiblePanel ? "Close Bible panel" : "Open Bible panel"}
+      >
+        {showBiblePanel ? (
+          <BsArrowRightCircleFill className="text-4xl sm:text-5xl md:text-6xl" />
+        ) : (
+          <BsArrowLeftCircleFill className="text-4xl sm:text-5xl md:text-6xl" />
+        )}
+      </button>
     </div>
   );
 }
+
 export default memo(Hero);
 
 {
