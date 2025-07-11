@@ -9,7 +9,11 @@ export default function Header() {
   const [showSearch, setShowSearch] = useState(false);
   return (
     <>
-      <div className="flex items-center justify-between lg:p-4 p-2.5  w-full xl:px-10 md:px-4 sm:px-2 lg:px-6">
+      <div
+        className={`flex items-center w-full lg:p-4 p-2.5 xl:px-10 md:px-4 sm:px-2 lg:px-6 ${
+          showSearch ? "justify-center" : "justify-between"
+        }`}
+      >
         <div className="flex items-center">
           <img
             src="public\\Assets\\FoundationLogoWhite.svg"
@@ -18,7 +22,7 @@ export default function Header() {
           />
           <h1
             className={`xl:text-4xl md:text-3xl text-2xl font-black ${
-              showSearch ? "hidden sm:block" : "block"
+              showSearch ? "hidden sm:block " : "block"
             }`}
           >
             Foundation.
@@ -113,7 +117,7 @@ function SearchBar({ showSearch, setShowSearch }) {
           <input
             value={searchQuery}
             onChange={(e) => setsearchQuery(e.target.value)}
-            className={`flex xl:w-[350px] w-[14rem] rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
+            className={`flex xl:w-[22rem] w-[14rem] sm:w-[16rem] md:w-[18rem] lg:w-[20rem] rounded-full bg-[#01222e] px-6 py-1.5 sm:py-2.5 xl:py-3 transition-all duration-300 md:focus:w-[400px] font-bold text-gray-500 focus:outline-none ${
               showSearch ? "block" : "hidden"
             } md:block`}
             placeholder="Search Foundation..."
