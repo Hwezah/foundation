@@ -40,7 +40,7 @@ function ContentBar({ selectedsearchQuery, setSelectedsearchQuery }) {
     "Testimonies",
   ];
   return (
-    <div className="flex pb-2 xl:pb-3 xl:px-10 md:px-4 sm:px-2 lg:px-6 overflow-x-auto  justify-between gap-4 text-sm lg:text-md font-bold scrollbar-hidden">
+    <div className="flex py-2 px-2 xl:pb-3 xl:px-10 md:px-4 sm:px-2 lg:px-6 overflow-x-auto  justify-between gap-4 text-sm lg:text-md font-bold scrollbar-hidden">
       {categories.map((searchQuery) => (
         <button
           key={searchQuery}

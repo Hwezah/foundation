@@ -93,7 +93,7 @@ export const BibleSearch = ({
     KJV: "f276be3571f516cb-01",
     GANDA: "de4e12af7f28f599-01",
   };
-  const [bibleVersion, setBibleVersion] = useState("KJV");
+  const [bibleVersion, setBibleVersion] = useState("GANDA");
   const bibleId = BIBLE_IDS[bibleVersion];
 
   const [isVerseByVerse, setIsVerseByVerse] = useState(false);
@@ -394,7 +394,7 @@ export const BibleSearch = ({
 
         <button
           type="submit"
-          className="hidden sm:inline-block bg-[#4a5759] text-white px-2 py-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
+          className="hidden cursor-pointer sm:inline-block bg-[#4a5759] text-white px-2 py-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
         >
           Search
         </button>
