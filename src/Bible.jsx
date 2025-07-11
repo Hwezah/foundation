@@ -1,14 +1,14 @@
 // import { useSearch } from "../SearchContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
 import { fetchData } from "./Services/api";
 import { useSearch } from "./SearchContext";
 import { NavLink } from "react-router-dom";
+import { HiOutlineSwitchHorizontal } from "react-icons/hi";
 import {
   HiMiniMagnifyingGlass,
   HiMiniBars3BottomLeft,
   HiMiniBars3,
-  HiMiniPencilSquare,
 } from "react-icons/hi2";
 const BASE_URL = "https://api.scripture.api.bible/v1/bibles";
 const API_KEY = "2917b29dcc612336646fc8dd29282dbd";
@@ -66,20 +66,29 @@ function BibleDisplay({ result, isVerseByVerse, bibleVersion }) {
   );
 }
 
-export default function Bible() {
+export default function Bible({ setIsBibleLoading, result, setResult }) {
   return (
     <div className="">
-      <BibleSearch fetchBibleData={fetchBibleData} />
+      <BibleSearch
+        fetchBibleData={fetchBibleData}
+        setIsBibleLoading={setIsBibleLoading}
+        result={result}
+        setResult={setResult}
+      />
     </div>
   );
 }
 
-export const BibleSearch = ({ fetchBibleData }) => {
+export const BibleSearch = ({
+  fetchBibleData,
+  setIsBibleLoading,
+  result,
+  setResult,
+}) => {
   const [verse, setVerse] = useState("");
   const [chapter, setChapter] = useState("");
   const [book, setBook] = useState("");
   const { isLoading, dispatch, error } = useSearch();
-  const [result, setResult] = useState(null);
   const BIBLE_IDS = {
     KJV: "f276be3571f516cb-01",
     GANDA: "de4e12af7f28f599-01",
@@ -280,8 +289,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
 
   const handleBibleSearch = async () => {
     setResult(null);
-    dispatch({ type: "LOADING" });
-    dispatch({ type: "REJECTED", payload: "" });
+    setIsBibleLoading(true);
 
     if (!book || !chapter) {
       dispatch({
@@ -318,7 +326,15 @@ export const BibleSearch = ({ fetchBibleData }) => {
       const cleanContent = data.data.content.replace(/<[^>]*>/g, "");
       setResult({ ...data.data, content: cleanContent });
     }
+
+    setIsBibleLoading(false);
   };
+
+  useEffect(() => {
+    if (verse) {
+      handleBibleSearch();
+    }
+  }, [verse]);
 
   return (
     <div className="p-2 w-full mx-auto">
@@ -350,7 +366,7 @@ export const BibleSearch = ({ fetchBibleData }) => {
           className=" py-0.5 sm:inline-block bg-[#4a5759] text-white p-0.5 lg:py-1 rounded hover:bg-[#3b4647]"
         >
           <NavLink>
-            <HiMiniPencilSquare className="w-6.5 h-6.5" />
+            <HiOutlineSwitchHorizontal className="w-6.5 h-6.5" />
           </NavLink>
         </button>
 

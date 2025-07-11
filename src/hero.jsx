@@ -1,21 +1,46 @@
-// import { strokeColor } from "./App";
+import { useState, memo, useRef, useEffect } from "react";
 import { useSearch } from "./SearchContext";
 import { Loader } from "./loader";
 import { VideoEmbed } from "./sermons";
 import Bible from "./Bible";
-import React, { memo, useState } from "react";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 
 function Hero() {
   const { selectedVideo, isLoading } = useSearch();
   const [showBiblePanel, setShowBiblePanel] = useState(false);
 
+  // ✅ Bible-specific loading and result state
+  const [isBibleLoading, setIsBibleLoading] = useState(false);
+  const [bibleResult, setBibleResult] = useState(null);
+
+  // ✅ Ref for panel
+  const panelRef = useRef(null);
+
+  // ✅ Click outside handler
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (panelRef.current && !panelRef.current.contains(event.target)) {
+        setShowBiblePanel(false);
+      }
+    }
+
+    if (showBiblePanel) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showBiblePanel]);
+
   return (
     <div
       className={`bg-[#01212c] w-full sticky top-0 z-1 
-      xl:flex xl:justify-between items-start scrollbar-hidden`}
+      xl:flex xl:justify-between items-start scrollbar-hidden `}
     >
-      {/* If still loading, show the Loader */}
+      {/* ✅ Video area */}
       {isLoading ? (
         <Loader />
       ) : !selectedVideo ? (
@@ -26,12 +51,10 @@ function Hero() {
         />
       ) : (
         <>
-          <div className="hidden xl:block h-full">
-            {/* <Tools setIsFeedVisible={setIsFeedVisible} /> */}
-          </div>
+          <div className="hidden xl:block h-full">{/* Tools or other */}</div>
           <div className="w-full aspect-video ">
             <VideoEmbed
-              className=" shadow-none rounded-none w-full h-full object-cover "
+              className="shadow-none rounded-none w-full h-full object-cover"
               videoId={selectedVideo.id.videoId}
               title={selectedVideo.snippet.title}
             />
@@ -39,21 +62,31 @@ function Hero() {
         </>
       )}
 
-      {/* Slide-out Bible Panel */}
+      {/* ✅ Slide-out Bible Panel */}
       <div
-        className={`absolute top-0 right-0 h-screen z-20 bg-[#01212c]
+        ref={panelRef}
+        className={`fixed top-0 right-0 h-screen z-50 bg-[#01212c]
           transition-transform duration-300 ease-in-out transform
           ${showBiblePanel ? "translate-x-0" : "translate-x-full"}
           w-full sm:w-3/4 md:w-1/2 xl:w-[40%]
           overflow-y-auto scrollbar-hidden shadow-xl`}
       >
-        <Bible />
+        {showBiblePanel &&
+          (isBibleLoading ? (
+            <Loader />
+          ) : (
+            <Bible
+              setIsBibleLoading={setIsBibleLoading}
+              result={bibleResult}
+              setResult={setBibleResult}
+            />
+          ))}
       </div>
 
-      {/* Toggle Button */}
+      {/* ✅ Toggle Button — always visible */}
       <button
-        className="absolute top-24 right-4 -translate-y-1/2 transform cursor-pointer z-30
-          rounded-full opacity-30 hover:bg-opacity-100 hover:scale-110 
+        className="fixed top-[8rem] right-4 transform cursor-pointer z-[60]
+          rounded-full opacity-30 hover:opacity-100 hover:scale-110 
           transition-all duration-200"
         onClick={(e) => {
           e.stopPropagation();
