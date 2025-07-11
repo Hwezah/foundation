@@ -411,9 +411,5 @@ export const BibleSearch = ({
 };
 
 function BibleSearchButton() {
-  return (
-    <NavLink>
-      <HiMiniMagnifyingGlass className="w-6 h-6" />
-    </NavLink>
-  );
+  return <HiMiniMagnifyingGlass className="w-6 h-6" />;
 }
