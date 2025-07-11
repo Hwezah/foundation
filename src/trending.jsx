@@ -20,6 +20,9 @@ function Trending() {
         selectedsearchQuery={selectedsearchQuery}
         setSelectedsearchQuery={setSelectedsearchQuery}
       />
+      <p className="text-center text-sm text-amber-500 mb-2 px-2">
+        Search for something to watch in the top Search-Bar...
+      </p>
       {selectedsearchQuery === "Podcasts" && <Podcasts query={query} />}
       {selectedsearchQuery === "Sermons" && <Sermons query={query} />}
       <div className="flex justify-center mt-4"></div>
